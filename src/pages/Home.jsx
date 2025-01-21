@@ -27,7 +27,7 @@ const Home = () => {
     autoplaySpeed: 3000,
     arrows: false,
   };
-  
+
   return (
     <div>
       <link
@@ -421,9 +421,7 @@ const Home = () => {
                       <small className="fa fa-star text-primary"></small>
                       <small>(123)</small>
                     </div>
-                    <h5 className="mb-4">
-                    Nutri Trainer Course
-                    </h5>
+                    <h5 className="mb-4">Nutri Trainer Course</h5>
                   </div>
                   <div className="d-flex border-top">
                     <small className="flex-fill text-center border-end py-2">
@@ -477,7 +475,7 @@ const Home = () => {
                       <small>(123)</small>
                     </div>
                     <h5 className="mb-4">
-                    Diploma In Personal Training Course
+                      Diploma In Personal Training Course
                     </h5>
                   </div>
                   <div className="d-flex border-top">
@@ -531,9 +529,7 @@ const Home = () => {
                       <small className="fa fa-star text-primary"></small>
                       <small>(123)</small>
                     </div>
-                    <h5 className="mb-4">
-                    Diploma In Nutrition Course
-                    </h5>
+                    <h5 className="mb-4">Diploma In Nutrition Course</h5>
                   </div>
                   <div className="d-flex border-top">
                     <small className="flex-fill text-center border-end py-2">
@@ -568,7 +564,11 @@ const Home = () => {
               >
                 <div className="team-item bg-light">
                   <div className="overflow-hidden">
-                    <img className="img-fluid" src="images/team-1.webp" alt="" />
+                    <img
+                      className="img-fluid"
+                      src="images/team-1.webp"
+                      alt=""
+                    />
                   </div>
                   <div className="position-relative d-flex justify-content-center icons-margin">
                     <div className="bg-light d-flex justify-content-center pt-2 px-1">
@@ -595,7 +595,11 @@ const Home = () => {
               >
                 <div className="team-item bg-light">
                   <div className="overflow-hidden">
-                    <img className="img-fluid" src="images/team-2.webp" alt="" />
+                    <img
+                      className="img-fluid"
+                      src="images/team-2.webp"
+                      alt=""
+                    />
                   </div>
                   <div className="position-relative d-flex justify-content-center icons-margin">
                     <div className="bg-light d-flex justify-content-center pt-2 px-1">
@@ -622,7 +626,11 @@ const Home = () => {
               >
                 <div className="team-item bg-light">
                   <div className="overflow-hidden">
-                    <img className="img-fluid" src="images/team-3.webp" alt="" />
+                    <img
+                      className="img-fluid"
+                      src="images/team-3.webp"
+                      alt=""
+                    />
                   </div>
                   <div className="position-relative d-flex justify-content-center icons-margin">
                     <div className="bg-light d-flex justify-content-center pt-2 px-1">
@@ -649,7 +657,11 @@ const Home = () => {
               >
                 <div className="team-item bg-light">
                   <div className="overflow-hidden">
-                    <img className="img-fluid" src="images/team-4.webp" alt="" />
+                    <img
+                      className="img-fluid"
+                      src="images/team-4.webp"
+                      alt=""
+                    />
                   </div>
                   <div className="position-relative d-flex justify-content-center icons-margin">
                     <div className="bg-light d-flex justify-content-center pt-2 px-1">
@@ -673,7 +685,10 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="container-xxl py-5 wow fadeInUp text-start" data-wow-delay="0.1s">
+        <div
+          className="container-xxl py-5 wow fadeInUp text-start"
+          data-wow-delay="0.1s"
+        >
           <div className="container">
             <div className="text-center">
               <h6 className="section-title bg-white text-center text-primary px-3">

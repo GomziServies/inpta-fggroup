@@ -120,7 +120,7 @@ const Login = () => {
         <div id="main-wrapper">
           <Header />
           <div className="clearfix" />
-          <section className="gray text-start" style={{ marginTop: "70px" }}>
+          <section className="gray text-start" style={{ marginTop: "20px" }}>
             <div className="container">
               <div className="row align-items-start justify-content-center p-3">
                 <div className="col-xl-5 col-lg-8 col-md-12">

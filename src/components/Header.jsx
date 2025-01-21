@@ -147,22 +147,21 @@ function Header() {
               Profile
             </Link>
           </div>
-          
         </div>
         <li className="list-unstyled p-3 sign-in">
-            <a href="#" onClick={handleShow} className="ft-bold">
-              <i className="fas fa-sign-in-alt me-2 theme-cl" />
-              Sign In
-            </a>
-          </li>
-          <Link
-            to="/add-listing"
-            className="d-none d-lg-flex align-items-center mr-3"
-          >
-            <p className="btn btn-primary">
-              <i className="fa fa-plus me-2"></i> Add Listing{" "}
-            </p>
-          </Link>
+          <a href="#" onClick={handleShow} className="ft-bold">
+            <i className="fas fa-sign-in-alt me-2 theme-cl" />
+            Sign In
+          </a>
+        </li>
+        <Link
+          to="/add-listing"
+          className="d-none d-lg-flex align-items-center mr-3"
+        >
+          <p className="btn btn-primary">
+            <i className="fa fa-plus me-2"></i> Add Listing{" "}
+          </p>
+        </Link>
       </nav>
 
       <Modal

@@ -277,7 +277,7 @@ const ListingView = () => {
               <div className="row">
                 <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 p-3">
                   <div className="featured-slick mb-4">
-                    <div className="featured-gallery-slide">
+                    <div className="featured-gallery-slide p-2">
                       <Slider {...settings}>
                         <div style={{ cursor: "pointer" }}>
                           <div className="mx-2">
@@ -330,7 +330,7 @@ const ListingView = () => {
                   {/* About The Business */}
 
                   <div className="d-block">
-                    <div className="jbd-01">
+                    <div>
                       <div className="jbd-details">
                         <h5 className="ft-bold fs-lg">Description</h5>
                         <div className="d-block mt-3">
@@ -345,7 +345,7 @@ const ListingView = () => {
                     </div>
                   </div>
 
-                  <div className="sep-devider" />
+                  {/* <div className="sep-devider" />
                   <div>
                     <div className="d-block mt-3">
                       <div className="list-lioe">
@@ -377,9 +377,9 @@ const ListingView = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="d-block">
-                    <div className="jbd-01">
+                    <div className="mt-3">
                       <div className="jbd-details">
                         <h5 className="ft-bold fs-lg mb-3">Timings</h5>
                         <div className="Goodup-lot-wrap d-block">
@@ -422,7 +422,7 @@ const ListingView = () => {
                   <div className="sep-devider" />
                   {/* Recommended Reviews */}
                   <div className="d-block">
-                    <div className="jbd-01">
+                    <div className="mt-3">
                       <div className="jbd-details mb-4">
                         <h5 className="ft-bold fs-lg">Recommended Reviews</h5>
                         <div className="reviews-comments-wrap w-100">
@@ -486,7 +486,7 @@ const ListingView = () => {
                   </div>
                   {/* Drop Your Review */}
                   <div className="d-block">
-                    <div className="jbd-01">
+                    <div className="mt-3">
                       <div className="jbd-details">
                         <h5 className="ft-bold fs-lg">Drop Your Review</h5>
                         <div className="review-form-box form-submit mt-3">
@@ -537,11 +537,9 @@ const ListingView = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="sep-devider" />
-                  {/* Frequently Asked Questions */}
 
                   <div className="d-block">
-                    <div className="jbd-01">
+                    <div className="mt-3">
                       <div className="jbd-details">
                         <h5 className="ft-bold fs-lg">
                           Frequently Asked Questions
@@ -551,9 +549,58 @@ const ListingView = () => {
                             <div className="card">
                               <div className="card-header">
                                 <h5 className="mb-0">
-                                  <button className="btn btn-link">
-                                    FWG full form kya hai ?
-                                  </button>
+                                  <button> 1. FWG full form kya hai ?</button>
+                                </h5>
+                              </div>
+                              <div>
+                                <div className="card-body">
+                                  Fitness With Gomzi
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="d-block mt-3">
+                          <div className="accordion">
+                            <div className="card">
+                              <div className="card-header">
+                                <h5 className="mb-0">
+                                  <button> 1. FWG full form kya hai ?</button>
+                                </h5>
+                              </div>
+                              <div>
+                                <div className="card-body">
+                                  Fitness With Gomzi
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="d-block mt-3">
+                          <div className="accordion">
+                            <div className="card">
+                              <div className="card-header">
+                                <h5 className="mb-0">
+                                  <button> 1. FWG full form kya hai ?</button>
+                                </h5>
+                              </div>
+                              <div>
+                                <div className="card-body">
+                                  Fitness With Gomzi
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="d-block mt-3">
+                          <div className="accordion">
+                            <div className="card">
+                              <div className="card-header">
+                                <h5 className="mb-0">
+                                  <button> 1. FWG full form kya hai ?</button>
                                 </h5>
                               </div>
                               <div>
@@ -575,11 +622,11 @@ const ListingView = () => {
                     <div className="uli-list-info">
                       <ul>
                         <li>
-                          <div className="list-uiyt">
-                            <div className="list-iobk">
+                          <div className="list-uiyt d-flex">
+                            <div className="list-iobk p-2">
                               <i className="fas fa-globe" />
                             </div>
-                            <div className="list-uiyt-capt">
+                            <div className="list-uiyt-capt p-2">
                               <h5>Live Site</h5>
 
                               <div className="d-flex align-items-center">
@@ -590,7 +637,7 @@ const ListingView = () => {
                                   sx={{ cursor: "pointer" }}
                                 >
                                   <p className="text-dark text-underline">
-                                    +91 9875686960
+                                    fggroup.in
                                   </p>
                                 </Link>
                               </div>
@@ -598,11 +645,11 @@ const ListingView = () => {
                           </div>
                         </li>
                         <li>
-                          <div className="list-uiyt">
-                            <div className="list-iobk">
+                          <div className="list-uiyt d-flex">
+                            <div className="list-iobk p-2">
                               <i className="fas fa-envelope" />
                             </div>
-                            <div className="list-uiyt-capt">
+                            <div className="list-uiyt-capt p-2">
                               <h5>Drop a Mail</h5>
 
                               <p>fgiit@gmail.com</p>
@@ -610,22 +657,22 @@ const ListingView = () => {
                           </div>
                         </li>
                         <li>
-                          <div className="list-uiyt">
-                            <div className="list-iobk">
+                          <div className="list-uiyt d-flex">
+                            <div className="list-iobk p-2">
                               <i className="fas fa-phone" />
                             </div>
-                            <div className="list-uiyt-capt">
+                            <div className="list-uiyt-capt p-2">
                               <h5>Call Us</h5>
-                              <p>+91 886655442277</p>
+                              <p>+91 8866554477</p>
                             </div>
                           </div>
                         </li>
                         <li>
-                          <div className="list-uiyt">
-                            <div className="list-iobk">
+                          <div className="list-uiyt d-flex">
+                            <div className="list-iobk p-2">
                               <i className="fas fa-map-marker-alt" />
                             </div>
-                            <div className="list-uiyt-capt">
+                            <div className="list-uiyt-capt p-2">
                               <h5>Get Directions</h5>
                               <a
                                 href={locationData.direction_link}

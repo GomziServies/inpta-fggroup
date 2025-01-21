@@ -71,6 +71,7 @@ const Home = () => {
                 className="img-fluid"
                 src="images/co-1.webp"
                 alt="Carousel 1"
+                width="100%"
               />
               <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center first-secttion-bg">
                 <div className="container">
@@ -109,6 +110,7 @@ const Home = () => {
                 className="img-fluid"
                 src="images/co-2.webp"
                 alt="Carousel 2"
+                width="100%"
               />
               <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center first-secttion-bg">
                 <div className="container">

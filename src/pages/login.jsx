@@ -122,7 +122,7 @@ const Login = () => {
           <div className="clearfix" />
           <section className="gray text-start" style={{ marginTop: "70px" }}>
             <div className="container">
-              <div className="row align-items-start justify-content-center">
+              <div className="row align-items-start justify-content-center p-3">
                 <div className="col-xl-5 col-lg-8 col-md-12">
                   {!isLogin && currentStep === "login" && (
                     <div className="signup-screen-wrap">

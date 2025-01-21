@@ -1017,36 +1017,6 @@ fieldset:disabled .btn {
   transform: translateY(-2px);
 }
 
-/* FAQ Section */
-.view-listing-page .accordion .card {
-  border: none;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
-}
-
-.view-listing-page .accordion .card:hover {
-  transform: scale(1.02);
-}
-
-.view-listing-page .accordion .card-header {
-  background-color: #f7f7f7;
-  padding: 1.2rem;
-  border-radius: 10px 10px 0 0;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.view-listing-page .accordion .card-body {
-  padding: 1rem;
-  background-color: #fff;
-  border-radius: 0 0 10px 10px;
-  border-top: 1px solid #eee;
-  color: #666;
-  line-height: 1.6;
-}
-
 /* Information Sidebar */
 .view-listing-page .jb-apply-form {
   background-color: #fff;
@@ -1097,4 +1067,209 @@ fieldset:disabled .btn {
 
 .view-listing-page .list-uiyt-capt a:hover {
   text-decoration: underline;
+}
+
+.view-listing-page .jbd-01 {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.view-listing-page .jbd-details h5 {
+  color: #333333;
+  margin-bottom: 15px;
+}
+
+.view-listing-page .review-form-box {
+  padding: 10px;
+}
+
+.view-listing-page .review-form-box .form-group {
+  margin-bottom: 20px;
+}
+
+.view-listing-page .review-form-box textarea {
+  width: 100%;
+  padding: 15px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  resize: none;
+  transition: all 0.3s ease;
+}
+
+.view-listing-page .review-form-box .btn {
+  background-color: #003d99;
+  border: none;
+  font-size: 16px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.view-listing-page .review-form-box .d-flex svg {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.sign-in a {
+  color: #003d99;
+}
+
+/* Accordion Styles */
+.view-listing-page .accordion .card {
+  border: 1px dashed gray;
+  margin-bottom: 10px;
+}
+
+.view-listing-page .accordion .card-header {
+  background-color: #f8f8f8;
+  padding: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  border: none !important;
+}
+
+
+.view-listing-page .accordion .card-header button {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333333;
+  background: none;
+  border: none;
+  padding: 0;
+  outline: none;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.view-listing-page .accordion .card-body {
+  padding: 15px;
+  font-size: 14px;
+  color: #555555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .view-listing-page .review-form-box textarea {
+    height: 100px;
+  }
+
+  .view-listing-page .accordion .card-header button {
+    font-size: 14px;
+  }
+}
+
+.signup-screen-wrap {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 30px 20px;
+}
+
+.signup-screen-wrap .signup-screen-single {
+  text-align: center;
+}
+
+.signup-screen-wrap .nav-brand img.logo {
+  max-width: 120px;
+  margin-bottom: 15px;
+}
+
+.signup-screen-wrap h3.text-center {
+  font-size: 1.8rem;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.signup-screen-wrap h4.ft-medium {
+  font-size: 1.2rem;
+  color: #555555;
+  margin-bottom: 20px;
+}
+
+/* Form Styles */
+.signup-screen-wrap form .form-group {
+  margin-bottom: 20px;
+}
+
+.signup-screen-wrap form .form-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333333;
+}
+
+.signup-screen-wrap form .form-control {
+  height: 45px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  padding: 10px 15px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.signup-screen-wrap form .form-control:focus {
+  border-color: #3f51b5;
+  box-shadow: 0 0 5px rgba(63, 81, 181, 0.4);
+  outline: none;
+}
+
+.signup-screen-wrap form button {
+  height: 45px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.signup-screen-wrap button.theme-bg {
+  background-color: #3f51b5;
+  border: none;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 6px;
+}
+
+button.theme-bg:hover {
+  background-color: #2c3ea3;
+}
+
+button.bg-dark {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+button.bg-dark:hover {
+  background-color: #555555;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .signup-screen-wrap {
+    padding: 20px;
+  }
+
+  h3.text-center {
+    font-size: 1.5rem;
+  }
+
+  h4.ft-medium {
+    font-size: 1rem;
+  }
+
+  form .form-control {
+    font-size: 13px;
+  }
+
+  button {
+    font-size: 14px;
+  }
 }

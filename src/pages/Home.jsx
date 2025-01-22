@@ -65,160 +65,45 @@ const Home = () => {
         )}
         <Header />
         <div className="container-fluid p-0 mb-5 text-start">
-          <Slider {...settings} className="header-carousel">
-            <div className="position-relative">
-              <img
-                className="img-fluid"
-                src="images/co-1.webp"
-                alt="Carousel 1"
-                width="100%"
-              />
-              <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center first-secttion-bg">
-                <div className="container">
-                  <div className="row justify-content-start">
-                    <div className="col-sm-10 col-lg-8">
-                      <h5 className="text-white text-uppercase mb-3 animated slideInDown">
-                        Welcome to INPTA
-                      </h5>
-                      <h1 className="display-3 text-white animated slideInDown">
-                        Elevate Your Institution with INPTA Accreditation
-                      </h1>
-                      <p className="fs-5 text-white mb-4 pb-2">
-                        Join a globally recognized network of academies shaping
-                        the future of fitness and health education.
-                      </p>
-                      <a
-                        href="#"
-                        className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
-                      >
-                        Learn More
-                      </a>
-                      <a
-                        href="#"
-                        className="btn btn-light py-md-3 px-md-5 animated slideInRight"
-                      >
-                        Apply for Accreditation
-                      </a>
-                    </div>
+          <div className="position-relative">
+            <img
+              className="img-fluid"
+              src="images/co-1.webp"
+              alt="Carousel 1"
+              width="100%"
+            />
+            <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center first-secttion-bg">
+              <div className="container">
+                <div className="row justify-content-start">
+                  <div className="col-sm-10 col-lg-8">
+                    <h5 className="text-white text-uppercase mb-3 animated slideInDown">
+                      Welcome to INPTA
+                    </h5>
+                    <h1 className="display-3 text-white animated slideInDown">
+                      Elevate Your Institution with INPTA Accreditation
+                    </h1>
+                    <p className="fs-5 text-white mb-4 pb-2">
+                      Join a globally recognized network of academies shaping
+                      the future of fitness and health education.
+                    </p>
+                    <a
+                      href="https://fggroup.in/inpta/home-inpta"
+                      className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
+                      target="_blank"
+                    >
+                      Learn More
+                    </a>
+                    <a
+                      href="/add-listing"
+                      className="btn btn-light py-md-3 px-md-5 animated slideInRight"
+                    >
+                      Apply for Accreditation
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="position-relative">
-              <img
-                className="img-fluid"
-                src="images/co-2.webp"
-                alt="Carousel 2"
-                width="100%"
-              />
-              <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center first-secttion-bg">
-                <div className="container">
-                  <div className="row justify-content-start">
-                    <div className="col-sm-10 col-lg-8">
-                      <h5 className="text-white text-uppercase mb-3 animated slideInDown">
-                        Empowering Excellence in Academies
-                      </h5>
-                      <h1 className="display-3 text-white animated slideInDown">
-                        Setting the Benchmark for Quality Education
-                      </h1>
-                      <p className="fs-5 text-white mb-4 pb-2">
-                        Our rigorous standards ensure that your academy meets
-                        international fitness and health education guidelines.
-                      </p>
-                      <a
-                        href="#"
-                        className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
-                      >
-                        Explore Benefits
-                      </a>
-                      <a
-                        href="#"
-                        className="btn btn-light py-md-3 px-md-5 animated slideInRight"
-                      >
-                        Get Accredited
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="position-relative">
-              <img
-                className="img-fluid"
-                src="images/co-1.webp"
-                alt="Carousel 1"
-                width="100%"
-              />
-              <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center first-secttion-bg">
-                <div className="container">
-                  <div className="row justify-content-start">
-                    <div className="col-sm-10 col-lg-8">
-                      <h5 className="text-white text-uppercase mb-3 animated slideInDown">
-                        Connect with Global Leaders
-                      </h5>
-                      <h1 className="display-3 text-white animated slideInDown">
-                        Your Gateway to International Recognition
-                      </h1>
-                      <p className="fs-5 text-white mb-4 pb-2">
-                        Collaborate with world-class professionals and enhance
-                        your academy's reputation globally.
-                      </p>
-                      <a
-                        href="#"
-                        className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
-                      >
-                        Meet Our Experts
-                      </a>
-                      <a
-                        href="#"
-                        className="btn btn-light py-md-3 px-md-5 animated slideInRight"
-                      >
-                        Start Your Journey
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="position-relative">
-              <img
-                className="img-fluid"
-                src="images/co-2.webp"
-                alt="Carousel 2"
-                width="100%"
-              />
-              <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center first-secttion-bg">
-                <div className="container">
-                  <div className="row justify-content-start">
-                    <div className="col-sm-10 col-lg-8">
-                      <h5 className="text-white text-uppercase mb-3 animated slideInDown">
-                        Shaping Future Professionals
-                      </h5>
-                      <h1 className="display-3 text-white animated slideInDown">
-                        Developing the Next Generation of Fitness Experts
-                      </h1>
-                      <p className="fs-5 text-white mb-4 pb-2">
-                        Offer INPTA-certified courses and provide your students
-                        with unmatched career opportunities.
-                      </p>
-                      <a
-                        href="#"
-                        className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
-                      >
-                        View Certified Courses
-                      </a>
-                      <a
-                        href="#"
-                        className="btn btn-light py-md-3 px-md-5 animated slideInRight"
-                      >
-                        Become a Partner
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Slider>
+          </div>
         </div>
         <div className="container-xxl py-5 text-start">
           <div className="container">

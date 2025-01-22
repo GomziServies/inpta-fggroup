@@ -22,12 +22,12 @@ axiosInstance.interceptors.request.use(
 
 export default axiosInstance;
 
-// Additional code to create a separate instance for business-listing
-export const businessListingAxiosInstance = axios.create({
-    baseURL: apiConfig.BASE_URL + '/business-listing',
+// Additional code to create a separate instance for inpta-listing
+export const inptaListingAxiosInstance = axios.create({
+    baseURL: apiConfig.BASE_URL + '/inpta-listing',
 });
 
-businessListingAxiosInstance.interceptors.request.use(
+inptaListingAxiosInstance.interceptors.request.use(
     (config) => {
         const authorization = localStorage.getItem('authorization');
 

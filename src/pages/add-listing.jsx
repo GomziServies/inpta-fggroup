@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import "../assets/css/style.css";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
-import axiosInstance, { businessListingAxiosInstance } from "../js/api";
+import axiosInstance, { inptaListingAxiosInstance } from "../js/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
@@ -31,36 +31,36 @@ const AddListing = () => {
   }, []);
 
   const [formData, setFormData] = useState({
-    businessName: "",
-    description: "",
-    address_line_1: "",
-    address_line_2: "",
-    area: "",
-    landmark: "",
-    city: "",
-    state: "",
-    pin_code: "",
-    contactNumber: "",
-    whatsappNumber: "",
+    title: "demo title",
+    description: "demo description",
+    address_line_1: "Gomzi-2",
+    address_line_2: "demo katargam",
+    area: "katargam",
+    landmark: "demo.url",
+    city: "surat",
+    state: "gujarat",
+    pin_code: "395004",
+    contactNumber: "8866842520",
+    whatsappNumber: "8866842520",
     services: [],
-    tags: [],
-    website: "",
-    email: "",
+    tags: ["demo", "test"],
+    website: "https://fggroup.in/",
+    email: "fitnesswithgomzi@gmail.com",
     branch: "",
   });
-  const [businessHours, setBusinessHours] = useState([
+  const [inptaHours, setInptaHours] = useState([
     { day: "Mon", open: "10:00 AM", close: "07:00 PM" },
   ]);
-  const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
+  const [faqs, setFaqs] = useState([{ question: "i have question?", answer: "here is your answer." }]);
   const [socialMediaLinks, setSocialMediaLinks] = useState([
     { platform: "Instagram", link: "Instagram.com" },
     { platform: "Facebook", link: "Facebook.com" },
     { platform: "YouTube", link: "YouTube.com" },
   ]);
   const [selectedListingCategory, setSelectedListingCategory] = useState("");
-  const [selectedBusinessCategory, setSelectedBusinessCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedFacilities, setSelectedFacilities] = useState("");
-  const [selectedBusinessType, setSelectedBusinessType] = useState("");
+  const [selectedType, setSelectedType] = useState("gym");
   const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingOne, setLoadingOne] = useState(false);
@@ -89,30 +89,29 @@ const AddListing = () => {
 
   // ----------------------------------------------------------------------------------
 
-  const [businessPhotos, setBusinessPhotos] = useState([]);
+  const [inptaPhotos, setInptaPhotos] = useState([]);
   const [featurePreview, setFeaturePreview] = useState(null);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(null);
-  const [currentBusinessPhotoIndex, setCurrentBusinessPhotoIndex] =
-    useState(null);
+  const [currentInptaPhotoIndex, setCurrentInptaPhotoIndex] = useState(null);
   const [logoImage, setLogoImage] = useState(null);
   const [logoPreview, setLogoPreview] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
-  const [businessImageSrc, setBusinessImageSrc] = useState(null);
+  const [inptaImageSrc, setInptaImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [businessCrop, setBusinessCrop] = useState({ x: 0, y: 0 });
+  const [inptaCrop, setInptaCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  const [businessZoom, setBusinessZoom] = useState(1);
+  const [inptaZoom, setInptaZoom] = useState(1);
   const [show, setShow] = useState(false);
-  const [businessShow, setBusinessShow] = useState(false);
+  const [inptaShow, setInptaShow] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState(null);
-  const [businessPhoto, setBusinessPhoto] = useState(null);
+  const [inptaPhoto, setInptaPhoto] = useState(null);
 
   const onCropComplete = useCallback((croppedArea, profilePhoto, context) => {
     if (context === "logo") {
       setProfilePhoto(profilePhoto);
       handleLogoChange(profilePhoto);
     } else if (context === "feature") {
-      setBusinessPhoto(profilePhoto);
+      setInptaPhoto(profilePhoto);
     }
   }, []);
 
@@ -134,7 +133,7 @@ const AddListing = () => {
         setLogoImage(file);
         setFormData((prevData) => ({
           ...prevData,
-          business_logo: reader.result,
+          logo: reader.result,
         }));
       };
       reader.readAsDataURL(file);
@@ -142,7 +141,7 @@ const AddListing = () => {
   };
 
   const handleCropComplete = async (context) => {
-    if (imageSrc && (profilePhoto || businessPhoto)) {
+    if (imageSrc && (profilePhoto || inptaPhoto)) {
       try {
         const croppedImg = await getCroppedImg(imageSrc, profilePhoto);
         if (context === "logo") {
@@ -151,7 +150,7 @@ const AddListing = () => {
           setShow(false);
         } else if (context === "feature") {
           setFeaturePreview(croppedImg);
-          setBusinessShow(false);
+          setInptaShow(false);
         }
       } catch (error) {
         console.error("Error cropping the image:", error);
@@ -163,8 +162,8 @@ const AddListing = () => {
     setShow(false);
   };
 
-  const handleBusinessClose = () => {
-    setBusinessShow(false);
+  const handleInptaClose = () => {
+    setInptaShow(false);
   };
 
   const handleCropLogoChange = (event) => {
@@ -186,10 +185,10 @@ const AddListing = () => {
     fileInput.click();
   };
 
-  const handleRemoveBusinessPhoto = (index) => {
-    const newPhotos = [...businessPhotos];
+  const handleRemoveInptaPhoto = (index) => {
+    const newPhotos = [...inptaPhotos];
     newPhotos.splice(index, 1);
-    setBusinessPhotos([...newPhotos]);
+    setInptaPhotos([...newPhotos]);
   };
 
   const handleSelectFeature = () => {
@@ -197,25 +196,25 @@ const AddListing = () => {
     fileInput.click();
   };
 
-  const handleCropBusinessPhoto = (event, index) => {
+  const handleCropInptaPhoto = (event, index) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setBusinessImageSrc(reader.result);
-        setCurrentBusinessPhotoIndex(index);
-        setBusinessShow(true);
+        setInptaImageSrc(reader.result);
+        setCurrentInptaPhotoIndex(index);
+        setInptaShow(true);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleBusinessCropComplete = async () => {
+  const handleInptaCropComplete = async () => {
     setLoadingTwo(true);
-    if (businessImageSrc && businessPhoto) {
+    if (inptaImageSrc && inptaPhoto) {
       try {
-        const croppedImg = await getCroppedImg(businessImageSrc, businessPhoto);
-        const updatedPhotos = [...businessPhotos];
+        const croppedImg = await getCroppedImg(inptaImageSrc, inptaPhoto);
+        const updatedPhotos = [...inptaPhotos];
         if (currentPhotoIndex !== null) {
           updatedPhotos[currentPhotoIndex] = {
             file: null,
@@ -224,11 +223,11 @@ const AddListing = () => {
         } else {
           updatedPhotos.push({ file: null, preview: croppedImg });
         }
-        setBusinessPhotos(updatedPhotos);
+        setInptaPhotos(updatedPhotos);
         setFeaturePreview(croppedImg);
-        setBusinessShow(false);
+        setInptaShow(false);
       } catch (error) {
-        console.error("Error cropping the business photo:", error);
+        console.error("Error cropping the photos:", error);
       }
     }
     setLoadingTwo(false);
@@ -356,8 +355,8 @@ const AddListing = () => {
     let uploadedUrls = [];
     try {
       const photoUrls = await Promise.all(
-        businessPhotos.map(async (photo) => {
-          let croppedBlobBusiness = photo.preview;
+        inptaPhotos.map(async (photo) => {
+          let croppedBlobInpta = photo.preview;
 
           if (typeof photo.preview === "string") {
             const byteString = atob(photo.preview.split(",")[1]);
@@ -370,14 +369,14 @@ const AddListing = () => {
             for (let i = 0; i < byteString.length; i++) {
               ia[i] = byteString.charCodeAt(i);
             }
-            croppedBlobBusiness = new Blob([ab], { type: mimeString });
+            croppedBlobInpta = new Blob([ab], { type: mimeString });
           } else if (!(photo.preview instanceof Blob)) {
             throw new Error(
               "Invalid file type: Photo must be a Blob, File, or Base64 string."
             );
           }
           const photoFormData = new FormData();
-          photoFormData.append("files", croppedBlobBusiness);
+          photoFormData.append("files", croppedBlobInpta);
 
           const photoResponse = await axiosInstance.post(
             "/file-upload",
@@ -406,12 +405,12 @@ const AddListing = () => {
       const logoUrl = await uploadLogo();
 
       const postData = {
-        business_type: selectedBusinessType,
-        business_name: formData.businessName,
+        type: selectedType,
+        title: formData.title,
         description: formData.description,
-        business_logo: logoUrl,
-        business_images: uploadedUrls.flat(),
-        services: selectedFacilities.map((facilities) => facilities.value),
+        logo: logoUrl,
+        images: uploadedUrls.flat(),
+        // services: selectedFacilities.map((facilities) => facilities.value),
         tags: formData.tags,
         social_media: socialMediaLinks.map((link) => ({
           social_media_type: link.platform.toLowerCase(),
@@ -421,10 +420,8 @@ const AddListing = () => {
           selectedListingCategory.length > 0
             ? selectedListingCategory
             : [selectedListingCategory],
-        business_category:
-          selectedBusinessCategory.length > 0
-            ? selectedBusinessCategory
-            : [selectedBusinessCategory],
+        category:
+          selectedCategory.length > 0 ? selectedCategory : [selectedCategory],
         amount: {
           paid_amount: formData.paid_amount,
           discount_amount: formData.discount_amount,
@@ -464,7 +461,7 @@ const AddListing = () => {
           question: faq.question,
           answer: faq.answer,
         })),
-        timings: businessHours.map((timeSlot) => ({
+        timings: inptaHours.map((timeSlot) => ({
           title: timeSlot.day,
           timings: [
             {
@@ -475,7 +472,7 @@ const AddListing = () => {
         })),
       };
 
-      await businessListingAxiosInstance.post("/create-listing", postData);
+      await inptaListingAxiosInstance.post("/create-listing", postData);
 
       setIsLoading(false);
       toast.success("Listing created successfully!", {
@@ -567,13 +564,13 @@ const AddListing = () => {
     }
   };
 
-  const getBusinessHours = () => {
+  const getInptaHours = () => {
     const allDaysTime = Object.keys(times).map((day) => ({
       day,
       open: times[day].opening,
       close: times[day].closing,
     }));
-    setBusinessHours(allDaysTime);
+    setInptaHours(allDaysTime);
   };
 
   const categoryAmounts = {
@@ -583,10 +580,10 @@ const AddListing = () => {
   };
 
   useEffect(() => {
-    if (selectedBusinessCategory && categoryAmounts[selectedBusinessCategory]) {
+    if (selectedCategory && categoryAmounts[selectedCategory]) {
       setFormData((prev) => ({
         ...prev,
-        paid_amount: categoryAmounts[selectedBusinessCategory].toString(),
+        paid_amount: categoryAmounts[selectedCategory].toString(),
         discount_amount: "",
         discount_percent: "",
       }));
@@ -598,7 +595,7 @@ const AddListing = () => {
         discount_percent: "",
       }));
     }
-  }, [selectedBusinessCategory]);
+  }, [selectedCategory]);
 
   // Effect to calculate discount percent based on discount amount
   useEffect(() => {
@@ -622,7 +619,7 @@ const AddListing = () => {
         <title>Add Your Listing - Get Featured on Our Platform</title>
         <meta
           name="description"
-          content="Add your business to our platform and boost visibility. Showcase your services, attract customers, and grow your brand with our easy listing process!"
+          content="Add your inpta to our platform and boost visibility. Showcase your services, attract customers, and grow your brand with our easy listing process!"
         />
         <link
           rel="shortcut icon"
@@ -666,12 +663,9 @@ const AddListing = () => {
                                   type="text"
                                   className="form-control rounded"
                                   placeholder="Enter Listing Title"
-                                  value={formData.businessName}
+                                  value={formData.title}
                                   onChange={(e) =>
-                                    handleInputChange(
-                                      "businessName",
-                                      e.target.value
-                                    )
+                                    handleInputChange("title", e.target.value)
                                   }
                                 />
                               </div>
@@ -693,57 +687,31 @@ const AddListing = () => {
                                 />
                               </div>
                             </div>
-                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                              <div className="form-group">
-                                <label className="mb-1">
-                                  Listing Categories
-                                </label>
-                                <select
-                                  className="form-control"
-                                  value={selectedListingCategory}
-                                  onChange={(e) =>
-                                    setSelectedListingCategory(e.target.value)
-                                  }
-                                >
-                                  <option>Select Listing Category</option>
-                                  <option selected value="Personal Trainer">
-                                    Personal Trainer
-                                  </option>
-                                  <option value="General Trainer">
-                                    General Trainer
-                                  </option>
-                                  <option value="Gym">Gym</option>
-                                  <option value="Dietitian">Dietitian</option>
-                                  <option value="Nutritionist">
-                                    Nutritionist
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                            <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                               <div className="form-group">
                                 <label className="mb-1">Type</label>
                                 <select
                                   className="form-control"
-                                  value={selectedBusinessType}
+                                  value={selectedType}
                                   onChange={(e) =>
-                                    setSelectedBusinessType(e.target.value)
+                                    setSelectedType(e.target.value)
                                   }
                                 >
-                                  <option>Select Business Type</option>
-                                  <option value="personal">Personal</option>
-                                  <option selected value="business">
-                                    Business
+                                  <option>Select Type</option>
+                                  <option value="Gym">Gym</option>
+                                  <option value="Institute">Institute</option>
+                                  <option value="Fitness Studio">
+                                    Fitness Studio
                                   </option>
                                 </select>
                               </div>
                             </div>
-                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                            <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                               <div className="form-group">
                                 <label className="mb-1">Tags</label>
                                 <TagInput
                                   type="text"
-                                  className="form-control rounded"
+                                  className="form-control type rounded"
                                   placeholder="Add Tags"
                                   value={formData.tags}
                                   onChange={(value) =>
@@ -765,24 +733,38 @@ const AddListing = () => {
                               </div>
                             </div> */}
 
-                            <div className="col-xl-6 col-lg-4 col-md-12 col-sm-12">
+                            <div className="col-md-12 col-sm-12">
                               <div className="form-group">
-                                <label className="mb-1">
-                                  Categories
-                                </label>
+                                <label className="mb-1">Course Offered:</label>
                                 <select
                                   className="form-control"
-                                  value={selectedBusinessCategory}
+                                  value={selectedCategory}
                                   onChange={(e) =>
-                                    setSelectedBusinessCategory(e.target.value)
+                                    setSelectedCategory(e.target.value)
                                   }
                                 >
-                                  <option>Select Category</option>
-                                  <option selected value="Affordable">
-                                    Affordable
+                                  <option>Select Course Offered</option>
+                                  <option value="Nutri Trainer Course">
+                                    Nutri Trainer Course
                                   </option>
-                                  <option value="Standard">Standard</option>
-                                  <option value="Premium">Premium</option>
+                                  <option value="Diploma In Personal Training Course">
+                                    Diploma In Personal Training Course
+                                  </option>
+                                  <option value="Diploma In Nutrition Course">
+                                    Diploma In Nutrition Course
+                                  </option>
+                                  <option value="Anabolic Androgenic Steroids">
+                                    Anabolic Androgenic Steroids
+                                  </option>
+                                  <option value="Group Instructor Master Class">
+                                    Group Instructor Master Class
+                                  </option>
+                                  <option value="Powerlifting Coach Workshop">
+                                    Powerlifting Coach Workshop
+                                  </option>
+                                  <option value="Injury Rehabilitation Workshop">
+                                    Injury Rehabilitation Workshop
+                                  </option>
                                 </select>
                               </div>
                             </div>
@@ -1107,7 +1089,7 @@ const AddListing = () => {
                             </div>
                             <div className="col-12 mt-3">
                               <label className="mb-1">Featured Image </label>
-                              {businessPhotos && businessPhotos.length > 0 ? (
+                              {inptaPhotos && inptaPhotos.length > 0 ? (
                                 <div>
                                   <div
                                     className="row position-relative"
@@ -1125,7 +1107,7 @@ const AddListing = () => {
                                         </div>
                                       </div>
                                     )}
-                                    {businessPhotos.map((photo, index) => (
+                                    {inptaPhotos.map((photo, index) => (
                                       <div
                                         key={index}
                                         style={{
@@ -1142,7 +1124,7 @@ const AddListing = () => {
                                         >
                                           <img
                                             src={photo.preview}
-                                            alt={`Business Photo ${index + 1}`}
+                                            alt={`INPTA Photo ${index + 1}`}
                                             style={{
                                               maxWidth: "100%",
                                               height: "auto",
@@ -1151,7 +1133,7 @@ const AddListing = () => {
                                           />
                                           <IconButton
                                             onClick={() =>
-                                              handleRemoveBusinessPhoto(index)
+                                              handleRemoveInptaPhoto(index)
                                             }
                                             className="px-1 py-1"
                                             style={{
@@ -1170,10 +1152,7 @@ const AddListing = () => {
                                             type="file"
                                             accept="image/*"
                                             onChange={(event) =>
-                                              handleCropBusinessPhoto(
-                                                event,
-                                                index
-                                              )
+                                              handleCropInptaPhoto(event, index)
                                             }
                                             style={{ display: "none" }}
                                             id={`photoInput-${index}`}
@@ -1215,7 +1194,7 @@ const AddListing = () => {
                                 type="file"
                                 accept="image/*"
                                 className="d-none"
-                                onChange={handleCropBusinessPhoto}
+                                onChange={handleCropInptaPhoto}
                                 sx={{ mt: 2, mb: 2 }}
                               />
                             </div>
@@ -1267,7 +1246,7 @@ const AddListing = () => {
                                       "opening",
                                       e.target.value
                                     );
-                                    getBusinessHours();
+                                    getInptaHours();
                                   }}
                                 >
                                   <option>Opening Time</option>
@@ -1288,7 +1267,7 @@ const AddListing = () => {
                                       "closing",
                                       e.target.value
                                     );
-                                    getBusinessHours();
+                                    getInptaHours();
                                   }}
                                 >
                                   <option>Closing Time</option>
@@ -1465,37 +1444,32 @@ const AddListing = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal
-        show={businessShow}
-        onHide={handleBusinessClose}
-        size="lg"
-        centered
-      >
+      <Modal show={inptaShow} onHide={handleInptaClose} size="lg" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Crop Business Image</Modal.Title>
+          <Modal.Title>Crop Image</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div style={{ position: "relative", width: "100%", height: 400 }}>
             <Cropper
-              image={businessImageSrc}
-              crop={businessCrop}
-              zoom={businessZoom}
+              image={inptaImageSrc}
+              crop={inptaCrop}
+              zoom={inptaZoom}
               aspect={12 / 8}
-              onCropChange={setBusinessCrop}
+              onCropChange={setInptaCrop}
               onCropComplete={(croppedArea, profilePhoto) =>
                 onCropComplete(croppedArea, profilePhoto, "feature")
               }
-              onZoomChange={setBusinessZoom}
+              onZoomChange={setInptaZoom}
             />
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleBusinessClose}>
+          <Button variant="secondary" onClick={handleInptaClose}>
             Close
           </Button>
           <Button
             variant="primary"
-            onClick={() => handleBusinessCropComplete("feature")}
+            onClick={() => handleInptaCropComplete("feature")}
             style={{
               backgroundColor: "#007bff",
               borderColor: "#007bff",

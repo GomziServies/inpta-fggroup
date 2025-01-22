@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from "../components/Footer";
 import WhatsappBtn from "../components/WhatsappBtn";
-import { businessListingAxiosInstance } from "../js/api";
+import { inptaListingAxiosInstance } from "../js/api";
 import { Link } from "react-router-dom";
 import Dummy_img from "../assets/dummy-image-square.jpg";
 import User_img from "../assets/user-profile.png";
@@ -65,7 +65,7 @@ const AllListing = () => {
         limit: 6,
       };
 
-      const response = await businessListingAxiosInstance.post(
+      const response = await inptaListingAxiosInstance.post(
         "/get-businesses",
         requestData
       );

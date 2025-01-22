@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { businessListingAxiosInstance } from "../js/api";
+import { inptaListingAxiosInstance } from "../js/api";
 import Dummy_img from "../assets/dummy-image-square.jpg";
 import User_img from "../assets/user-profile.png";
 import Footer from "../components/Footer";
@@ -62,7 +62,7 @@ const ListingView = () => {
         limit: 10,
       };
 
-      const response = await businessListingAxiosInstance.post(
+      const response = await inptaListingAxiosInstance.post(
         "/get-businesses",
         requestData
       );
@@ -129,7 +129,7 @@ const ListingView = () => {
         listing_id: [business_id],
       };
 
-      const response = await businessListingAxiosInstance.post(
+      const response = await inptaListingAxiosInstance.post(
         "/get-businesses",
         requestData
       );
@@ -164,7 +164,7 @@ const ListingView = () => {
 
   const fetchReviewsData = async () => {
     try {
-      const response = await businessListingAxiosInstance.get(
+      const response = await inptaListingAxiosInstance.get(
         `/get-reviews?business_listing_id=${business_id}`
       );
       const fetchedReviewsData = response.data.data;
@@ -220,7 +220,7 @@ const ListingView = () => {
         rating,
       };
 
-      const response = await businessListingAxiosInstance.post(
+      const response = await inptaListingAxiosInstance.post(
         "/create-review",
         requestData
       );

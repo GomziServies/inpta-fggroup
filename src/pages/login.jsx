@@ -71,10 +71,15 @@ const Login = () => {
         getUserData();
         setOtpDialogOpen(false);
         toast.success("OTP Verified!");
-        const activeServices = response.data.data.active_services;
-        if (activeServices.includes("BUSINESS-LISTING")) {
-          toast.success("Login Successful!");
+
+        const IsInptaUser = response.data.data.active_services.find(
+          (service) => service === "INPTA-LISTING"
+        );
+
+        if (!IsInptaUser) {
+          await axiosInstance.post("/account/enable-inpta-listing");
         }
+
         window.location.href = "/";
       } else {
         toast.error("Failed to verify OTP. Please try again.");

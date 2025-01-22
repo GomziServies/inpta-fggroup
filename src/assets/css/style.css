@@ -636,6 +636,10 @@
   background-color: #ffffff;
 }
 
+.add-listing-page .form-control.type {
+  padding: 6px 0px;
+}
+
 .add-listing-page .form-control:focus {
   border-color: #1b4681;
   outline: none;

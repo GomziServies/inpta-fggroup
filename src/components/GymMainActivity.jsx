@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { businessListingAxiosInstance } from "../js/api";
+import { inptaListingAxiosInstance } from "../js/api";
 import Dummy_img from "../assets/dummy-image-square.jpg";
 import User_img from "../assets/user-profile.png";
 import "../index.css";
@@ -24,7 +24,7 @@ const GymMainActivity = ({ searchData }) => {
                 limit: 6,
             };
 
-            const response = await businessListingAxiosInstance.post(
+            const response = await inptaListingAxiosInstance.post(
                 "/get-businesses",
                 requestData
             );

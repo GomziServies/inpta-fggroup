@@ -77,28 +77,27 @@ const Home = () => {
                 <div className="container">
                   <div className="row justify-content-start">
                     <div className="col-sm-10 col-lg-8">
-                      <h5 className="text-primary text-uppercase mb-3 animated slideInDown">
-                        Best Online Courses
+                      <h5 className="text-white text-uppercase mb-3 animated slideInDown">
+                        Welcome to INPTA
                       </h5>
                       <h1 className="display-3 text-white animated slideInDown">
-                        The Best Online Learning Platform
+                        Elevate Your Institution with INPTA Accreditation
                       </h1>
                       <p className="fs-5 text-white mb-4 pb-2">
-                        Vero elitr justo clita lorem. Ipsum dolor at sed stet
-                        sit diam no. Kasd rebum ipsum et diam justo clita et
-                        kasd rebum sea sanctus eirmod elitr.
+                        Join a globally recognized network of academies shaping
+                        the future of fitness and health education.
                       </p>
                       <a
                         href="#"
                         className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
                       >
-                        Read More
+                        Learn More
                       </a>
                       <a
                         href="#"
                         className="btn btn-light py-md-3 px-md-5 animated slideInRight"
                       >
-                        Join Now
+                        Apply for Accreditation
                       </a>
                     </div>
                   </div>
@@ -116,28 +115,103 @@ const Home = () => {
                 <div className="container">
                   <div className="row justify-content-start">
                     <div className="col-sm-10 col-lg-8">
-                      <h5 className="text-primary text-uppercase mb-3 animated slideInDown">
-                        Best Online Courses
+                      <h5 className="text-white text-uppercase mb-3 animated slideInDown">
+                        Empowering Excellence in Academies
                       </h5>
                       <h1 className="display-3 text-white animated slideInDown">
-                        Get Educated Online From Your Home
+                        Setting the Benchmark for Quality Education
                       </h1>
                       <p className="fs-5 text-white mb-4 pb-2">
-                        Vero elitr justo clita lorem. Ipsum dolor at sed stet
-                        sit diam no. Kasd rebum ipsum et diam justo clita et
-                        kasd rebum sea sanctus eirmod elitr.
+                        Our rigorous standards ensure that your academy meets
+                        international fitness and health education guidelines.
                       </p>
                       <a
                         href="#"
                         className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
                       >
-                        Read More
+                        Explore Benefits
                       </a>
                       <a
                         href="#"
                         className="btn btn-light py-md-3 px-md-5 animated slideInRight"
                       >
-                        Join Now
+                        Get Accredited
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="position-relative">
+              <img
+                className="img-fluid"
+                src="images/co-1.webp"
+                alt="Carousel 1"
+                width="100%"
+              />
+              <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center first-secttion-bg">
+                <div className="container">
+                  <div className="row justify-content-start">
+                    <div className="col-sm-10 col-lg-8">
+                      <h5 className="text-white text-uppercase mb-3 animated slideInDown">
+                        Connect with Global Leaders
+                      </h5>
+                      <h1 className="display-3 text-white animated slideInDown">
+                        Your Gateway to International Recognition
+                      </h1>
+                      <p className="fs-5 text-white mb-4 pb-2">
+                        Collaborate with world-class professionals and enhance
+                        your academy's reputation globally.
+                      </p>
+                      <a
+                        href="#"
+                        className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
+                      >
+                        Meet Our Experts
+                      </a>
+                      <a
+                        href="#"
+                        className="btn btn-light py-md-3 px-md-5 animated slideInRight"
+                      >
+                        Start Your Journey
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="position-relative">
+              <img
+                className="img-fluid"
+                src="images/co-2.webp"
+                alt="Carousel 2"
+                width="100%"
+              />
+              <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center first-secttion-bg">
+                <div className="container">
+                  <div className="row justify-content-start">
+                    <div className="col-sm-10 col-lg-8">
+                      <h5 className="text-white text-uppercase mb-3 animated slideInDown">
+                        Shaping Future Professionals
+                      </h5>
+                      <h1 className="display-3 text-white animated slideInDown">
+                        Developing the Next Generation of Fitness Experts
+                      </h1>
+                      <p className="fs-5 text-white mb-4 pb-2">
+                        Offer INPTA-certified courses and provide your students
+                        with unmatched career opportunities.
+                      </p>
+                      <a
+                        href="#"
+                        className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
+                      >
+                        View Certified Courses
+                      </a>
+                      <a
+                        href="#"
+                        className="btn btn-light py-md-3 px-md-5 animated slideInRight"
+                      >
+                        Become a Partner
                       </a>
                     </div>
                   </div>
@@ -229,53 +303,32 @@ const Home = () => {
               </div>
               <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
                 <h6 className="section-title bg-white text-start text-primary pe-3">
-                  About Us
+                  About INPTA
                 </h6>
-                <h1 className="mb-4">Welcome to eLEARNING</h1>
+                <h1 className="mb-4">Welcome to INPTA Accreditation</h1>
                 <p className="mb-4">
-                  Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit.
-                  Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.
-                </p>
-                <p className="mb-4">
-                  Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit.
-                  Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit,
-                  sed stet lorem sit clita duo justo magna dolore erat amet
+                  The International Network of Professional Training Academies
+                  (INPTA) is a globally recognized organization dedicated to
+                  enhancing the quality of fitness and health education. With
+                  our accreditation, academies gain access to
                 </p>
                 <div className="row gy-2 gx-4 mb-4">
                   <div className="col-sm-6">
                     <p className="mb-0">
                       <i className="fa fa-arrow-right text-primary me-2"></i>
-                      Skilled Instructors
+                      Internationally Certified Programs
                     </p>
                   </div>
                   <div className="col-sm-6">
                     <p className="mb-0">
                       <i className="fa fa-arrow-right text-primary me-2"></i>
-                      Online Classes
+                      Global Networking Opportunities
                     </p>
                   </div>
                   <div className="col-sm-6">
                     <p className="mb-0">
                       <i className="fa fa-arrow-right text-primary me-2"></i>
-                      International Certificate
-                    </p>
-                  </div>
-                  <div className="col-sm-6">
-                    <p className="mb-0">
-                      <i className="fa fa-arrow-right text-primary me-2"></i>
-                      Skilled Instructors
-                    </p>
-                  </div>
-                  <div className="col-sm-6">
-                    <p className="mb-0">
-                      <i className="fa fa-arrow-right text-primary me-2"></i>
-                      Online Classes
-                    </p>
-                  </div>
-                  <div className="col-sm-6">
-                    <p className="mb-0">
-                      <i className="fa fa-arrow-right text-primary me-2"></i>
-                      International Certificate
+                      Expert Guidance and Resources
                     </p>
                   </div>
                 </div>
@@ -286,7 +339,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="container-xxl py-5 category text-start">
+        {/* <div className="container-xxl py-5 category text-start">
           <div className="container">
             <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
               <h6 className="section-title bg-white text-center text-primary px-3">
@@ -377,14 +430,16 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="container-xxl py-5 text-start">
           <div className="container">
             <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
               <h6 className="section-title bg-white text-center text-primary px-3">
-                Courses
+                Popular Courses
               </h6>
-              <h1 className="mb-5">Popular Courses</h1>
+              <h1 className="mb-5">
+                Most Popular INPTA-Certified Courses
+              </h1>
             </div>
             <div className="row g-4 justify-content-center">
               <div
@@ -423,20 +478,20 @@ const Home = () => {
                       <small className="fa fa-star text-primary"></small>
                       <small>(123)</small>
                     </div>
-                    <h5 className="mb-4">Nutri Trainer Course</h5>
+                    <h5 className="mb-4">Certified Personal Trainer Course </h5>
                   </div>
                   <div className="d-flex border-top">
                     <small className="flex-fill text-center border-end py-2">
-                      <i className="fa fa-user-tie text-primary me-2"></i>John
-                      Doe
+                      <i className="fa fa-user-tie text-primary me-2"></i>Become
+                      a globally certified personal trainer
                     </small>
-                    <small className="flex-fill text-center border-end py-2">
+                    {/* <small className="flex-fill text-center border-end py-2">
                       <i className="fa fa-clock text-primary me-2"></i>1.49 Hrs
                     </small>
                     <small className="flex-fill text-center py-2">
                       <i className="fa fa-user text-primary me-2"></i>30
                       Students
-                    </small>
+                    </small> */}
                   </div>
                 </div>
               </div>
@@ -476,21 +531,12 @@ const Home = () => {
                       <small className="fa fa-star text-primary"></small>
                       <small>(123)</small>
                     </div>
-                    <h5 className="mb-4">
-                      Diploma In Personal Training Course
-                    </h5>
+                    <h5 className="mb-4">Diploma in Nutrition Coaching</h5>
                   </div>
                   <div className="d-flex border-top">
                     <small className="flex-fill text-center border-end py-2">
-                      <i className="fa fa-user-tie text-primary me-2"></i>John
-                      Doe
-                    </small>
-                    <small className="flex-fill text-center border-end py-2">
-                      <i className="fa fa-clock text-primary me-2"></i>1.49 Hrs
-                    </small>
-                    <small className="flex-fill text-center py-2">
-                      <i className="fa fa-user text-primary me-2"></i>30
-                      Students
+                      <i className="fa fa-user-tie text-primary me-2"></i>Gain
+                      expertise in crafting science-based nutrition plans.
                     </small>
                   </div>
                 </div>
@@ -531,19 +577,12 @@ const Home = () => {
                       <small className="fa fa-star text-primary"></small>
                       <small>(123)</small>
                     </div>
-                    <h5 className="mb-4">Diploma In Nutrition Course</h5>
+                    <h5 className="mb-4">Master's in Fitness Marketing </h5>
                   </div>
                   <div className="d-flex border-top">
                     <small className="flex-fill text-center border-end py-2">
-                      <i className="fa fa-user-tie text-primary me-2"></i>John
-                      Doe
-                    </small>
-                    <small className="flex-fill text-center border-end py-2">
-                      <i className="fa fa-clock text-primary me-2"></i>1.49 Hrs
-                    </small>
-                    <small className="flex-fill text-center py-2">
-                      <i className="fa fa-user text-primary me-2"></i>30
-                      Students
+                      <i className="fa fa-user-tie text-primary me-2"></i>Learn
+                      strategies to grow your fitness business.
                     </small>
                   </div>
                 </div>
@@ -555,9 +594,9 @@ const Home = () => {
           <div className="container">
             <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
               <h6 className="section-title bg-white text-center text-primary px-3">
-                Instructors
+                Expert Instructors
               </h6>
-              <h1 className="mb-5">Expert Instructors</h1>
+              <h1 className="mb-5">Meet Our Expert Instructor</h1>
             </div>
             <div className="row g-4">
               <div
@@ -694,9 +733,9 @@ const Home = () => {
           <div className="container">
             <div className="text-center">
               <h6 className="section-title bg-white text-center text-primary px-3">
-                Testimonial
+                Testimonials
               </h6>
-              <h1 className="mb-5">Our Students Say!</h1>
+              <h1 className="mb-5">What Our Partners Say</h1>
             </div>
             <div className="row">
               <div className="col-md-3 testimonial-item text-center">
@@ -708,8 +747,8 @@ const Home = () => {
                 <p>Profession</p>
                 <div className="testimonial-text bg-light text-center p-4">
                   <p className="mb-0">
-                    Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit
-                    diam amet diam et eos. Clita erat ipsum et lorem et sit.
+                    INPTA transformed our academy's reputation. Students now
+                    trust our courses more than ever!
                   </p>
                 </div>
               </div>
@@ -722,8 +761,8 @@ const Home = () => {
                 <p>Profession</p>
                 <div className="testimonial-text bg-light text-center p-4">
                   <p className="mb-0">
-                    Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit
-                    diam amet diam et eos. Clita erat ipsum et lorem et sit.
+                    The accreditation process was seamless and helped us align
+                    with global standards.
                   </p>
                 </div>
               </div>
@@ -736,8 +775,8 @@ const Home = () => {
                 <p>Profession</p>
                 <div className="testimonial-text bg-light text-center p-4">
                   <p className="mb-0">
-                    Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit
-                    diam amet diam et eos. Clita erat ipsum et lorem et sit.
+                    Thanks to INPTA, our graduates are now placed in top
+                    international organizations.
                   </p>
                 </div>
               </div>
@@ -750,8 +789,8 @@ const Home = () => {
                 <p>Profession</p>
                 <div className="testimonial-text bg-light text-center p-4">
                   <p className="mb-0">
-                    Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit
-                    diam amet diam et eos. Clita erat ipsum et lorem et sit.
+                    The accreditation process was seamless and helped us align
+                    with global standards.
                   </p>
                 </div>
               </div>

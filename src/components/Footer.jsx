@@ -24,10 +24,13 @@ function Footer() {
                 Home
               </Link>
               <Link className="btn btn-link" to="">
-                Course
+                About Us
               </Link>
               <Link className="btn btn-link" to="">
-                Profile
+                Contact
+              </Link>
+              <Link className="btn btn-link" to="">
+                Privacy Policy
               </Link>
             </div>
             <div className="col-lg-3 col-md-6">

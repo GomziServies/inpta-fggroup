@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useCallback, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Helmet } from "react-helmet";
@@ -14,6 +16,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { IconButton } from "@mui/material";
 import { TagInput } from "rsuite";
 import "rsuite/dist/rsuite.min.css";
+import { useLocation } from "react-router-dom";
+import Typography from "@mui/material/Typography";
 import { Modal } from "react-bootstrap";
 import Cropper from "react-easy-crop";
 import Footer from "../components/Footer";
@@ -22,220 +26,51 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const UpdateListing = () => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
-
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const listing_id = searchParams.get("listing_id");
   const [formData, setFormData] = useState({
-    title: "demo title",
-    description: "demo description",
-    address_line_1: "Gomzi-2",
-    address_line_2: "demo katargam",
-    area: "katargam",
-    landmark: "demo.url",
-    city: "surat",
-    state: "gujarat",
-    pin_code: "395004",
-    contactNumber: "8866842520",
-    whatsappNumber: "8866842520",
-    services: [],
-    tags: ["demo", "test"],
-    website: "https://fggroup.in/",
-    email: "fitnesswithgomzi@gmail.com",
+    listing_id: listing_id,
+    title: "",
+    description: "",
+    address_line_1: "",
+    address_line_2: "",
+    area: "",
+    landmark: "",
+    city: "",
+    country: "India",
+    state: "",
+    pin_code: "",
+    contactNumber: "",
+    direction_link: "",
+    whatsappNumber: "",
+    website: "",
+    email: "",
     branch: "",
+    logo: "",
+    course_offered: [],
   });
-  const [inptaHours, setInptaHours] = useState([
-    { day: "Mon", open: "10:00 AM", close: "07:00 PM" },
-  ]);
-  const [faqs, setFaqs] = useState([
-    { question: "i have question?", answer: "here is your answer." },
-  ]);
+  const [tagsData, setTagsData] = useState([]);
+  const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
+  const [photoOnlyUrl, setPhotoOnlyUrl] = useState([]);
   const [socialMediaLinks, setSocialMediaLinks] = useState([
-    { platform: "Instagram", link: "Instagram.com" },
-    { platform: "Facebook", link: "Facebook.com" },
-    { platform: "YouTube", link: "YouTube.com" },
+    { platform: "Instagram", link: "" },
+    { platform: "Facebook", link: "" },
+    { platform: "YouTube", link: "" },
   ]);
   const [selectedListingCategory, setSelectedListingCategory] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedFacilities, setSelectedFacilities] = useState("");
-  const [selectedType, setSelectedType] = useState("gym");
-  const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [selectedCourseOffered, setSelectedCourseOffered] = useState("");
+  const [approvedData, setApprovedData] = useState("");
+  const [inptaHours, setInptaHours] = useState([
+    { day: "Mon", open: "10:00 AM", close: "7:00 PM" },
+  ]);
+  const [loading, setLoading] = useState(true);
   const [loadingOne, setLoadingOne] = useState(false);
   const [loadingTwo, setLoadingTwo] = useState(false);
-
-  const facilities = [
-    { value: "WiFi", label: "WiFi" },
-    { value: "Steam Bath", label: "Steam Bath" },
-    { value: "Air Conditioner", label: "Air Conditioner" },
-    { value: "Parking", label: "Parking" },
-    { value: "Locker", label: "Locker" },
-    { value: "Changing room", label: "Changing room" },
-    { value: "Lounge area", label: "Lounge area" },
-    { value: "Personal trainers", label: "Personal trainers" },
-    { value: "Massage", label: "Massage" },
-  ];
-
-  const handleSelectChange = (selectedOptions) => {
-    setSelectedFacilities(selectedOptions);
-    const selectedValues = selectedOptions.map((option) => option.value);
-    setFormData((prevState) => ({
-      ...prevState,
-      services: selectedValues,
-    }));
-  };
-
-  // ----------------------------------------------------------------------------------
-
-  const [inptaPhotos, setInptaPhotos] = useState([]);
-  const [featurePreview, setFeaturePreview] = useState(null);
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(null);
-  const [currentInptaPhotoIndex, setCurrentInptaPhotoIndex] = useState(null);
-  const [logoImage, setLogoImage] = useState(null);
-  const [logoPreview, setLogoPreview] = useState(null);
-  const [imageSrc, setImageSrc] = useState(null);
-  const [inptaImageSrc, setInptaImageSrc] = useState(null);
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [inptaCrop, setInptaCrop] = useState({ x: 0, y: 0 });
-  const [zoom, setZoom] = useState(1);
-  const [inptaZoom, setInptaZoom] = useState(1);
-  const [show, setShow] = useState(false);
-  const [inptaShow, setInptaShow] = useState(false);
-  const [profilePhoto, setProfilePhoto] = useState(null);
-  const [inptaPhoto, setInptaPhoto] = useState(null);
-
-  const onCropComplete = useCallback((croppedArea, profilePhoto, context) => {
-    if (context === "logo") {
-      setProfilePhoto(profilePhoto);
-      handleLogoChange(profilePhoto);
-    } else if (context === "feature") {
-      setInptaPhoto(profilePhoto);
-    }
-  }, []);
-
-  const handleLogoChange = (event) => {
-    const file = profilePhoto;
-
-    if (file instanceof File) {
-      if (file.size > 2 * 1024 * 1024) {
-        alert("File size exceeds 2 MB!");
-        return;
-      }
-      const previewUrl = URL.createObjectURL(file);
-      setLogoPreview(previewUrl);
-    }
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setLogoImage(file);
-        setFormData((prevData) => ({
-          ...prevData,
-          logo: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleCropComplete = async (context) => {
-    if (imageSrc && (profilePhoto || inptaPhoto)) {
-      try {
-        const croppedImg = await getCroppedImg(imageSrc, profilePhoto);
-        if (context === "logo") {
-          setLogoPreview(croppedImg);
-          setProfilePhoto(croppedImg);
-          setShow(false);
-        } else if (context === "feature") {
-          setFeaturePreview(croppedImg);
-          setInptaShow(false);
-        }
-      } catch (error) {
-        console.error("Error cropping the image:", error);
-      }
-    }
-  };
-
-  const handleClose = () => {
-    setShow(false);
-  };
-
-  const handleInptaClose = () => {
-    setInptaShow(false);
-  };
-
-  const handleCropLogoChange = (event) => {
-    setLoadingOne(true);
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImageSrc(reader.result);
-        setShow(true);
-      };
-      reader.readAsDataURL(file);
-    }
-    setLoadingOne(false);
-  };
-
-  const handleSelectLogo = () => {
-    const fileInput = document.getElementById("logoInput");
-    fileInput.click();
-  };
-
-  const handleRemoveInptaPhoto = (index) => {
-    const newPhotos = [...inptaPhotos];
-    newPhotos.splice(index, 1);
-    setInptaPhotos([...newPhotos]);
-  };
-
-  const handleSelectFeature = () => {
-    const fileInput = document.getElementById("featureInput");
-    fileInput.click();
-  };
-
-  const handleCropInptaPhoto = (event, index) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setInptaImageSrc(reader.result);
-        setCurrentInptaPhotoIndex(index);
-        setInptaShow(true);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleInptaCropComplete = async () => {
-    setLoadingTwo(true);
-    if (inptaImageSrc && inptaPhoto) {
-      try {
-        const croppedImg = await getCroppedImg(inptaImageSrc, inptaPhoto);
-        const updatedPhotos = [...inptaPhotos];
-        if (currentPhotoIndex !== null) {
-          updatedPhotos[currentPhotoIndex] = {
-            file: null,
-            preview: croppedImg,
-          };
-        } else {
-          updatedPhotos.push({ file: null, preview: croppedImg });
-        }
-        setInptaPhotos(updatedPhotos);
-        setFeaturePreview(croppedImg);
-        setInptaShow(false);
-      } catch (error) {
-        console.error("Error cropping the photos:", error);
-      }
-    }
-    setLoadingTwo(false);
-  };
-
-  // ----------------------------------------------------------------------------------
+  const [loadingNew, setLoadingNew] = useState(false);
+  const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const [userData, setUserData] = useState({
     first_name: "",
@@ -283,6 +118,325 @@ const UpdateListing = () => {
     getUserData();
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
+
+  const courseOfferedOption = [
+    { value: "Nutri Trainer Course", label: "Nutri Trainer Course" },
+    {
+      value: "Diploma In Personal Training Course",
+      label: "Diploma In Personal Training Course",
+    },
+    {
+      value: "Diploma In Nutrition Course",
+      label: "Diploma In Nutrition Course",
+    },
+    {
+      value: "Anabolic Androgenic Steroids",
+      label: "Anabolic Androgenic Steroids",
+    },
+    {
+      value: "Group Instructor Master Class",
+      label: "Group Instructor Master Class",
+    },
+    {
+      value: "Powerlifting Coach Workshop",
+      label: "Powerlifting Coach Workshop",
+    },
+    {
+      value: "Injury Rehabilitation Workshop",
+      label: "Injury Rehabilitation Workshop",
+    },
+  ];
+
+  const handleSelectChange = (selectedOptions) => {
+    setSelectedCourseOffered(selectedOptions);
+    const selectedValues = selectedOptions.map((option) => option.value);
+    setFormData((prevState) => ({
+      ...prevState,
+      course_offered: selectedValues,
+    }));
+  };
+
+  const [inptaPhotos, setInptaPhotos] = useState([]);
+  const [currentInptaPhotoIndex, setCurrentInptaPhotoIndex] =
+    useState(null);
+  const [logoImage, setLogoImage] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
+  const [imageSrc, setImageSrc] = useState(null);
+  const [inptaImageSrc, setInptaImageSrc] = useState(null);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [inptaCrop, setInptaCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [inptaZoom, setInptaZoom] = useState(1);
+  const [show, setShow] = useState(false);
+  const [inptaShow, setInptaShow] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState(null);
+
+  const onCropComplete = useCallback((croppedArea, profilePhoto) => {
+    setProfilePhoto(profilePhoto);
+    handleLogoChange();
+  }, []);
+
+  const handleCropComplete = async () => {
+    setLoadingOne(true);
+    if (imageSrc && profilePhoto) {
+      try {
+        const croppedImg = await getCroppedImg(imageSrc, profilePhoto);
+        setLogoPreview(croppedImg);
+        setProfilePhoto(croppedImg);
+        setShow(false);
+
+        let croppedBlob = croppedImg;
+        if (typeof croppedImg === "string") {
+          const byteString = atob(croppedImg.split(",")[1]);
+          const mimeString = croppedImg
+            .split(",")[0]
+            .split(":")[1]
+            .split(";")[0];
+          const ab = new ArrayBuffer(byteString.length);
+          const ia = new Uint8Array(ab);
+          for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+          }
+          croppedBlob = new Blob([ab], { type: mimeString });
+        }
+
+        if (croppedBlob) {
+          const reader = new FileReader();
+          reader.onloadend = async () => {
+            setLogoImage(croppedBlob);
+            const updatedFormData = {
+              ...formData,
+              logo: reader.result,
+            };
+            setFormData(updatedFormData);
+
+            try {
+              const logoFormData = new FormData();
+              logoFormData.append("files", croppedBlob);
+
+              const localStorage = logoFormData.append("files", croppedBlob);
+
+              const logoResponse = await axiosInstance.post(
+                "/file-upload",
+                logoFormData
+              );
+              const logoUrl = logoResponse.data.data.fileURLs[0];
+
+              const updatedListingData = {
+                listing_id: listing_id,
+                logo: logoUrl,
+              };
+              await inptaListingAxiosInstance.patch("/update-listing", {
+                description: formData.description,
+                ...updatedListingData,
+              });
+
+              toast.success("Logo updated successfully!", {
+                position: toast.POSITION.TOP_RIGHT,
+              });
+            } catch (error) {
+              console.error("Error updating logo and listing data:", error);
+              toast.error(
+                "Error updating logo and listing data. Please try again.",
+                {
+                  position: toast.POSITION.TOP_RIGHT,
+                }
+              );
+            }
+          };
+
+          reader.readAsDataURL(croppedBlob);
+        }
+      } catch (error) {
+        console.error("Error cropping the image:", error);
+      }
+    }
+    setLoadingOne(false);
+  };
+
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  const handleInptaClose = () => {
+    setInptaShow(false);
+  };
+
+  const handleCropLogoChange = (event) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        setShow(true);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleLogoChange = (event) => {
+    const file = profilePhoto;
+    if (file instanceof File) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert("File size exceeds 2 MB!");
+        return;
+      }
+      const previewUrl = URL.createObjectURL(file);
+      setLogoPreview(previewUrl);
+    }
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogoImage(file);
+        setFormData((prevData) => ({
+          ...prevData,
+          logo: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSelectLogo = () => {
+    const fileInput = document.getElementById("logoInput");
+    fileInput.click();
+  };
+
+  const handleRemoveInptaPhoto = async (index) => {
+    const newPhotos = [...inptaPhotos];
+    const removedPhoto = newPhotos.splice(index, 1)[0];
+    setInptaPhotos([...newPhotos]);
+
+    try {
+      const updatedRemovedPhoto = removedPhoto.replace(
+        "https://files.fggroup.in/",
+        ""
+      );
+      const updatedListingData = {
+        listing_id: listing_id,
+        images: newPhotos.map((url) =>
+          url.replace("https://files.fggroup.in/", "")
+        ),
+      };
+      await inptaListingAxiosInstance.patch(
+        `/update-listing?listing_id=${listing_id}`,
+        { description: formData.description, ...updatedListingData }
+      );
+
+      toast.success("INPTA photo removed successfully!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } catch (error) {
+      console.error(
+        "Error removing inpta photo and updating listing data:",
+        error
+      );
+      toast.error(
+        "Error removing inpta photo and updating listing data. Please try again.",
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
+      );
+    }
+  };
+
+  const handleSelectFeature = () => {
+    const fileInput = document.getElementById("featureInput");
+    fileInput.click();
+  };
+
+  const handleCropInptaPhoto = (event, index) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setInptaImageSrc(reader.result);
+        setCurrentInptaPhotoIndex(index);
+        setInptaShow(true);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleInptaCropComplete = async () => {
+    setLoadingTwo(true);
+    if (inptaImageSrc && profilePhoto) {
+      try {
+        const croppedImg = await getCroppedImg(inptaImageSrc, profilePhoto);
+
+        if (!croppedImg) {
+          console.error("Cropped image is not valid.");
+          return;
+        }
+        let croppedBlob = croppedImg;
+        if (typeof croppedImg === "string") {
+          const byteString = atob(croppedImg.split(",")[1]);
+          const mimeString = croppedImg
+            .split(",")[0]
+            .split(":")[1]
+            .split(";")[0];
+          const ab = new ArrayBuffer(byteString.length);
+          const ia = new Uint8Array(ab);
+          for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+          }
+          croppedBlob = new Blob([ab], { type: mimeString });
+        }
+        const photoFormData = new FormData();
+        photoFormData.append("files", croppedBlob);
+
+        const photoResponse = await axiosInstance.post(
+          "/file-upload",
+          photoFormData
+        );
+        const uploadedUrls = photoResponse.data.data.fileURLs;
+        const processedUrls = uploadedUrls.map((url) =>
+          url.replace("https://files.fggroup.in/", "")
+        );
+
+        const validPreviousImages = inptaPhotos
+          .filter(
+            (photo) =>
+              typeof photo === "string" && photo.includes("development/")
+          )
+          .map((url) => url.replace("https://files.fggroup.in/", ""));
+
+        const updatedListingData = {
+          listing_id: listing_id,
+          images: [...processedUrls, ...validPreviousImages],
+        };
+
+        await inptaListingAxiosInstance.patch(
+          `/update-listing?listing_id=${listing_id}`,
+          { description: formData.description, ...updatedListingData }
+        );
+
+        toast.success("INPTA photo updated successfully!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+
+        const fullUrls = [...validPreviousImages, ...processedUrls].map(
+          (url) => `https://files.fggroup.in/${url}`
+        );
+        setInptaPhotos(fullUrls);
+        setInptaShow(false);
+      } catch (error) {
+        console.error("Error updating inpta photo:", error);
+        toast.error("Error updating inpta photo. Please try again.", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    }
+
+    setLoadingTwo(false);
+  };
+
   const handleAddFaq = () => {
     setFaqs([...faqs, { question: "", answer: "" }]);
   };
@@ -313,109 +467,129 @@ const UpdateListing = () => {
     }
   };
 
-  const uploadLogo = async () => {
-    let logoUrl = "";
-
+  const getInptaData = async () => {
     try {
-      let croppedBlob = profilePhoto;
-      if (typeof profilePhoto === "string") {
-        const byteString = atob(profilePhoto.split(",")[1]);
-        const mimeString = profilePhoto
-          .split(",")[0]
-          .split(":")[1]
-          .split(";")[0];
-        const ab = new ArrayBuffer(byteString.length);
-        const ia = new Uint8Array(ab);
-        for (let i = 0; i < byteString.length; i++) {
-          ia[i] = byteString.charCodeAt(i);
-        }
-        croppedBlob = new Blob([ab], { type: mimeString });
-      }
+      const response = await inptaListingAxiosInstance.get(
+        `/get-listing?listing_id=${listing_id}`
+      );
+      const fetchedInptaData = response.data.data[0];
+      const address = fetchedInptaData.locations[0];
+      const social_media = fetchedInptaData.social_media;
+      const inptaHours = fetchedInptaData.timings || [];
+      const approval_status = fetchedInptaData.approval_status;
+      const allDays = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ];
+      const inptaHoursData = inptaHours.map((dayData) => ({
+        day: dayData.title || "",
+        open: dayData.timings.length > 0 ? dayData.timings[0].from_time : "",
+        close: dayData.timings.length > 0 ? dayData.timings[0].to_time : "",
+      }));
+      const timesData = allDays.reduce((acc, day) => {
+        const dayData = inptaHours.find((item) => item.title === day);
+        acc[day] = {
+          opening:
+            dayData && dayData.timings.length > 0
+              ? dayData.timings[0].from_time
+              : "Closed",
+          closing:
+            dayData && dayData.timings.length > 0
+              ? dayData.timings[0].to_time
+              : "Closed",
+        };
+        return acc;
+      }, {});
 
-      if (croppedBlob) {
-        const logoFormData = new FormData();
-        logoFormData.append("files", croppedBlob);
-
-        const logoResponse = await axiosInstance.post(
-          "/file-upload",
-          logoFormData
-        );
-
-        const logoUrl = logoResponse.data.data.fileURLs[0];
-        return logoUrl;
-      }
-    } catch (error) {
-      console.error("Error uploading Logo file:", error);
-      toast.error("Error uploading Logo file. Please try again.", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      throw error;
-    }
-  };
-
-  const uploadFeatureImage = async () => {
-    let uploadedUrls = [];
-    try {
-      const photoUrls = await Promise.all(
-        inptaPhotos.map(async (photo) => {
-          let croppedBlobInpta = photo.preview;
-
-          if (typeof photo.preview === "string") {
-            const byteString = atob(photo.preview.split(",")[1]);
-            const mimeString = photo.preview
-              .split(",")[0]
-              .split(":")[1]
-              .split(";")[0];
-            const ab = new ArrayBuffer(byteString.length);
-            const ia = new Uint8Array(ab);
-            for (let i = 0; i < byteString.length; i++) {
-              ia[i] = byteString.charCodeAt(i);
-            }
-            croppedBlobInpta = new Blob([ab], { type: mimeString });
-          } else if (!(photo.preview instanceof Blob)) {
-            throw new Error(
-              "Invalid file type: Photo must be a Blob, File, or Base64 string."
-            );
-          }
-          const photoFormData = new FormData();
-          photoFormData.append("files", croppedBlobInpta);
-
-          const photoResponse = await axiosInstance.post(
-            "/file-upload",
-            photoFormData
-          );
-          return photoResponse.data.data.fileURLs;
-        })
+      setTimes(timesData);
+      const faq = fetchedInptaData.faqs;
+      const faqData = faq.map((faqItem) => ({
+        question: faqItem.question,
+        answer: faqItem.answer,
+      }));
+      const logoImg = "https://files.fggroup.in/" + fetchedInptaData.logo;
+      const inptaImages = fetchedInptaData.images || [];
+      const inptaPhotoURLs = inptaImages.map(
+        (imagePath) => `https://files.fggroup.in/${imagePath}`
       );
 
-      uploadedUrls = photoUrls.flat();
-    } catch (error) {
-      console.error("Error uploading Feature files:", error);
-      toast.error("Error uploading Feature files. Please try again.", {
-        position: toast.POSITION.TOP_RIGHT,
+      setPhotoOnlyUrl(inptaImages);
+      setInptaPhotos(inptaPhotoURLs);
+      setSocialMediaLinks(social_media);
+      setApprovedData(approval_status);
+
+      setTagsData(fetchedInptaData.tags)
+      setSelectedType(fetchedInptaData.type)
+      setFormData({
+        title: fetchedInptaData.title || "",
+        description: fetchedInptaData.description || "",
+        address_line_1: address.address_line_1 || "",
+        address_line_2: address.address_line_2 || "",
+        area: address.area || "",
+        landmark: address.landmark || "",
+        city: address.city || "",
+        state: address.state || "",
+        pin_code: address.pin_code || "",
+        direction_link: address.direction_link || "",
+        contactNumber:
+          address.contact.contact_type === "mobile"
+            ? address.contact.value
+            : "",
+        whatsappNumber:
+          fetchedInptaData.contacts.find(
+            (contact) => contact.contact_type === "whatsapp"
+          )?.value || "",
+        course_offered: fetchedInptaData.course_offered || [],
+        website:
+          fetchedInptaData.contacts.find(
+            (contact) => contact.contact_type === "website"
+          )?.value || "",
+        email:
+          fetchedInptaData.contacts.find(
+            (contact) => contact.contact_type === "email"
+          )?.value || "",
+        branch: address.location_name || "",
       });
+
+      setSelectedCourseOffered(
+        fetchedInptaData.course_offered?.map((course) => ({
+          label: course,
+          value: course,
+        }))
+      );
+      setInptaHours(inptaHoursData);
+      setFaqs(faqData);
+      setLogoImage(logoImg);
+      setLogoPreview(logoImg);
+      setSelectedListingCategory(fetchedInptaData.listing_category);
+    } catch (error) {
+      console.error("Error in Getting INPTA Data:", error);
     }
-    return uploadedUrls;
   };
 
+  useEffect(() => {
+    getInptaData();
+  }, []);
+
   const handleSubmit = async (event) => {
+    setLoadingNew(true);
     event.preventDefault();
-    setIsLoading(true);
+
     try {
-      const uploadedUrls = await uploadFeatureImage();
-
-      const logoUrl = await uploadLogo();
-
       const postData = {
+        listing_id: listing_id,
         type: selectedType,
+        course_offered: formData.course_offered,
         title: formData.title,
         description: formData.description,
-        logo: logoUrl,
-        images: uploadedUrls.flat(),
-        // services: selectedFacilities.map((facilities) => facilities.value),
-        tags: formData.tags,
+        tags: tagsData || [],
         social_media: socialMediaLinks.map((link) => ({
-          social_media_type: link.platform.toLowerCase(),
+          social_media_type: link.social_media_type,
           link: link.link,
         })),
         listing_category:
@@ -424,10 +598,6 @@ const UpdateListing = () => {
             : [selectedListingCategory],
         category:
           selectedCategory.length > 0 ? selectedCategory : [selectedCategory],
-        amount: {
-          paid_amount: formData.paid_amount,
-          discount_amount: formData.discount_amount,
-        },
         locations: [
           {
             location_name: formData.branch,
@@ -435,7 +605,7 @@ const UpdateListing = () => {
             address_line_2: formData.address_line_2,
             city: formData.city,
             state: formData.state,
-            country: "india",
+            country: "India",
             pin_code: formData.pin_code,
             landmark: formData.landmark,
             direction_link: formData.direction_link,
@@ -474,19 +644,71 @@ const UpdateListing = () => {
         })),
       };
 
-      await inptaListingAxiosInstance.post("/create-listing", postData);
+      await inptaListingAxiosInstance.patch("/update-listing", postData);
+      getInptaData();
 
-      setIsLoading(false);
-      toast.success("Listing created successfully!", {
+      toast.success("INPTA Data Updated successfully!", {
         position: toast.POSITION.TOP_RIGHT,
       });
     } catch (error) {
       console.error("Error uploading files:", error);
-      setIsLoading(false);
-      toast.error(error?.message, {
+
+      toast.error("Error Updating listing. Please try again.", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
+    setLoadingNew(false);
+  };
+
+  const getStatusBadge = (status, feedback) => {
+    let badgeColor, badgeText;
+
+    switch (status) {
+      case "APPROVED":
+        badgeColor = "#00d300";
+        badgeText = "Approved";
+        break;
+      case "PENDING":
+        badgeColor = "orange";
+        badgeText = "Pending";
+        break;
+      case "REJECTED":
+        badgeColor = "red";
+        badgeText = "Rejected";
+        break;
+      case "BANNED":
+        badgeColor = "red";
+        badgeText = "Banned";
+        break;
+      default:
+        badgeColor = "gray";
+        badgeText = "Unknown";
+    }
+
+    return (
+      <div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div
+            className="mt-2"
+            style={{
+              backgroundColor: badgeColor,
+              color: "#fff",
+              padding: "5px 10px",
+              borderRadius: "5px",
+              textAlign: "center",
+              marginRight: "10px",
+            }}
+          >
+            {badgeText}
+          </div>
+        </div>
+        {feedback && (
+          <div style={{ color: "red" }} className="mt-3">
+            <h6>Feedback: {feedback}</h6>
+          </div>
+        )}
+      </div>
+    );
   };
 
   const handleLogout = async () => {
@@ -551,6 +773,7 @@ const UpdateListing = () => {
         updatedTimes[key] = { ...updatedTimes[day] };
       });
     }
+
     setTimes(updatedTimes);
   };
 
@@ -572,45 +795,9 @@ const UpdateListing = () => {
       open: times[day].opening,
       close: times[day].closing,
     }));
+
     setInptaHours(allDaysTime);
   };
-
-  const categoryAmounts = {
-    Affordable: 30000,
-    Standard: 45000,
-    Premium: 90000,
-  };
-
-  useEffect(() => {
-    if (selectedCategory && categoryAmounts[selectedCategory]) {
-      setFormData((prev) => ({
-        ...prev,
-        paid_amount: categoryAmounts[selectedCategory].toString(),
-        discount_amount: "",
-        discount_percent: "",
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        paid_amount: "",
-        discount_amount: "",
-        discount_percent: "",
-      }));
-    }
-  }, [selectedCategory]);
-
-  // Effect to calculate discount percent based on discount amount
-  useEffect(() => {
-    const amount = parseFloat(formData.paid_amount);
-    const discountAmount = parseFloat(formData.discount_amount);
-    if (!isNaN(amount) && !isNaN(discountAmount)) {
-      const discountPercent = ((discountAmount / amount) * 100).toFixed(2);
-      setFormData((prev) => ({
-        ...prev,
-        discount_percent: discountPercent,
-      }));
-    }
-  }, [formData.discount_amount]);
 
   return (
     <div>
@@ -618,10 +805,12 @@ const UpdateListing = () => {
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Add Your Listing - Get Featured on Our Platform</title>
+        <title>
+          Update Your INPTA Listing - Keep Your Information Current
+        </title>
         <meta
           name="description"
-          content="Add your inpta to our platform and boost visibility. Showcase your services, attract customers, and grow your brand with our easy listing process!"
+          content="Update your inpta details to maintain accurate information and improve visibility. Ensure your listing reflects the latest services and offerings!"
         />
         <link
           rel="shortcut icon"
@@ -641,18 +830,63 @@ const UpdateListing = () => {
         <div id="main-wrapper">
           <Header />
           <div className="clearfix" />
-          <div className="goodup-dashboard-wrap gray px-4 py-5 add-listing-page">
+          <div className="goodup-dashboard-wrap gray px-4 py-5">
             <div className="goodup-dashboard-content text-start">
+              <div className="dashboard-tlbar d-block mb-md-5 mb-3">
+                <div className="row">
+                  <div className="colxl-12 col-lg-12 col-md-12">
+                    <h1 className="ft-medium listing-title">Update Listing</h1>
+                  </div>
+                </div>
+              </div>
               <div className="dashboard-widg-bar d-block">
                 <div className="row">
-                  <div className="col-xl-12 col-md-12 col-sm-12">
+                  <div className="col-xl-12 col-lg-2 col-md-12 col-sm-12">
                     <div className="submit-form">
                       <div className="dashboard-list-wraps bg-white rounded mb-4">
                         <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                           <div className="dashboard-list-wraps-flx">
                             <h4 className="mb-0 ft-medium fs-md">
                               <i className="fa fa-file me-2 theme-cl fs-sm" />
-                              Update Listing
+                              INPTA Info
+                            </h4>
+                          </div>
+                        </div>
+                        <div className="dashboard-list-wraps-body py-3 px-3">
+                          <div className="row">
+                            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                              <div>
+                                <Typography variant="h6" gutterBottom>
+                                  INPTA Approval Status
+                                </Typography>
+                                <div style={{ marginBottom: "10px" }}>
+                                  <div>
+                                    <Typography
+                                      variant="subtitle1"
+                                      className="mb-1"
+                                    >
+                                      Date:{" "}
+                                      {new Date(
+                                        approvedData.createdAt
+                                      ).toLocaleDateString()}
+                                    </Typography>
+                                  </div>
+                                  {getStatusBadge(
+                                    approvedData.status,
+                                    approvedData.feedback
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="dashboard-list-wraps bg-white rounded mb-4">
+                        <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
+                          <div className="dashboard-list-wraps-flx">
+                            <h4 className="mb-0 ft-medium fs-md">
+                              <i className="fa fa-file me-2 theme-cl fs-sm" />
+                              Listing Info
                             </h4>
                           </div>
                         </div>
@@ -715,29 +949,26 @@ const UpdateListing = () => {
                                   type="text"
                                   className="form-control type rounded"
                                   placeholder="Add Tags"
-                                  value={formData.tags}
-                                  onChange={(value) =>
-                                    handleInputChange("tags", value)
-                                  }
+                                  value={tagsData}
+                                  onChange={(value) => setTagsData(value)}
                                 />
                               </div>
                             </div>
-                            {/* <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                              <div className="form-group">
-                                <label className="mb-1">Facilities</label>
-                                <Select
-                                  isMulti
-                                  options={facilities}
-                                  value={selectedFacilities}
-                                  onChange={handleSelectChange}
-                                  placeholder="Select Facilities"
-                                />
-                              </div>
-                            </div> */}
-
                             <div className="col-md-12 col-sm-12">
                               <div className="form-group">
-                                <label className="mb-1">Course Offered:</label>
+                                <label className="mb-1">Course Offered</label>
+                                <Select
+                                  isMulti
+                                  options={courseOfferedOption}
+                                  value={selectedCourseOffered}
+                                  onChange={handleSelectChange}
+                                  placeholder="Select Course Offered"
+                                />
+                              </div>
+                            </div>
+                            {/* <div className="col-md-12 col-sm-12">
+                              <div className="form-group">
+                                <label className="mb-1">Course Offered</label>
                                 <select
                                   className="form-control"
                                   value={selectedCategory}
@@ -768,58 +999,6 @@ const UpdateListing = () => {
                                     Injury Rehabilitation Workshop
                                   </option>
                                 </select>
-                              </div>
-                            </div>
-                            {/* <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                              <div className="form-group">
-                                <label className="mb-1">Amount</label>
-                                <input
-                                  type="text"
-                                  className="form-control rounded"
-                                  placeholder="Enter Amount"
-                                  value={formData.paid_amount}
-                                  onChange={(e) =>
-                                    handleInputChange(
-                                      "paid_amount",
-                                      e.target.value
-                                    )
-                                  }
-                                />
-                              </div>
-                            </div> */}
-                            {/* <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                              <div className="form-group">
-                                <label className="mb-1">Discount Amount</label>
-                                <input
-                                  type="text"
-                                  className="form-control rounded"
-                                  placeholder="Enter Discount Amount"
-                                  value={formData.discount_amount}
-                                  onChange={(e) =>
-                                    handleInputChange(
-                                      "discount_amount",
-                                      e.target.value
-                                    )
-                                  }
-                                />
-                              </div>
-                            </div> */}
-                            {/* <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                              <div className="form-group">
-                                <label className="mb-1">Discount Percent</label>
-                                <input
-                                  type="text"
-                                  className="form-control rounded"
-                                  placeholder="Enter Discount Percent"
-                                  value={formData.discount_percent}
-                                  disabled
-                                  onChange={(e) =>
-                                    handleInputChange(
-                                      "discount_percent",
-                                      e.target.value
-                                    )
-                                  }
-                                />
                               </div>
                             </div> */}
                           </div>
@@ -1052,6 +1231,7 @@ const UpdateListing = () => {
                                       cursor: "pointer",
                                     }}
                                   />
+
                                   <div className="mt-2 text-center">
                                     <button
                                       className="btn btn-primary rounded-pill px-3 py-1"
@@ -1125,7 +1305,11 @@ const UpdateListing = () => {
                                           }}
                                         >
                                           <img
-                                            src={photo.preview}
+                                            src={
+                                              photo.preview
+                                                ? photo.preview
+                                                : photo
+                                            }
                                             alt={`INPTA Photo ${index + 1}`}
                                             style={{
                                               maxWidth: "100%",
@@ -1154,7 +1338,10 @@ const UpdateListing = () => {
                                             type="file"
                                             accept="image/*"
                                             onChange={(event) =>
-                                              handleCropInptaPhoto(event, index)
+                                              handleCropInptaPhoto(
+                                                event,
+                                                index
+                                              )
                                             }
                                             style={{ display: "none" }}
                                             id={`photoInput-${index}`}
@@ -1289,7 +1476,7 @@ const UpdateListing = () => {
                           <div className="dashboard-list-wraps-flx">
                             <h4 className="mb-0 ft-medium fs-md">
                               <i className="fa fa-clipboard-question me-2 theme-cl fs-sm" />
-                              FAQs
+                              INPTA FAQs
                             </h4>
                           </div>
                         </div>
@@ -1297,7 +1484,7 @@ const UpdateListing = () => {
                           <div className="row">
                             {faqs.map((faq, index) => (
                               <>
-                                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3">
+                                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                   <div className="form-group">
                                     <label className="mb-1">Question</label>
                                     <input
@@ -1333,25 +1520,26 @@ const UpdateListing = () => {
                                     />
                                   </div>
                                 </div>
-                                <div className="mt-3 d-flex align-items-center">
+                                <div className="col-xl-1 col-lg-1 col-md-1 col-sm-12">
                                   <div className="form-group">
-                                    <button
+                                    <Button
                                       onClick={() => handleRemoveFaq(index)}
-                                      className="add-listing-btn"
+                                      variant="contained"
+                                      color="secondary"
+                                      sx={{ mt: 2, background: "red" }}
                                     >
-                                      {/* <DeleteIcon /> */}
-                                      <i className="fa fa-trash text-white delete-button" />
-                                    </button>
+                                      <DeleteIcon />
+                                    </Button>
                                   </div>
                                 </div>
                               </>
                             ))}
-                            <div className="mt-3">
+                            <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
                               <div className="form-group">
                                 <Button
                                   onClick={handleAddFaq}
                                   variant="contained"
-                                  className="add-listing-btn"
+                                  sx={{ mt: 2 }}
                                 >
                                   + Add Another FAQ
                                 </Button>
@@ -1381,7 +1569,7 @@ const UpdateListing = () => {
                             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                               <div className="form-group">
                                 <button
-                                  className="btn theme-bg rounded text-light add-listing-btn"
+                                  className="btn theme-bg rounded text-light"
                                   onClick={handleSubmit}
                                   disabled={!isDetailsCorrect}
                                 >
@@ -1399,6 +1587,14 @@ const UpdateListing = () => {
             </div>
           </div>
           <Footer />
+
+          {loadingNew && (
+            <div className="loader-background">
+              <div className="spinner-box">
+                <div className="three-quarter-spinner"></div>
+              </div>
+            </div>
+          )}
           <a
             id="tops-button"
             className="top-scroll"
@@ -1422,9 +1618,7 @@ const UpdateListing = () => {
               zoom={zoom}
               aspect={8 / 8}
               onCropChange={setCrop}
-              onCropComplete={(croppedArea, profilePhoto) =>
-                onCropComplete(croppedArea, profilePhoto, "logo")
-              }
+              onCropComplete={onCropComplete}
               onZoomChange={setZoom}
             />
           </div>
@@ -1435,7 +1629,7 @@ const UpdateListing = () => {
           </Button>
           <Button
             variant="primary"
-            onClick={() => handleCropComplete("logo")}
+            onClick={handleCropComplete}
             style={{
               backgroundColor: "#007bff",
               borderColor: "#007bff",
@@ -1446,9 +1640,15 @@ const UpdateListing = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal show={inptaShow} onHide={handleInptaClose} size="lg" centered>
+
+      <Modal
+        show={inptaShow}
+        onHide={handleInptaClose}
+        size="lg"
+        centered
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Crop Image</Modal.Title>
+          <Modal.Title>Crop INPTA Image</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div style={{ position: "relative", width: "100%", height: 400 }}>
@@ -1458,9 +1658,7 @@ const UpdateListing = () => {
               zoom={inptaZoom}
               aspect={12 / 8}
               onCropChange={setInptaCrop}
-              onCropComplete={(croppedArea, profilePhoto) =>
-                onCropComplete(croppedArea, profilePhoto, "feature")
-              }
+              onCropComplete={onCropComplete}
               onZoomChange={setInptaZoom}
             />
           </div>
@@ -1471,7 +1669,7 @@ const UpdateListing = () => {
           </Button>
           <Button
             variant="primary"
-            onClick={() => handleInptaCropComplete("feature")}
+            onClick={handleInptaCropComplete}
             style={{
               backgroundColor: "#007bff",
               borderColor: "#007bff",
@@ -1485,7 +1683,9 @@ const UpdateListing = () => {
     </div>
   );
 };
+
 export default UpdateListing;
+
 const createImage = (url) =>
   new Promise((resolve, reject) => {
     const image = new Image();

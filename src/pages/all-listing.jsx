@@ -8,10 +8,9 @@ import "slick-carousel/slick/slick-theme.css";
 import Footer from "../components/Footer";
 import WhatsappBtn from "../components/WhatsappBtn";
 import { inptaListingAxiosInstance } from "../js/api";
-import { Link } from "react-router-dom";
-import Dummy_img from "../assets/dummy-image-square.jpg";
-import User_img from "../assets/user-profile.png";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AllListing = () => {
   const [loading, setLoading] = useState(true);
@@ -22,6 +21,7 @@ const AllListing = () => {
       setLoading(false);
     }, 1000);
   }, []);
+
   const handleLogout = async () => {
     try {
       localStorage.removeItem("authorization");
@@ -33,6 +33,7 @@ const AllListing = () => {
       toast.error("Logout Failed. Please try again.");
     }
   };
+
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [videoUrl, setVideoUrl] = useState("");
 
@@ -46,31 +47,17 @@ const AllListing = () => {
     setVideoUrl("");
   };
 
-  const [businessData, setBusinessData] = useState([]);
+  const [educationData, setEducationData] = useState([]);
   const [loadingOne, setLoadingOne] = useState(false);
 
-  const fetchBusinessData = async () => {
+  const fetchInptaData = async () => {
     setLoadingOne(true);
 
     try {
-      const requestData = {
-        filter: {
-          business_type: ["personal", "business"],
-        },
-        sort: {
-          business_name: "desc",
-          rating: "desc",
-        },
-        page: 1,
-        limit: 6,
-      };
-
-      const response = await inptaListingAxiosInstance.post(
-        "/get-businesses",
-        requestData
-      );
+      const response = await inptaListingAxiosInstance.get("/get-listing");
       const fetchedBusinessData = response.data.data;
-      setBusinessData(fetchedBusinessData);
+      setEducationData(fetchedBusinessData);
+      console.log("fetchedBusinessData :- ", fetchedBusinessData);
     } catch (error) {
       console.error("Error in Getting Business Data:", error);
     }
@@ -78,8 +65,42 @@ const AllListing = () => {
   };
 
   useEffect(() => {
-    fetchBusinessData();
+    fetchInptaData();
   }, []);
+
+  
+  const handleDeleteListing = async (listingId) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You will not be able to recover this inpta!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (result.isConfirmed) {
+        const response = await inptaListingAxiosInstance.delete(
+          `/delete-listing?listing_id=${listingId}`
+        );
+
+        if (response.status === 200) {
+          fetchInptaData();
+        } else {
+          Swal.fire("Error!", "Failed to delete the inpta.", "error");
+        }
+      }
+    } catch (error) {
+      console.error("Error deleting inpta listing:", error);
+      Swal.fire(
+        "Error!",
+        "An error occurred while deleting the inpta listing.",
+        "error"
+      );
+    }
+  };
 
   return (
     <div>
@@ -91,7 +112,6 @@ const AllListing = () => {
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
         rel="stylesheet"
       />
-
       <Helmet>
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -224,223 +244,104 @@ const AllListing = () => {
                 </div>
               </div>
               <div className="row g-4 justify-content-center">
-                <div
-                  className="col-lg-4 col-md-6 wow fadeInUp"
-                  data-wow-delay="0.1s"
-                >
-                  <Link to="/view-listing">
-                    <div className="course-item bg-light">
-                      <div className="position-relative overflow-hidden">
-                        <img
-                          className="img-fluid"
-                          src="images/course-1.jpg"
-                          alt=""
-                        />
-                        <div className="accepted-btn">
-                          <a
-                            href="#"
-                            className="flex-shrink-0 btn btn-sm btn-success px-3 border-end"
-                          >
-                            Accepted
-                          </a>
+                {educationData.map((education) => {
+                  return (
+                    <div
+                      className="col-lg-4 col-md-6 wow fadeInUp"
+                      data-wow-delay="0.1s"
+                    >
+                      <div className="course-item bg-light">
+                        <Link
+                          to={`/view-listing?listing_id=${education._id}`}
+                          className="text-dark"
+                        >
+                          <div className="position-relative overflow-hidden">
+                            <img
+                              className="img-fluid"
+                              src="images/course-1.jpg"
+                              alt=""
+                            />
+                            <div className="accepted-btn">
+                              {/* <a
+                                href="#"
+                                className="flex-shrink-0 btn btn-sm btn-success px-3 border-end"
+                              >
+                                Accepted
+                              </a> */}
+                              {education.approval_status.status ===
+                              "APPROVED" ? (
+                                <div className="Goodup-status open me-2">
+                                  APPROVED
+                                </div>
+                              ) : education.approval_status.status ===
+                                "REJECTED" ? (
+                                <div className="Goodup-status bg-danger">
+                                  REJECTED
+                                </div>
+                              ) : education.approval_status.status ===
+                                "PENDING" ? (
+                                <div className="Goodup-status pending">
+                                  PENDING
+                                </div>
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                          </div>
+                        </Link>
+                        <div className="text-center p-4 pb-0">
+                          <h3 className="mb-0">
+                            <Link
+                              to={`/view-listing?listing_id=${education._id}`}
+                              className="text-dark"
+                            >
+                              {education.title}
+                            </Link>{" "}
+                          </h3>
+                          <div className="mb-3">
+                            {/* {[...Array(5)].map((_, index) => (
+                                <i
+                                  className="fas fa-star"
+                                  key={index}
+                                  style={{
+                                    color:
+                                      index <
+                                      education.review_stats.average_rating
+                                        ? "#F09000"
+                                        : "#ccc",
+                                  }}
+                                />
+                              ))} */}
+                            {/* <small className="fa fa-star text-primary"></small>
+                              <small className="fa fa-star text-primary"></small>
+                              <small className="fa fa-star text-primary"></small>
+                              <small className="fa fa-star text-primary"></small>
+                              <small className="fa fa-star text-primary"></small> */}
+                          </div>
+                          <p className="mb-4">{education.description}</p>
                         </div>
-                      </div>
-                      <div className="text-center p-4 pb-0">
-                        <h3 className="mb-0">Fitness With Gomzi</h3>
-                        <div className="mb-3">
-                          <small className="fa fa-star text-primary"></small>
-                          <small className="fa fa-star text-primary"></small>
-                          <small className="fa fa-star text-primary"></small>
-                          <small className="fa fa-star text-primary"></small>
-                          <small className="fa fa-star text-primary"></small>
-                        </div>
-                        <p className="mb-4">
-                          You can expect a detailed assessment of your current
-                          eating habits, health goals, and any specific dietary
-                          needs. A customized plan will be created based on your
-                          preferences and lifestyle.
-                        </p>
-                      </div>
-                      <div className="d-flex border-top">
-                        <div class="w-100 d-flex justify-content-center mt-3 mb-3">
-                          <a
-                            href="/update-listing"
-                            class="flex-shrink-0 btn btn-sm btn-warning px-3 border-end m-1"
-                          >
-                            <i className="fas fa-edit mr-2" />
-                            Edit
-                          </a>
-                          <a
-                            href="#"
-                            class="flex-shrink-0 btn btn-sm btn-danger px-3 m-1"
-                          >
-                            <i className="fas fa-trash mr-2" />
-                            Delete
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-
-                <div
-                  className="col-lg-4 col-md-6 wow fadeInUp"
-                  data-wow-delay="0.3s"
-                >
-                  <Link to="/view-listing">
-                    <div className="course-item bg-light">
-                      <div className="position-relative overflow-hidden">
-                        <img
-                          className="img-fluid"
-                          src="images/course-2.jpg"
-                          alt=""
-                        />
-                        <div className="accepted-btn">
-                          <a
-                            href="#"
-                            className="flex-shrink-0 btn btn-sm btn-success px-3 border-end"
-                          >
-                            Accepted
-                          </a>
-                        </div>
-                      </div>
-                      <div className="text-center p-4 pb-0">
-                        <h3 className="mb-0">Stallon Gym</h3>
-                        <div className="mb-3">
-                          <small className="fa fa-star text-primary"></small>
-                          <small className="fa fa-star text-primary"></small>
-                          <small className="fa fa-star text-primary"></small>
-                          <small className="fa fa-star text-primary"></small>
-                          <small className="fa fa-star text-primary"></small>
-                        </div>
-                        <p className="mb-4">
-                          You can expect a detailed assessment of your current
-                          eating habits, health goals, and any specific dietary
-                          needs. A customized plan will be created based on your
-                          preferences and lifestyle.
-                        </p>
-                      </div>
-                      <div className="d-flex border-top">
-                        <div class="w-100 d-flex justify-content-center mt-3 mb-3">
-                          <a
-                            href="/update-listing"
-                            class="flex-shrink-0 btn btn-sm btn-warning px-3 border-end m-1"
-                          >
-                            <i className="fas fa-edit mr-2" />
-                            Edit
-                          </a>
-                          <a
-                            href="#"
-                            class="flex-shrink-0 btn btn-sm btn-danger px-3 m-1"
-                          >
-                            <i className="fas fa-trash mr-2" />
-                            Delete
-                          </a>
+                        <div className="d-flex border-top">
+                          <div class="w-100 d-flex justify-content-center mt-3 mb-3">
+                            <Link
+                              to={`/update-listing?listing_id=${education._id}`}
+                              class="flex-shrink-0 btn btn-sm btn-warning px-3 border-end m-1"
+                            >
+                              <i className="fas fa-edit mr-2" />
+                              Edit
+                            </Link>
+                            <button
+                              class="flex-shrink-0 btn btn-sm btn-danger px-3 m-1"
+                              onClick={() => handleDeleteListing(education._id)}
+                            >
+                              <i className="fas fa-trash mr-2" />
+                              Delete
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </Link>
-                </div>
-
-                <div
-                  className="col-lg-4 col-md-6 wow fadeInUp"
-                  data-wow-delay="0.5s"
-                >
-                  <Link to="/view-listing">
-                    <div className="course-item bg-light">
-                      <div className="position-relative overflow-hidden">
-                        <img
-                          className="img-fluid"
-                          src="images/course-3.jpg"
-                          alt=""
-                        />
-                        <div className="accepted-btn">
-                          <a
-                            href="#"
-                            className="flex-shrink-0 btn btn-sm btn-success px-3 border-end"
-                          >
-                            Accepted
-                          </a>
-                        </div>
-                      </div>
-                      <div className="text-center p-4 pb-0">
-                        <h3 className="mb-0">SlimFit Gym</h3>
-                        <div className="mb-3">
-                          <small className="fa fa-star text-primary"></small>
-                          <small className="fa fa-star text-primary"></small>
-                          <small className="fa fa-star text-primary"></small>
-                          <small className="fa fa-star text-primary"></small>
-                          <small className="fa fa-star text-primary"></small>
-                        </div>
-                        <p className="mb-4">
-                          You can expect a detailed assessment of your current
-                          eating habits, health goals, and any specific dietary
-                          needs. A customized plan will be created based on your
-                          preferences and lifestyle.
-                        </p>
-                      </div>
-                      <div className="d-flex border-top">
-                        <div class="w-100 d-flex justify-content-center mt-3 mb-3">
-                          <a
-                            href="/update-listing"
-                            class="flex-shrink-0 btn btn-sm btn-warning px-3 border-end m-1"
-                          >
-                            <i className="fas fa-edit mr-2" />
-                            Edit
-                          </a>
-                          <a
-                            href="#"
-                            class="flex-shrink-0 btn btn-sm btn-danger px-3 m-1"
-                          >
-                            <i className="fas fa-trash mr-2" />
-                            Delete
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section
-            className="space bg-cover text-start"
-            style={{
-              background: "#03343b url(images/landing-bg.png) no-repeat",
-            }}
-          >
-            <div className="container py-5">
-              <div className="row justify-content-center">
-                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                  <div className="sec_title position-relative text-center mb-5">
-                    <h2 className="ft-bold text-light whastapp-title">
-                      Join GOMZI Today and Discover Exclusive Deals - Connect
-                      with Us Instantly!
-                    </h2>
-                    <h6 className="text-light mb-0 d-md-block d-none">
-                      Unlock Success with GOMZI - Connect Now over whatsapp for
-                      Advance Perks!
-                    </h6>
-                    <p className="ft-bold text-light mt-4"></p>
-                  </div>
-                </div>
-              </div>
-              <div className="row align-items-center justify-content-center">
-                <div className="col-xl-7 col-lg-10 col-md-12 col-sm-12 col-12">
-                  <form className="rounded p-1">
-                    <div className="d-flex justify-content-center">
-                      <div className="form-group mb-0">
-                        <WhatsappBtn
-                          message={
-                            "Hello, I wanted to know more about Gym Listing."
-                          }
-                          options={{ pageRef: true }}
-                        />
-                      </div>
-                    </div>
-                  </form>
-                </div>
+                  );
+                })}
               </div>
             </div>
           </section>

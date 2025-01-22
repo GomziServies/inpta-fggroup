@@ -38,6 +38,7 @@ const AddListing = () => {
     area: "katargam",
     landmark: "demo.url",
     city: "surat",
+    country: "India",
     state: "gujarat",
     pin_code: "395004",
     contactNumber: "8866842520",
@@ -51,7 +52,9 @@ const AddListing = () => {
   const [inptaHours, setInptaHours] = useState([
     { day: "Mon", open: "10:00 AM", close: "07:00 PM" },
   ]);
-  const [faqs, setFaqs] = useState([{ question: "i have question?", answer: "here is your answer." }]);
+  const [faqs, setFaqs] = useState([
+    { question: "i have question?", answer: "here is your answer." },
+  ]);
   const [socialMediaLinks, setSocialMediaLinks] = useState([
     { platform: "Instagram", link: "Instagram.com" },
     { platform: "Facebook", link: "Facebook.com" },
@@ -60,7 +63,7 @@ const AddListing = () => {
   const [selectedListingCategory, setSelectedListingCategory] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedFacilities, setSelectedFacilities] = useState("");
-  const [selectedType, setSelectedType] = useState("gym");
+  const [selectedType, setSelectedType] = useState("");
   const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingOne, setLoadingOne] = useState(false);
@@ -77,15 +80,44 @@ const AddListing = () => {
     { value: "Personal trainers", label: "Personal trainers" },
     { value: "Massage", label: "Massage" },
   ];
+  const [selectedCourseOffered, setSelectedCourseOffered] = useState("");
 
   const handleSelectChange = (selectedOptions) => {
-    setSelectedFacilities(selectedOptions);
+    setSelectedCourseOffered(selectedOptions);
     const selectedValues = selectedOptions.map((option) => option.value);
     setFormData((prevState) => ({
       ...prevState,
-      services: selectedValues,
+      course_offered: selectedValues,
     }));
   };
+
+  const courseOfferedOption = [
+    { value: "Nutri Trainer Course", label: "Nutri Trainer Course" },
+    {
+      value: "Diploma In Personal Training Course",
+      label: "Diploma In Personal Training Course",
+    },
+    {
+      value: "Diploma In Nutrition Course",
+      label: "Diploma In Nutrition Course",
+    },
+    {
+      value: "Anabolic Androgenic Steroids",
+      label: "Anabolic Androgenic Steroids",
+    },
+    {
+      value: "Group Instructor Master Class",
+      label: "Group Instructor Master Class",
+    },
+    {
+      value: "Powerlifting Coach Workshop",
+      label: "Powerlifting Coach Workshop",
+    },
+    {
+      value: "Injury Rehabilitation Workshop",
+      label: "Injury Rehabilitation Workshop",
+    },
+  ];
 
   // ----------------------------------------------------------------------------------
 
@@ -408,6 +440,7 @@ const AddListing = () => {
         type: selectedType,
         title: formData.title,
         description: formData.description,
+        course_offered: formData.course_offered,
         logo: logoUrl,
         images: uploadedUrls.flat(),
         // services: selectedFacilities.map((facilities) => facilities.value),
@@ -732,8 +765,20 @@ const AddListing = () => {
                                 />
                               </div>
                             </div> */}
-
                             <div className="col-md-12 col-sm-12">
+                              <div className="form-group">
+                                <label className="mb-1">Course Offered</label>
+                                <Select
+                                  isMulti
+                                  options={courseOfferedOption}
+                                  value={selectedCourseOffered}
+                                  onChange={handleSelectChange}
+                                  placeholder="Select Course Offered"
+                                />
+                              </div>
+                            </div>
+
+                            {/* <div className="col-md-12 col-sm-12">
                               <div className="form-group">
                                 <label className="mb-1">Course Offered:</label>
                                 <select
@@ -767,7 +812,7 @@ const AddListing = () => {
                                   </option>
                                 </select>
                               </div>
-                            </div>
+                            </div> */}
                             {/* <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                               <div className="form-group">
                                 <label className="mb-1">Amount</label>

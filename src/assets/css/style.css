@@ -1277,3 +1277,8 @@ button.bg-dark:hover {
     font-size: 14px;
   }
 }
+.accepted-btn{
+  position: absolute;
+  top: 5%;
+  left: 5%;
+}

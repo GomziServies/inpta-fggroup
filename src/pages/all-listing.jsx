@@ -157,13 +157,15 @@ const AllListing = () => {
                     </h6>
                     <h1 className="mb-4">Welcome to eLEARNING</h1>
                     <p className="mb-4">
-                      Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit.
-                      Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.
+                      Tempor erat elitr rebum at clita. Diam dolor diam ipsum
+                      sit. Aliqu diam amet diam et eos. Clita erat ipsum et
+                      lorem et sit.
                     </p>
                     <p className="mb-4">
-                      Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit.
-                      Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit,
-                      sed stet lorem sit clita duo justo magna dolore erat amet
+                      Tempor erat elitr rebum at clita. Diam dolor diam ipsum
+                      sit. Aliqu diam amet diam et eos. Clita erat ipsum et
+                      lorem et sit, sed stet lorem sit clita duo justo magna
+                      dolore erat amet
                     </p>
                     <div className="row gy-2 gx-4 mb-4">
                       <div className="col-sm-6">
@@ -226,98 +228,178 @@ const AllListing = () => {
                   className="col-lg-4 col-md-6 wow fadeInUp"
                   data-wow-delay="0.1s"
                 >
-                  <div className="course-item bg-light">
-                    <div className="position-relative overflow-hidden">
-                      <img
-                        className="img-fluid"
-                        src="images/course-1.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="text-center p-4 pb-0">
-                      <h3 className="mb-0">Fitness With Gomzi</h3>
-                      <div className="mb-3">
-                        <small className="fa fa-star text-primary"></small>
-                        <small className="fa fa-star text-primary"></small>
-                        <small className="fa fa-star text-primary"></small>
-                        <small className="fa fa-star text-primary"></small>
-                        <small className="fa fa-star text-primary"></small>
+                  <Link to="/view-listing">
+                    <div className="course-item bg-light">
+                      <div className="position-relative overflow-hidden">
+                        <img
+                          className="img-fluid"
+                          src="images/course-1.jpg"
+                          alt=""
+                        />
+                        <div className="accepted-btn">
+                          <a
+                            href="#"
+                            className="flex-shrink-0 btn btn-sm btn-success px-3 border-end"
+                          >
+                            Accepted
+                          </a>
+                        </div>
                       </div>
-                      <p className="mb-4">You can expect a detailed assessment of your current eating habits, health goals, and any specific dietary needs. A customized plan will be created based on your preferences and lifestyle.</p>
-                    </div>
-                    <div className="d-flex border-top">
-                      <div class="w-100 d-flex justify-content-center mt-3 mb-3">
-                        <a href="#" class="flex-shrink-0 btn btn-sm btn-warning px-3 border-end m-1" ><i className="fas fa-edit mr-2" />Edit</a>
-                        <a href="#" class="flex-shrink-0 btn btn-sm btn-danger px-3 m-1"><i className="fas fa-trash mr-2" />Delete</a>
+                      <div className="text-center p-4 pb-0">
+                        <h3 className="mb-0">Fitness With Gomzi</h3>
+                        <div className="mb-3">
+                          <small className="fa fa-star text-primary"></small>
+                          <small className="fa fa-star text-primary"></small>
+                          <small className="fa fa-star text-primary"></small>
+                          <small className="fa fa-star text-primary"></small>
+                          <small className="fa fa-star text-primary"></small>
+                        </div>
+                        <p className="mb-4">
+                          You can expect a detailed assessment of your current
+                          eating habits, health goals, and any specific dietary
+                          needs. A customized plan will be created based on your
+                          preferences and lifestyle.
+                        </p>
+                      </div>
+                      <div className="d-flex border-top">
+                        <div class="w-100 d-flex justify-content-center mt-3 mb-3">
+                          <a
+                            href="/update-listing"
+                            class="flex-shrink-0 btn btn-sm btn-warning px-3 border-end m-1"
+                          >
+                            <i className="fas fa-edit mr-2" />
+                            Edit
+                          </a>
+                          <a
+                            href="#"
+                            class="flex-shrink-0 btn btn-sm btn-danger px-3 m-1"
+                          >
+                            <i className="fas fa-trash mr-2" />
+                            Delete
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
+
                 <div
                   className="col-lg-4 col-md-6 wow fadeInUp"
                   data-wow-delay="0.3s"
                 >
-                  <div className="course-item bg-light">
-                    <div className="position-relative overflow-hidden">
-                      <img
-                        className="img-fluid"
-                        src="images/course-2.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="text-center p-4 pb-0">
-                      <h3 className="mb-0">Stallon Gym</h3>
-                      <div className="mb-3">
-                        <small className="fa fa-star text-primary"></small>
-                        <small className="fa fa-star text-primary"></small>
-                        <small className="fa fa-star text-primary"></small>
-                        <small className="fa fa-star text-primary"></small>
-                        <small className="fa fa-star text-primary"></small>
+                  <Link to="/view-listing">
+                    <div className="course-item bg-light">
+                      <div className="position-relative overflow-hidden">
+                        <img
+                          className="img-fluid"
+                          src="images/course-2.jpg"
+                          alt=""
+                        />
+                        <div className="accepted-btn">
+                          <a
+                            href="#"
+                            className="flex-shrink-0 btn btn-sm btn-success px-3 border-end"
+                          >
+                            Accepted
+                          </a>
+                        </div>
                       </div>
-                      <p className="mb-4">
-                        You can expect a detailed assessment of your current eating habits, health goals, and any specific dietary needs. A customized plan will be created based on your preferences and lifestyle.
-                      </p>
-                    </div>
-                    <div className="d-flex border-top">
-                      <div class="w-100 d-flex justify-content-center mt-3 mb-3">
-                        <a href="#" class="flex-shrink-0 btn btn-sm btn-warning px-3 border-end m-1" ><i className="fas fa-edit mr-2" />Edit</a>
-                        <a href="#" class="flex-shrink-0 btn btn-sm btn-danger px-3 m-1"><i className="fas fa-trash mr-2" />Delete</a>
+                      <div className="text-center p-4 pb-0">
+                        <h3 className="mb-0">Stallon Gym</h3>
+                        <div className="mb-3">
+                          <small className="fa fa-star text-primary"></small>
+                          <small className="fa fa-star text-primary"></small>
+                          <small className="fa fa-star text-primary"></small>
+                          <small className="fa fa-star text-primary"></small>
+                          <small className="fa fa-star text-primary"></small>
+                        </div>
+                        <p className="mb-4">
+                          You can expect a detailed assessment of your current
+                          eating habits, health goals, and any specific dietary
+                          needs. A customized plan will be created based on your
+                          preferences and lifestyle.
+                        </p>
+                      </div>
+                      <div className="d-flex border-top">
+                        <div class="w-100 d-flex justify-content-center mt-3 mb-3">
+                          <a
+                            href="/update-listing"
+                            class="flex-shrink-0 btn btn-sm btn-warning px-3 border-end m-1"
+                          >
+                            <i className="fas fa-edit mr-2" />
+                            Edit
+                          </a>
+                          <a
+                            href="#"
+                            class="flex-shrink-0 btn btn-sm btn-danger px-3 m-1"
+                          >
+                            <i className="fas fa-trash mr-2" />
+                            Delete
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
+
                 <div
                   className="col-lg-4 col-md-6 wow fadeInUp"
                   data-wow-delay="0.5s"
                 >
-                  <div className="course-item bg-light">
-                    <div className="position-relative overflow-hidden">
-                      <img
-                        className="img-fluid"
-                        src="images/course-3.jpg"
-                        alt=""
-                      />
-                    </div>
-                    <div className="text-center p-4 pb-0">
-                      <h3 className="mb-0">SlimFit Gym</h3>
-                      <div className="mb-3">
-                        <small className="fa fa-star text-primary"></small>
-                        <small className="fa fa-star text-primary"></small>
-                        <small className="fa fa-star text-primary"></small>
-                        <small className="fa fa-star text-primary"></small>
-                        <small className="fa fa-star text-primary"></small>
+                  <Link to="/view-listing">
+                    <div className="course-item bg-light">
+                      <div className="position-relative overflow-hidden">
+                        <img
+                          className="img-fluid"
+                          src="images/course-3.jpg"
+                          alt=""
+                        />
+                        <div className="accepted-btn">
+                          <a
+                            href="#"
+                            className="flex-shrink-0 btn btn-sm btn-success px-3 border-end"
+                          >
+                            Accepted
+                          </a>
+                        </div>
                       </div>
-                      <p className="mb-4">You can expect a detailed assessment of your current eating habits, health goals, and any specific dietary needs. A customized plan will be created based on your preferences and lifestyle.</p>
-                    </div>
-                    <div className="d-flex border-top">
-                      <div class="w-100 d-flex justify-content-center mt-3 mb-3">
-                        <a href="#" class="flex-shrink-0 btn btn-sm btn-warning px-3 border-end m-1" ><i className="fas fa-edit mr-2" />Edit</a>
-                        <a href="#" class="flex-shrink-0 btn btn-sm btn-danger px-3 m-1"><i className="fas fa-trash mr-2" />Delete</a>
+                      <div className="text-center p-4 pb-0">
+                        <h3 className="mb-0">SlimFit Gym</h3>
+                        <div className="mb-3">
+                          <small className="fa fa-star text-primary"></small>
+                          <small className="fa fa-star text-primary"></small>
+                          <small className="fa fa-star text-primary"></small>
+                          <small className="fa fa-star text-primary"></small>
+                          <small className="fa fa-star text-primary"></small>
+                        </div>
+                        <p className="mb-4">
+                          You can expect a detailed assessment of your current
+                          eating habits, health goals, and any specific dietary
+                          needs. A customized plan will be created based on your
+                          preferences and lifestyle.
+                        </p>
+                      </div>
+                      <div className="d-flex border-top">
+                        <div class="w-100 d-flex justify-content-center mt-3 mb-3">
+                          <a
+                            href="/update-listing"
+                            class="flex-shrink-0 btn btn-sm btn-warning px-3 border-end m-1"
+                          >
+                            <i className="fas fa-edit mr-2" />
+                            Edit
+                          </a>
+                          <a
+                            href="#"
+                            class="flex-shrink-0 btn btn-sm btn-danger px-3 m-1"
+                          >
+                            <i className="fas fa-trash mr-2" />
+                            Delete
+                          </a>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 </div>
-
               </div>
             </div>
           </section>

@@ -30,8 +30,6 @@ const GymMainActivity = ({ searchData }) => {
             );
             let fetchedBusinessData = response.data.data;
 
-            console.log("searchData :- ", searchData);
-
             if (searchData) {
                 fetchedBusinessData = fetchedBusinessData.filter(
                     (addressData) => addressData.locations[0].city === searchData

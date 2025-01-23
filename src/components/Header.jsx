@@ -176,7 +176,7 @@ function Header() {
             />
           </Link>
           <Link to="/">Home</Link>
-          <Link to="/listing-list">Listing</Link>
+          <Link to="/all-listing">Listing</Link>
           {isLogin ? <Link to="/profile">Profile</Link> : ""}
           <div className="d-flex justify-content-center mt-3">
             {isLogin ? (

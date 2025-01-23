@@ -57,7 +57,6 @@ const AllListing = () => {
       const response = await inptaListingAxiosInstance.get("/get-listing");
       const fetchedBusinessData = response.data.data;
       setEducationData(fetchedBusinessData);
-      console.log("fetchedBusinessData :- ", fetchedBusinessData);
     } catch (error) {
       console.error("Error in Getting Business Data:", error);
     }
@@ -68,7 +67,6 @@ const AllListing = () => {
     fetchInptaData();
   }, []);
 
-  
   const handleDeleteListing = async (listingId) => {
     try {
       const result = await Swal.fire({
@@ -156,11 +154,11 @@ const AllListing = () => {
             />
           </section>
           <section>
-            <div className="container-xxl py-5 text-start">
+            <div className="container-xxl py-5 text-start mt-5">
               <div className="container">
                 <div className="row g-5">
                   <div
-                    className="col-lg-6 wow fadeInUp container-min-height"
+                    className="col-lg-6 wow fadeInUp container-min-height d-md-block d-none"
                     data-wow-delay="0.1s"
                   >
                     <div className="position-relative h-100">
@@ -173,61 +171,51 @@ const AllListing = () => {
                   </div>
                   <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
                     <h6 className="section-title bg-white text-start text-primary pe-3">
-                      About Us
+                      About INPTA
                     </h6>
-                    <h1 className="mb-4">Welcome to eLEARNING</h1>
+                    <h1 className="mb-4 home-title">
+                      Welcome to INPTA Accreditation
+                    </h1>
+                    <div className="d-md-none d-block mb-3">
+                      <img
+                        className="img-fluid w-100 "
+                        src="images/about.webp"
+                        alt=""
+                      />
+                    </div>
                     <p className="mb-4">
-                      Tempor erat elitr rebum at clita. Diam dolor diam ipsum
-                      sit. Aliqu diam amet diam et eos. Clita erat ipsum et
-                      lorem et sit.
-                    </p>
-                    <p className="mb-4">
-                      Tempor erat elitr rebum at clita. Diam dolor diam ipsum
-                      sit. Aliqu diam amet diam et eos. Clita erat ipsum et
-                      lorem et sit, sed stet lorem sit clita duo justo magna
-                      dolore erat amet
+                      The International Network of Professional Training
+                      Academies (INPTA) is a globally recognized organization
+                      dedicated to enhancing the quality of fitness and health
+                      education. With our accreditation, academies gain access
+                      to
                     </p>
                     <div className="row gy-2 gx-4 mb-4">
                       <div className="col-sm-6">
                         <p className="mb-0">
                           <i className="fa fa-arrow-right text-primary me-2"></i>
-                          Skilled Instructors
+                          Internationally Certified Programs
                         </p>
                       </div>
                       <div className="col-sm-6">
                         <p className="mb-0">
                           <i className="fa fa-arrow-right text-primary me-2"></i>
-                          Online Classes
+                          Global Networking Opportunities
                         </p>
                       </div>
                       <div className="col-sm-6">
                         <p className="mb-0">
                           <i className="fa fa-arrow-right text-primary me-2"></i>
-                          International Certificate
-                        </p>
-                      </div>
-                      <div className="col-sm-6">
-                        <p className="mb-0">
-                          <i className="fa fa-arrow-right text-primary me-2"></i>
-                          Skilled Instructors
-                        </p>
-                      </div>
-                      <div className="col-sm-6">
-                        <p className="mb-0">
-                          <i className="fa fa-arrow-right text-primary me-2"></i>
-                          Online Classes
-                        </p>
-                      </div>
-                      <div className="col-sm-6">
-                        <p className="mb-0">
-                          <i className="fa fa-arrow-right text-primary me-2"></i>
-                          International Certificate
+                          Expert Guidance and Resources
                         </p>
                       </div>
                     </div>
-                    <a className="btn btn-primary py-3 px-5 mt-2" href="">
+                    <Link
+                      className="btn btn-primary py-3 px-5 mt-2"
+                      to="https://fggroup.in/inpta/home-inpta"
+                    >
                       Read More
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -258,8 +246,8 @@ const AllListing = () => {
                           <div className="position-relative overflow-hidden">
                             <img
                               className="img-fluid"
-                              src="images/course-1.jpg"
-                              alt=""
+                              src={`https://files.fggroup.in/${education?.images?.[0]}`}
+                              alt={education.title}
                             />
                             <div className="accepted-btn">
                               {/* <a

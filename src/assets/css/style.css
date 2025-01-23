@@ -468,6 +468,11 @@
 }
 
 /*** Categories & Courses ***/
+.course-item {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
 .category img,
 .course-item img {
   transition: 0.5s;
@@ -642,8 +647,8 @@
 }
 
 .img-width-height {
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
 }
 
 .icons-margin {
@@ -1128,7 +1133,7 @@ fieldset:disabled .btn {
 }
 
 /* Timings Table */
-.view-listing-page table.table-borderless {
+/* .view-listing-page table.table-borderless {
   width: 100%;
   border-collapse: collapse;
   background: #f9f9f9;
@@ -1150,7 +1155,7 @@ fieldset:disabled .btn {
 
 .view-listing-page table.table-borderless tr:last-child td {
   border-bottom: none;
-}
+} */
 
 /* Reviews Section */
 .view-listing-page .reviews-comments-item {
@@ -1166,7 +1171,7 @@ fieldset:disabled .btn {
   height: 70px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #007bff;
+  border: 1px solid #007bff;
 }
 
 .view-listing-page .reviews-comments-item-text h4 a {
@@ -1192,7 +1197,7 @@ fieldset:disabled .btn {
   padding: 1rem;
   font-size: 1rem;
   resize: vertical;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
   transition: border-color 0.3s ease-in-out;
 }
 
@@ -1216,7 +1221,7 @@ fieldset:disabled .btn {
 
 .view-listing-page .btn.theme-bg:hover {
   background-color: #0056d2;
-  transform: translateY(-2px);
+  /* transform: translateY(-2px); */
 }
 
 /* Information Sidebar */
@@ -1271,20 +1276,25 @@ fieldset:disabled .btn {
   text-decoration: underline;
 }
 
-.view-listing-page .jbd-01 {
+/* .view-listing-page .jbd-01 {
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   margin-bottom: 20px;
+} */
+
+.jbd-01-caption .jbd-list span {
+  margin-bottom: 5px !important;
+  display: inline-block;
 }
 
-.view-listing-page .jbd-details h5 {
+/* .view-listing-page .jbd-details h5 {
   color: #333333;
   margin-bottom: 15px;
-}
+} */
 
-.view-listing-page .review-form-box {
+/* .view-listing-page .review-form-box {
   padding: 10px;
 }
 
@@ -1314,7 +1324,7 @@ fieldset:disabled .btn {
 .view-listing-page .review-form-box .d-flex svg {
   cursor: pointer;
   transition: color 0.2s ease;
-}
+} */
 
 .sign-in a {
   color: #003d99;
@@ -1358,9 +1368,9 @@ fieldset:disabled .btn {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .view-listing-page .review-form-box textarea {
+  /* .view-listing-page .review-form-box textarea {
     height: 100px;
-  }
+  } */
 
   .view-listing-page .accordion .card-header button {
     font-size: 14px;
@@ -1477,4 +1487,258 @@ button.bg-dark:hover {
   position: absolute;
   top: 5%;
   left: 5%;
+}
+
+.Goodup-status {
+  font-size: 11px;
+  font-weight: 500;
+  color: #ffffff;
+  background: #282525;
+  padding: 4px 12px;
+  border-radius: 3px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.Goodup-status.open {
+  background: #8bc34a;
+}
+
+.Goodup-status.close {
+  background: #1683f4;
+}
+
+.Goodup-status.pending {
+  background: orange;
+}
+
+.sep-devider {
+  display: block;
+  position: relative;
+  margin: 2rem 0;
+  border-top: 1px solid #ececec;
+}
+
+.view-listing-page .review-form-box textarea.form-control {
+  height: 150px !important;
+  background-color: #f7f7f7 !important;
+  border-color: #eee;
+}
+
+.reviews-comments-wrap {
+  display: inline-table;
+  margin-top: 30px;
+}
+
+.reviews-comments-item {
+  padding: 0 0 30px 85px;
+  position: relative;
+  float: left;
+  margin-bottom: 40px;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+}
+
+.review-comments-avatar {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  border-radius: 100%;
+}
+
+.reviews-comments-item-text {
+  float: left;
+  width: 100%;
+  position: relative;
+  padding: 0 20px;
+}
+
+.reviews-comments-item-text h4 {
+  text-align: left;
+  padding-bottom: 0px;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.reviews-comments-item-date {
+  float: right;
+  font-weight: 500;
+  color: #86889a;
+  font-size: 12px;
+}
+
+.reviews-comments-item-date i {
+  color: #ff9800;
+}
+
+.listing-rating {
+  margin-bottom: 1rem;
+}
+
+.listing-rating i {
+  margin-right: 4px;
+  font-size: 11px;
+  color: #d2d2d2;
+}
+
+.listing-rating i.active {
+  color: #ff9800;
+}
+
+.reviews-reaction {
+  margin-top: 1rem;
+}
+
+.reviews-reaction a {
+  margin-right: 20px;
+  color: #8c97a2;
+}
+
+.reviews-reaction a.comment-like.active {
+  color: #0eb987;
+}
+
+.reviews-reaction a.comment-dislike.active {
+  color: #244763;
+}
+
+.reviews-reaction a.comment-love.active {
+  color: #ea1a57;
+}
+
+.Goodup-rating {
+  display: inline-flex;
+  position: relative;
+  margin-right: 10px;
+  align-items: center;
+}
+
+.Goodup-grid-upper {
+  position: relative;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+}
+
+.Goodup-grid-thumb {
+  display: block;
+  position: relative;
+}
+
+.Goodup-grid-thumb img {
+  position: relative;
+  display: block;
+  width: 100%;
+  transition: all ease 0.5s;
+}
+
+.Goodup-grid-thumb:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.3;
+  background: #202838;
+  z-index: 1;
+}
+
+.Goodup-pr-average {
+  padding: 2px 8px;
+  background: #323232;
+  display: inline-flex;
+  margin-right: 4px;
+  border-radius: 2px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.Goodup-pr-average.high {
+  background: #07a262;
+}
+
+.Goodup-pr-average.mid {
+  background: #ff6e19;
+}
+
+.Goodup-pr-average.poor {
+  background: #f22b2b;
+}
+
+.Goodup-rating.overlay .Goodup-pr-average {
+  padding: 7px 10px;
+  border-radius: 4px;
+}
+
+.Goodup-aldeio {
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.Goodup-rating.overlay .Goodup-rates {
+  font-size: 10px;
+  color: #ff9d0c;
+  letter-spacing: 1px;
+}
+
+.Goodup-all-review {
+  line-height: 1.4;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+}
+
+.Goodup-rating.overlay {
+  position: absolute;
+  left: 10px;
+  bottom: 15px;
+  z-index: 2;
+}
+
+.Goodup-grid-wrap {
+  background: #fff;
+  border-radius: 6px;
+  margin-bottom: 30px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.Goodup-grid-fl-wrap {
+  border: 1px solid #eee;
+  border-radius: 0 0 6px 6px;
+  float: left;
+  overflow: visible;
+  overflow: initial;
+  position: relative;
+  width: 100%;
+}
+
+.Goodup-grid-footer {
+  align-items: center;
+  border-top: 1px dashed #eee;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 556px) {
+  .welcome-sec {
+    margin-top: 70px !important;
+  }
+  .welcome-sec .welcome-sub-sec {
+    padding: 130px 0px !important;
+  }
+  .display-3 {
+    font-size: 36px !important;
+  }
+  .home-title {
+    font-size: 36px !important;
+    line-height: 45px !important;
+  }
 }

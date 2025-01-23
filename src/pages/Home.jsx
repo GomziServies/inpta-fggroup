@@ -7,6 +7,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Footer from "../components/Footer";
+import { inptaListingAxiosInstance } from "../js/api";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -28,6 +30,26 @@ const Home = () => {
     arrows: false,
   };
 
+  const [educationData, setEducationData] = useState([]);
+  const [loadingOne, setLoadingOne] = useState(false);
+
+  const fetchInptaData = async () => {
+    setLoadingOne(true);
+
+    try {
+      const response = await inptaListingAxiosInstance.post("/get-educations");
+      const fetchedBusinessData = response.data.data;
+      setEducationData(fetchedBusinessData);
+    } catch (error) {
+      console.error("Error in Getting Business Data:", error);
+    }
+    setLoadingOne(false);
+  };
+
+  useEffect(() => {
+    fetchInptaData();
+  }, []);
+
   return (
     <div>
       <link
@@ -38,7 +60,6 @@ const Home = () => {
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
         rel="stylesheet"
       />
-
       <Helmet>
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -64,15 +85,21 @@ const Home = () => {
           </div>
         )}
         <Header />
-        <div className="container-fluid p-0 mb-5 text-start">
+        <div className="welcome-sec container-fluid p-0 mb-5 text-start">
           <div className="position-relative">
             <img
-              className="img-fluid"
-              src="images/co-1.webp"
+              className="img-fluid d-md-block d-none"
+              src="images/home-banner.webp"
               alt="Carousel 1"
               width="100%"
             />
-            <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center first-secttion-bg">
+            <img
+              className="img-fluid d-md-none d-block"
+              src="images/home-banner-mobile.webp"
+              alt="Carousel 1"
+              width="100%"
+            />
+            <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center welcome-sub-sec first-secttion-bg">
               <div className="container">
                 <div className="row justify-content-start">
                   <div className="col-sm-10 col-lg-8">
@@ -117,8 +144,8 @@ const Home = () => {
                     <i className="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
                     <h5 className="mb-3">Skilled Instructors</h5>
                     <p>
-                      Diam elitr kasd sed at elitr sed ipsum justo dolor sed
-                      clita amet diam
+                      Learn from highly qualified and experienced instructors
+                      dedicated to your success.
                     </p>
                   </div>
                 </div>
@@ -131,9 +158,9 @@ const Home = () => {
                   <div className="p-4">
                     <i className="fa fa-3x fa-globe text-primary mb-4"></i>
                     <h5 className="mb-3">Online Classes</h5>
-                    <p>
-                      Diam elitr kasd sed at elitr sed ipsum justo dolor sed
-                      clita amet diam
+                    <p className="pb-4">
+                      Access interactive, engaging classes from anywhere in the
+                      world.
                     </p>
                   </div>
                 </div>
@@ -146,9 +173,9 @@ const Home = () => {
                   <div className="p-4">
                     <i className="fa fa-3x fa-home text-primary mb-4"></i>
                     <h5 className="mb-3">Home Projects</h5>
-                    <p>
-                      Diam elitr kasd sed at elitr sed ipsum justo dolor sed
-                      clita amet diam
+                    <p className="pb-4">
+                      Apply your knowledge with practical projects designed for
+                      real-world impact.
                     </p>
                   </div>
                 </div>
@@ -161,9 +188,9 @@ const Home = () => {
                   <div className="p-4">
                     <i className="fa fa-3x fa-book-open text-primary mb-4"></i>
                     <h5 className="mb-3">Book Library</h5>
-                    <p>
-                      Diam elitr kasd sed at elitr sed ipsum justo dolor sed
-                      clita amet diam
+                    <p className="pb-4">
+                      Explore a vast library of resources to deepen your
+                      understanding and skills.
                     </p>
                   </div>
                 </div>
@@ -175,7 +202,7 @@ const Home = () => {
           <div className="container">
             <div className="row g-5">
               <div
-                className="col-lg-6 wow fadeInUp container-min-height"
+                className="col-lg-6 wow fadeInUp container-min-height d-md-block d-none"
                 data-wow-delay="0.1s"
               >
                 <div className="position-relative h-100">
@@ -190,7 +217,16 @@ const Home = () => {
                 <h6 className="section-title bg-white text-start text-primary pe-3">
                   About INPTA
                 </h6>
-                <h1 className="mb-4">Welcome to INPTA Accreditation</h1>
+                <h1 className="mb-4 home-title">
+                  Welcome to INPTA Accreditation
+                </h1>
+                <div className="d-md-none d-block mb-3">
+                  <img
+                    className="img-fluid w-100 "
+                    src="images/about.webp"
+                    alt=""
+                  />
+                </div>
                 <p className="mb-4">
                   The International Network of Professional Training Academies
                   (INPTA) is a globally recognized organization dedicated to
@@ -217,9 +253,12 @@ const Home = () => {
                     </p>
                   </div>
                 </div>
-                <a className="btn btn-primary py-3 px-5 mt-2" href="">
+                <Link
+                  className="btn btn-primary py-3 px-5 mt-2"
+                  to="https://fggroup.in/inpta/home-inpta"
+                >
                   Read More
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -322,12 +361,91 @@ const Home = () => {
               <h6 className="section-title bg-white text-center text-primary px-3">
                 Popular Courses
               </h6>
-              <h1 className="mb-5">
+              <h1 className="mb-5 home-title">
                 Most Popular INPTA-Certified Courses
               </h1>
             </div>
             <div className="row g-4 justify-content-center">
-              <div
+              {educationData.map((education) => {
+                const description = education?.description;
+                const truncatedDescription =
+                  description?.length > 110
+                    ? description?.substring(0, 110) + "..."
+                    : description;
+                return (
+                  <div
+                    className="col-lg-4 col-md-6 wow fadeInUp"
+                    data-wow-delay="0.1s"
+                  >
+                    <div className="Goodup-grid-wrap course-item">
+                      <Link
+                        to={`/view-listing?listing_id=${education._id}`}
+                        className="text-dark Goodup-grid-upper"
+                      >
+                        <div className="Goodup-grid-thumb overflow-hidden">
+                          <img
+                            className="img-fluid"
+                            src={`https://files.fggroup.in/${education?.images?.[0]}`}
+                            alt={education.title}
+                          />
+                        </div>
+
+                        <div className="Goodup-rating overlay">
+                          <div className="Goodup-pr-average high">
+                            {(education.review_stats.average_rating &&
+                              education.review_stats.average_rating.toFixed(
+                                1
+                              )) ||
+                              "0"}
+                          </div>
+                          <div className="Goodup-aldeio">
+                            <div className="Goodup-rates">
+                              {[...Array(5)].map((_, index) => (
+                                <i
+                                  className="fas fa-star"
+                                  key={index}
+                                  style={{
+                                    color:
+                                      index <
+                                      education.review_stats.average_rating
+                                        ? "#F09000"
+                                        : "#ccc",
+                                  }}
+                                />
+                              ))}
+                            </div>
+                            <div className="Goodup-all-review">
+                              <span>
+                                {education.review_stats.total_ratings} Rating
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                      <div className="Goodup-grid-fl-wrap text-start py-3 px-0 pb-0">
+                        <h5 className="mb-2 ps-2">{education.title}</h5>
+                        <div className="ps-2 pb-1">
+                          <small className="text-center pt-2">
+                            {truncatedDescription}
+                          </small>
+                        </div>
+                        <div className="Goodup-grid-footer py-2 pb-2 ps-2 mt-2">
+                          <div className="Goodup-ft-first">
+                            <div className="Goodup-location">
+                              <i className="fas fa-map-marker-alt me-2 theme-cl text-primary" />
+                              {education.locations[0].city +
+                                ", " +
+                                education.locations[0].state}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+
+              {/* <div
                 className="col-lg-4 col-md-6 wow fadeInUp"
                 data-wow-delay="0.1s"
               >
@@ -370,13 +488,6 @@ const Home = () => {
                       <i className="fa fa-user-tie text-primary me-2"></i>Become
                       a globally certified personal trainer
                     </small>
-                    {/* <small className="flex-fill text-center border-end py-2">
-                      <i className="fa fa-clock text-primary me-2"></i>1.49 Hrs
-                    </small>
-                    <small className="flex-fill text-center py-2">
-                      <i className="fa fa-user text-primary me-2"></i>30
-                      Students
-                    </small> */}
                   </div>
                 </div>
               </div>
@@ -471,21 +582,21 @@ const Home = () => {
                     </small>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
-        <div className="container-xxl py-5 text-start">
+        {/* <div className="container-xxl py-5 text-start">
           <div className="container">
             <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
               <h6 className="section-title bg-white text-center text-primary px-3">
                 Expert Instructors
               </h6>
-              <h1 className="mb-5">Meet Our Expert Instructor</h1>
+              <h1 className="mb-5 home-title">Meet Our Expert Instructor</h1>
             </div>
             <div className="row g-4">
               <div
-                className="col-lg-3 col-md-6 wow fadeInUp"
+                className="col-lg-3 col-6 wow fadeInUp"
                 data-wow-delay="0.1s"
               >
                 <div className="team-item bg-light">
@@ -503,7 +614,7 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className="col-lg-3 col-md-6 wow fadeInUp"
+                className="col-lg-3 col-6 wow fadeInUp"
                 data-wow-delay="0.3s"
               >
                 <div className="team-item bg-light">
@@ -521,7 +632,7 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className="col-lg-3 col-md-6 wow fadeInUp"
+                className="col-lg-3 col-6 wow fadeInUp"
                 data-wow-delay="0.5s"
               >
                 <div className="team-item bg-light">
@@ -539,7 +650,7 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className="col-lg-3 col-md-6 wow fadeInUp"
+                className="col-lg-3 col-6 wow fadeInUp"
                 data-wow-delay="0.7s"
               >
                 <div className="team-item bg-light">
@@ -558,7 +669,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         <div
           className="container-xxl py-5 wow fadeInUp text-start"
           data-wow-delay="0.1s"
@@ -568,15 +679,15 @@ const Home = () => {
               <h6 className="section-title bg-white text-center text-primary px-3">
                 Testimonials
               </h6>
-              <h1 className="mb-5">What Our Partners Say</h1>
+              <h1 className="mb-5 home-title">What Our Partners Say</h1>
             </div>
-            <div className="row">
-              <div className="col-md-3 testimonial-item text-center">
+            <div className="row justify-content-center">
+              <div className="col-md-4 testimonial-item text-center mb=md-0 mb-3">
                 <img
                   className="border rounded-circle p-2 mx-auto mb-3 img-width-height"
-                  src="images/testimonial-1.jpg"
+                  src="images/team-1.webp"
                 />
-                <h5 className="mb-0">Client Name</h5>
+                <h5 className="mb-0">Gautam Jani</h5>
                 <p>Profession</p>
                 <div className="testimonial-text bg-light text-center p-4">
                   <p className="mb-0">
@@ -585,40 +696,12 @@ const Home = () => {
                   </p>
                 </div>
               </div>
-              <div className="col-md-3 testimonial-item text-center">
+              <div className="col-md-4 testimonial-item text-center mb=md-0 mb-3">
                 <img
                   className="border rounded-circle p-2 mx-auto mb-3 img-width-height"
-                  src="images/testimonial-2.jpg"
+                  src="images/team-4.webp"
                 />
-                <h5 className="mb-0">Client Name</h5>
-                <p>Profession</p>
-                <div className="testimonial-text bg-light text-center p-4">
-                  <p className="mb-0">
-                    The accreditation process was seamless and helped us align
-                    with global standards.
-                  </p>
-                </div>
-              </div>
-              <div className="col-md-3 testimonial-item text-center">
-                <img
-                  className="border rounded-circle p-2 mx-auto mb-3 img-width-height"
-                  src="images/testimonial-3.jpg"
-                />
-                <h5 className="mb-0">Client Name</h5>
-                <p>Profession</p>
-                <div className="testimonial-text bg-light text-center p-4">
-                  <p className="mb-0">
-                    Thanks to INPTA, our graduates are now placed in top
-                    international organizations.
-                  </p>
-                </div>
-              </div>
-              <div className="col-md-3 testimonial-item text-center">
-                <img
-                  className="border rounded-circle p-2 mx-auto mb-3 img-width-height"
-                  src="images/testimonial-4.jpg"
-                />
-                <h5 className="mb-0">Client Name</h5>
+                <h5 className="mb-0">chirag Pandey</h5>
                 <p>Profession</p>
                 <div className="testimonial-text bg-light text-center p-4">
                   <p className="mb-0">

@@ -24,58 +24,21 @@ import WhatsappBtn from "../components/WhatsappBtn";
 const ListingView = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const business_id = searchParams.get("business_id");
-  const [businessData, setBusinessData] = useState([]);
-  // const [listNumber, setListNumber] = useState("");
-  // const [lightboxOpen, setLightboxOpen] = useState(false);
-  // const [selectedImage, setSelectedImage] = useState(null);
+  const listing_id = searchParams.get("listing_id");
+  const [educationData, setEducationData] = useState([]);
   const [locationData, setLocationData] = useState([]);
   const [contactData, setContactData] = useState([]);
-  // const [reviewData, setReviewData] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [timings, setTimings] = useState([]);
   const [services, setServices] = useState([]);
   const [tags, setTags] = useState([]);
   const [faqs, setFaqs] = useState([]);
-  const [businessImages, setBusinessImages] = useState([]);
+  const [inptaImages, setInptaImages] = useState([]);
   const [review, setReview] = useState("");
   const [rating, setRating] = useState(0);
   const [userReviewsData, setUserReviewData] = useState([]);
-  // const [isFavorite, setIsFavorite] = useState(false);
-  // const [favoriteList, setFavoriteList] = useState([]);
-  // const [userData, setUserData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [allBusinessData, setAllBusinessData] = useState([]);
-
-  const fetchAllBusinessData = async () => {
-    try {
-      const requestData = {
-        filter: {
-          business_type: ["personal", "business"],
-        },
-        sort: {
-          business_name: "asc",
-          rating: "desc",
-        },
-        page: 1,
-        limit: 10,
-      };
-
-      const response = await inptaListingAxiosInstance.post(
-        "/get-businesses",
-        requestData
-      );
-      const fetchedBusinessData = response.data.data;
-      setAllBusinessData(fetchedBusinessData);
-    } catch (error) {
-      console.error("Error in Getting Business Data:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchAllBusinessData();
-  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -126,17 +89,17 @@ const ListingView = () => {
     try {
       setIsLoading(true);
       const requestData = {
-        listing_id: [business_id],
+        listing_id: [listing_id],
       };
 
       const response = await inptaListingAxiosInstance.post(
-        "/get-businesses",
+        "/get-educations",
         requestData
       );
       const data = response.data.metadata;
       const fetchedBusinessData = response.data.data[0];
-      const fetchedLocationData = fetchedBusinessData.locations[0];
 
+      const fetchedLocationData = fetchedBusinessData.locations[0];
       const contacts = fetchedBusinessData.contacts || [];
       setContacts(contacts);
       const timing = fetchedBusinessData.timings || [];
@@ -147,10 +110,10 @@ const ListingView = () => {
       setTags(tags);
       const faqs = fetchedBusinessData.faqs || [];
       setFaqs(faqs);
-      const business_img = fetchedBusinessData.business_images || [];
-      setBusinessImages(business_img);
+      const inpta_img = fetchedBusinessData.images || [];
+      setInptaImages(inpta_img);
 
-      setBusinessData(fetchedBusinessData);
+      setEducationData(fetchedBusinessData);
       setLocationData(fetchedLocationData);
       setContactData(fetchedLocationData.contact);
       // setReviewData(fetchedBusinessData.review_stats);
@@ -165,7 +128,7 @@ const ListingView = () => {
   const fetchReviewsData = async () => {
     try {
       const response = await inptaListingAxiosInstance.get(
-        `/get-reviews?business_listing_id=${business_id}`
+        `/get-reviews?inpta_listing_id=${listing_id}`
       );
       const fetchedReviewsData = response.data.data;
       setUserReviewData(fetchedReviewsData);
@@ -185,7 +148,7 @@ const ListingView = () => {
     setRating(newRating);
   };
 
-  const slides = businessImages.map((image, index) => ({
+  const slides = inptaImages.map((image, index) => ({
     src: "https://files.fggroup.in/" + image,
     caption: `Image ${index + 1}`,
   }));
@@ -215,7 +178,7 @@ const ListingView = () => {
       }
 
       const requestData = {
-        business_listing_id: business_id,
+        inpta_listing_id: listing_id,
         comment: review,
         rating,
       };
@@ -279,107 +242,97 @@ const ListingView = () => {
                   <div className="featured-slick mb-4">
                     <div className="featured-gallery-slide p-2">
                       <Slider {...settings}>
-                        <div style={{ cursor: "pointer" }}>
-                          <div className="mx-2">
-                            <img
-                              src="/images/co-1.webp"
-                              alt=""
-                              style={{ width: "100%", borderRadius: "5px" }}
-                            />
+                        {slides.map((slide, index) => (
+                          <div style={{ cursor: "pointer" }} key={index}>
+                            <div className="mx-2">
+                              <img
+                                src={slide.src}
+                                alt={slide.caption}
+                                style={{ width: "100%", borderRadius: "5px" }}
+                              />
+                            </div>
                           </div>
-                        </div>
-                        <div style={{ cursor: "pointer" }}>
-                          <div className="mx-2">
-                            <img
-                              src="/images/co-2.webp"
-                              alt=""
-                              style={{ width: "100%", borderRadius: "5px" }}
-                            />
-                          </div>
-                        </div>
-                        <div style={{ cursor: "pointer" }}>
-                          <div className="mx-2">
-                            <img
-                              src="/images/co-2.webp"
-                              alt=""
-                              style={{ width: "100%", borderRadius: "5px" }}
-                            />
-                          </div>
-                        </div>
-                        <div style={{ cursor: "pointer" }}>
-                          <div className="mx-2">
-                            <img
-                              src="/images/co-2.webp"
-                              alt=""
-                              style={{ width: "100%", borderRadius: "5px" }}
-                            />
-                          </div>
-                        </div>
-                        <div style={{ cursor: "pointer" }}>
-                          <div className="mx-2">
-                            <img
-                              src="/images/co-2.webp"
-                              alt=""
-                              style={{ width: "100%", borderRadius: "5px" }}
-                            />
-                          </div>
-                        </div>
+                        ))}
                       </Slider>
                     </div>
                   </div>
                   {/* About The Business */}
 
+                  <div className="mb-3">
+                    <div className="d-flex align-items-start justify-content-start">
+                      <div className="">
+                        <img
+                          src={`https://files.fggroup.in/${educationData.logo}`}
+                          className="img-fluid rounded-circle"
+                          width={80}
+                          alt=""
+                        />
+                      </div>
+                      <div className=" ps-3">
+                        <div>
+                          <div className="">
+                            <h3 className="ft-bold text-dark">
+                              {educationData.title}
+                            </h3>
+                          </div>
+                          <div className="">
+                            <div className="">
+                              <div className="">
+                                {Array.from({
+                                  length:
+                                    educationData.review_stats &&
+                                    educationData.review_stats.average_rating,
+                                }).map((_, starIndex) => (
+                                  <StarIcon
+                                    key={starIndex}
+                                    sx={{
+                                      fontSize: "16px",
+                                      color: "#FFAE11",
+                                    }}
+                                  />
+                                ))}
+                                {Array.from({
+                                  length:
+                                    5 - educationData.review_stats &&
+                                    educationData.review_stats.average_rating,
+                                }).map((_, starIndex) => (
+                                  <StarIcon
+                                    key={starIndex}
+                                    sx={{ fontSize: "16px", color: "#000" }}
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                            <div className="">
+                              <span className="ft-medium">
+                                {(educationData.review_stats &&
+                                  educationData.review_stats.average_rating &&
+                                  educationData.review_stats &&
+                                  educationData.review_stats.average_rating.toFixed(
+                                    1
+                                  )) ||
+                                  "0"}{" "}
+                                Reviews
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div className="d-block">
                     <div>
                       <div className="jbd-details">
                         <h5 className="ft-bold fs-lg">Description</h5>
                         <div className="d-block mt-3">
-                          <p>
-                            You can expect a detailed assessment of your current
-                            eating habits, health goals, and any specific
-                            dietary needs. A customized plan will be created
-                            based on your preferences and lifestyle.
-                          </p>
+                          <p>{educationData.description}</p>
                         </div>
                       </div>
                     </div>
                   </div>
-
-                  {/* <div className="sep-devider" />
-                  <div>
-                    <div className="d-block mt-3">
-                      <div className="list-lioe">
-                        <div className="list-lioe-single">
-                          <span className="ft-medium fw-bold">Category</span>
-                        </div>
-                        <div className="list-lioe-single ms-2 ps-3 seperate">
-                          <a
-                            href="javascript:void(0);"
-                            className="text-dark ft-medium"
-                          >
-                            Affordable
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="d-block mt-1">
-                      <div className="list-lioe">
-                        <div className="list-lioe-single">
-                          <span className="ft-medium fw-bold">Type</span>
-                        </div>
-                        <div className="list-lioe-single ms-2 ps-3 seperate">
-                          <a
-                            href="javascript:void(0);"
-                            className="text-dark ft-medium"
-                          >
-                            business
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div> */}
+                  <div className="sep-devider" />
                   <div className="d-block">
-                    <div className="mt-3">
+                    <div className="jbd-01">
                       <div className="jbd-details">
                         <h5 className="ft-bold fs-lg mb-3">Timings</h5>
                         <div className="Goodup-lot-wrap d-block">
@@ -387,30 +340,20 @@ const ListingView = () => {
                             <div className="col-xl-6 col-lg-6 col-md-12">
                               <table className="table table-borderless">
                                 <tbody>
-                                  <tr>
-                                    <th scope="row">Monday</th>
-                                    <td>08:00 AM - 10:00 PM</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">Tuesday</th>
-                                    <td>08:00 AM - 10:00 PM</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">Tuesday</th>
-                                    <td>08:00 AM - 10:00 PM</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">Tuesday</th>
-                                    <td>08:00 AM - 10:00 PM</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">Tuesday</th>
-                                    <td>08:00 AM - 10:00 PM</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">Tuesday</th>
-                                    <td>08:00 AM - 10:00 PM</td>
-                                  </tr>
+                                  {timings.map((day, index) => (
+                                    <tr>
+                                      <th scope="row">{day.title}</th>
+                                      <td>
+                                        {day.timings.length > 0
+                                          ? day.timings[0].from_time !==
+                                              "00:00" &&
+                                            day.timings[0].to_time !== "00:00"
+                                            ? `${day.timings[0].from_time} - ${day.timings[0].to_time}`
+                                            : "Closed"
+                                          : "Closed"}
+                                      </td>
+                                    </tr>
+                                  ))}
                                 </tbody>
                               </table>
                             </div>
@@ -422,71 +365,76 @@ const ListingView = () => {
                   <div className="sep-devider" />
                   {/* Recommended Reviews */}
                   <div className="d-block">
-                    <div className="mt-3">
+                    <div className="jbd-01">
                       <div className="jbd-details mb-4">
                         <h5 className="ft-bold fs-lg">Recommended Reviews</h5>
                         <div className="reviews-comments-wrap w-100">
-                          <div className="reviews-comments-item mt-4">
-                            <div className="review-comments-avatar mt-2">
-                              <img
-                                src="/images/team-4.webp"
-                                className="img-fluid"
-                                onError={(e) => {
-                                  e.target.src = User_img;
-                                }}
-                                alt=""
-                              />
-                            </div>
-                            <div className="reviews-comments-item-text">
-                              <h4>
-                                <a href="#">chirag pandey</a>
-                                <span className="reviews-comments-item-date">
-                                  <i className="ti-calendar theme-cl me-1" />
-                                </span>
-                              </h4>
-                              <div className="listing-rating high">
-                                <StarIcon
-                                  sx={{
-                                    fontSize: "16px",
-                                    color: "#FFAE11",
+                          {userReviewsData.map((review, index) => (
+                            <div className="reviews-comments-item">
+                              <div className="review-comments-avatar">
+                                <img
+                                  src={`https://files.fggroup.in/${review.createdBy_user.profile_image}`}
+                                  className="img-fluid"
+                                  onError={(e) => {
+                                    e.target.src = User_img;
                                   }}
-                                />
-                                <StarIcon
-                                  sx={{
-                                    fontSize: "16px",
-                                    color: "#FFAE11",
-                                  }}
-                                />
-                                <StarIcon
-                                  sx={{
-                                    fontSize: "16px",
-                                    color: "#FFAE11",
-                                  }}
-                                />
-                                <StarIcon
-                                  sx={{
-                                    fontSize: "16px",
-                                    color: "#FFAE11",
-                                  }}
-                                />
-                                <StarIcon
-                                  sx={{
-                                    fontSize: "16px",
-                                    color: "#FFAE11",
-                                  }}
+                                  alt=""
                                 />
                               </div>
-                              <div className="clearfix" />
-                              <p>i really happy to work with fgiit..</p>
+                              <div className="reviews-comments-item-text">
+                                <h4>
+                                  <a href="#">
+                                    {review.createdBy_user.user_name}
+                                  </a>
+                                  <span className="reviews-comments-item-date">
+                                    <i class="fa fa-calendar me-1"></i>
+                                    {new Date(
+                                      review.createdAt
+                                    ).toLocaleDateString()}
+                                  </span>
+                                </h4>
+                                {/* <span className="agd-location">
+                                  {review.helpful_count}{" "}
+                                  {review.helpful_count === 1
+                                    ? "Review"
+                                    : "Reviews"}
+                                </span> */}
+                                <div className="listing-rating high">
+                                  {Array.from({ length: review.rating }).map(
+                                    (_, starIndex) => (
+                                      <StarIcon
+                                        key={starIndex}
+                                        sx={{
+                                          fontSize: "16px",
+                                          color: "#FFAE11",
+                                        }}
+                                      />
+                                    )
+                                  )}
+                                  {Array.from({
+                                    length: 5 - review.rating,
+                                  }).map((_, starIndex) => (
+                                    <StarIcon
+                                      key={starIndex}
+                                      sx={{ fontSize: "16px", color: "#000" }}
+                                    />
+                                  ))}
+                                </div>
+                                <div className="clearfix" />
+                                <p>{review.comment}</p>
+                              </div>
                             </div>
-                          </div>
+                          ))}
+                          {userReviewsData?.length === 0 && (
+                            <h5>No Review Found</h5>
+                          )}
                         </div>
                       </div>
                     </div>
                   </div>
                   {/* Drop Your Review */}
                   <div className="d-block">
-                    <div className="mt-3">
+                    <div className="jbd-01">
                       <div className="jbd-details">
                         <h5 className="ft-bold fs-lg">Drop Your Review</h5>
                         <div className="review-form-box form-submit mt-3">
@@ -537,83 +485,42 @@ const ListingView = () => {
                       </div>
                     </div>
                   </div>
-
-                  <div className="d-block">
-                    <div className="mt-3">
-                      <div className="jbd-details">
-                        <h5 className="ft-bold fs-lg">
-                          Frequently Asked Questions
-                        </h5>
-                        <div className="d-block mt-3">
-                          <div className="accordion">
-                            <div className="card">
-                              <div className="card-header">
-                                <h5 className="mb-0">
-                                  <button> 1. FWG full form kya hai ?</button>
-                                </h5>
-                              </div>
-                              <div>
-                                <div className="card-body">
-                                  Fitness With Gomzi
+                  <div className="sep-devider" />
+                  {/* Frequently Asked Questions */}
+                  {faqs.length > 0 && (
+                    <div className="d-block">
+                      <div className="jbd-01">
+                        <div className="jbd-details">
+                          <h5 className="ft-bold fs-lg">
+                            Frequently Asked Questions
+                          </h5>
+                          <div className="d-block mt-3">
+                            <div className="accordion">
+                              {faqs.map((faq, index) => (
+                                <div className="card" key={index}>
+                                  <div
+                                    className="card-header"
+                                    id={`heading-${index}`}
+                                  >
+                                    <h5 className="mb-0">
+                                      <button className="btn btn-link">
+                                        {index + 1}. {faq.question}
+                                      </button>
+                                    </h5>
+                                  </div>
+                                  <div>
+                                    <div className="card-body">
+                                      {faq.answer}
+                                    </div>
+                                  </div>
                                 </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="d-block mt-3">
-                          <div className="accordion">
-                            <div className="card">
-                              <div className="card-header">
-                                <h5 className="mb-0">
-                                  <button> 1. FWG full form kya hai ?</button>
-                                </h5>
-                              </div>
-                              <div>
-                                <div className="card-body">
-                                  Fitness With Gomzi
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="d-block mt-3">
-                          <div className="accordion">
-                            <div className="card">
-                              <div className="card-header">
-                                <h5 className="mb-0">
-                                  <button> 1. FWG full form kya hai ?</button>
-                                </h5>
-                              </div>
-                              <div>
-                                <div className="card-body">
-                                  Fitness With Gomzi
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="d-block mt-3">
-                          <div className="accordion">
-                            <div className="card">
-                              <div className="card-header">
-                                <h5 className="mb-0">
-                                  <button> 1. FWG full form kya hai ?</button>
-                                </h5>
-                              </div>
-                              <div>
-                                <div className="card-body">
-                                  Fitness With Gomzi
-                                </div>
-                              </div>
+                              ))}
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 <div className="col-xl-4 col-lg-4 col-md-4 col-sm-12 text-start">
@@ -629,7 +536,7 @@ const ListingView = () => {
                             <div className="list-uiyt-capt p-2">
                               <h5>Live Site</h5>
 
-                              <div className="d-flex align-items-center">
+                              {/* <div className="d-flex align-items-center">
                                 <Link
                                   target="_blank"
                                   rel="noopener noreferrer"
@@ -640,7 +547,27 @@ const ListingView = () => {
                                     fggroup.in
                                   </p>
                                 </Link>
-                              </div>
+                              </div> */}
+                              {contacts.map(
+                                (contact, index) =>
+                                  contact.contact_type === "website" &&
+                                  isValidWebsite(contact.value) && (
+                                    <div className="d-flex align-items-center">
+                                      <Link
+                                        key={index}
+                                        to={contact.value}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        underline="none"
+                                        sx={{ cursor: "pointer" }}
+                                      >
+                                        <p className="text-dark text-underline">
+                                          {contact.value}
+                                        </p>
+                                      </Link>
+                                    </div>
+                                  )
+                              )}
                             </div>
                           </div>
                         </li>
@@ -651,8 +578,12 @@ const ListingView = () => {
                             </div>
                             <div className="list-uiyt-capt p-2">
                               <h5>Drop a Mail</h5>
-
-                              <p>fgiit@gmail.com</p>
+                              {contacts.map(
+                                (contact, index) =>
+                                  contact.contact_type === "email" && (
+                                    <p>{contact.value}</p>
+                                  )
+                              )}
                             </div>
                           </div>
                         </li>
@@ -663,7 +594,7 @@ const ListingView = () => {
                             </div>
                             <div className="list-uiyt-capt p-2">
                               <h5>Call Us</h5>
-                              <p>+91 8866554477</p>
+                              <p>{contactData.value}</p>
                             </div>
                           </div>
                         </li>
@@ -679,8 +610,10 @@ const ListingView = () => {
                                 className="text-dark"
                               >
                                 <p className="text-underline">
-                                  G 805, Monsoon breeze Sec 78 Gurgaon Haryana,
-                                  , Gurugram, Haryana - 122051
+                                  {locationData.address_line_1},{" "}
+                                  {locationData.address_line_2},{" "}
+                                  {locationData.landmark}, {locationData.city},{" "}
+                                  {locationData.state} - {locationData.pin_code}
                                 </p>
                               </a>
                             </div>
@@ -693,45 +626,41 @@ const ListingView = () => {
                   <div className="jb-apply-form bg-white rounded py-4 px-4 border mb-4">
                     <h4 className="ft-bold mb-1">Tags</h4>
                     <div className="row mt-2">
-                      <div
-                        className="btn w-auto m-1 px-3 py-2"
-                        style={{
-                          backgroundColor: "#fff",
-                          color: "#000",
-                          border: "1.5px solid #ccc",
-                          borderRadius: "5px",
-                        }}
-                      >
-                        health
-                      </div>
-                      <div
-                        className="btn w-auto m-1 px-3 py-2"
-                        style={{
-                          backgroundColor: "#fff",
-                          color: "#000",
-                          border: "1.5px solid #ccc",
-                          borderRadius: "5px",
-                        }}
-                      >
-                        Inpta
-                      </div>
+                      {tags.map((tag, index) => (
+                        <div
+                          className="w-auto m-1 px-3 py-2"
+                          style={{
+                            backgroundColor: "#fff",
+                            color: "#000",
+                            border: "1.5px solid #ccc",
+                            borderRadius: "5px",
+                            fontWeight: '550'
+                          }}
+                        >
+                          {tag}
+                        </div>
+                      ))}
                     </div>
                   </div>
 
                   <div className="jb-apply-form bg-white rounded py-4 px-4 border mb-4">
-                    <h4 className="ft-bold mb-1">Services</h4>
+                    <h4 className="ft-bold mb-1">Course Offered</h4>
                     <div className="row mt-2">
-                      <div
-                        className="btn w-auto m-1 px-3 py-2"
-                        style={{
-                          backgroundColor: "#fff",
-                          color: "#000",
-                          border: "1.5px solid #ccc",
-                          borderRadius: "5px",
-                        }}
-                      >
-                        Air Conditioner
-                      </div>
+                      {educationData?.course_offered?.map((course, index) => (
+                        <div
+                          className="w-auto m-1 px-3 py-2"
+                          key={index}
+                          style={{
+                            backgroundColor: "#fff",
+                            color: "#000",
+                            border: "1.5px solid #ccc",
+                            borderRadius: "5px",
+                            fontWeight: '550'
+                          }}
+                        >
+                          {course}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

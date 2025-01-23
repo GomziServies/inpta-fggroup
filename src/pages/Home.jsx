@@ -496,21 +496,8 @@ const Home = () => {
                       alt=""
                     />
                   </div>
-                  <div className="position-relative d-flex justify-content-center icons-margin">
-                    <div className="bg-light d-flex justify-content-center pt-2 px-1">
-                      <a className="btn btn-sm-square btn-primary mx-1" href="">
-                        <i className="fab fa-facebook-f"></i>
-                      </a>
-                      <a className="btn btn-sm-square btn-primary mx-1" href="">
-                        <i className="fab fa-twitter"></i>
-                      </a>
-                      <a className="btn btn-sm-square btn-primary mx-1" href="">
-                        <i className="fab fa-instagram"></i>
-                      </a>
-                    </div>
-                  </div>
                   <div className="text-center p-4">
-                    <h5 className="mb-0">Instructor Name</h5>
+                    <h5 className="mb-0">Dr. Gautam Jani</h5>
                     <small>Designation</small>
                   </div>
                 </div>
@@ -527,21 +514,8 @@ const Home = () => {
                       alt=""
                     />
                   </div>
-                  <div className="position-relative d-flex justify-content-center icons-margin">
-                    <div className="bg-light d-flex justify-content-center pt-2 px-1">
-                      <a className="btn btn-sm-square btn-primary mx-1" href="">
-                        <i className="fab fa-facebook-f"></i>
-                      </a>
-                      <a className="btn btn-sm-square btn-primary mx-1" href="">
-                        <i className="fab fa-twitter"></i>
-                      </a>
-                      <a className="btn btn-sm-square btn-primary mx-1" href="">
-                        <i className="fab fa-instagram"></i>
-                      </a>
-                    </div>
-                  </div>
                   <div className="text-center p-4">
-                    <h5 className="mb-0">Instructor Name</h5>
+                    <h5 className="mb-0">Foram Desai</h5>
                     <small>Designation</small>
                   </div>
                 </div>
@@ -558,21 +532,8 @@ const Home = () => {
                       alt=""
                     />
                   </div>
-                  <div className="position-relative d-flex justify-content-center icons-margin">
-                    <div className="bg-light d-flex justify-content-center pt-2 px-1">
-                      <a className="btn btn-sm-square btn-primary mx-1" href="">
-                        <i className="fab fa-facebook-f"></i>
-                      </a>
-                      <a className="btn btn-sm-square btn-primary mx-1" href="">
-                        <i className="fab fa-twitter"></i>
-                      </a>
-                      <a className="btn btn-sm-square btn-primary mx-1" href="">
-                        <i className="fab fa-instagram"></i>
-                      </a>
-                    </div>
-                  </div>
                   <div className="text-center p-4">
-                    <h5 className="mb-0">Instructor Name</h5>
+                    <h5 className="mb-0">Waqaar qureshi</h5>
                     <small>Designation</small>
                   </div>
                 </div>
@@ -589,21 +550,8 @@ const Home = () => {
                       alt=""
                     />
                   </div>
-                  <div className="position-relative d-flex justify-content-center icons-margin">
-                    <div className="bg-light d-flex justify-content-center pt-2 px-1">
-                      <a className="btn btn-sm-square btn-primary mx-1" href="">
-                        <i className="fab fa-facebook-f"></i>
-                      </a>
-                      <a className="btn btn-sm-square btn-primary mx-1" href="">
-                        <i className="fab fa-twitter"></i>
-                      </a>
-                      <a className="btn btn-sm-square btn-primary mx-1" href="">
-                        <i className="fab fa-instagram"></i>
-                      </a>
-                    </div>
-                  </div>
                   <div className="text-center p-4">
-                    <h5 className="mb-0">Instructor Name</h5>
+                    <h5 className="mb-0">Chirag Pandey</h5>
                     <small>Designation</small>
                   </div>
                 </div>

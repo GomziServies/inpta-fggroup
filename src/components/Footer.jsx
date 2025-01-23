@@ -13,7 +13,7 @@ function Footer() {
         rel="stylesheet"
       />
       <div
-        className="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn text-start"
+        className="container-fluid bg-dark text-light footer pt-5 wow fadeIn text-start"
         data-wow-delay="0.1s"
       >
         <div className="container py-5">

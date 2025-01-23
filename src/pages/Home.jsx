@@ -362,7 +362,7 @@ const Home = () => {
                 Popular Courses
               </h6>
               <h1 className="mb-5 home-title">
-                Most Popular INPTA-Certified Courses
+                INPTA's Most Popular Certification Programs
               </h1>
             </div>
             <div className="row g-4 justify-content-center">
@@ -682,13 +682,14 @@ const Home = () => {
               <h1 className="mb-5 home-title">What Our Partners Say</h1>
             </div>
             <div className="row justify-content-center">
-              <div className="col-md-4 testimonial-item text-center mb=md-0 mb-3">
+              <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
                 <img
                   className="border rounded-circle p-2 mx-auto mb-3 img-width-height"
                   src="images/team-1.webp"
                 />
                 <h5 className="mb-0">Gautam Jani</h5>
-                <p>Profession</p>
+                <p>Founder</p>
+                <span>FGIIT</span>
                 <div className="testimonial-text bg-light text-center p-4">
                   <p className="mb-0">
                     INPTA transformed our academy's reputation. Students now
@@ -696,13 +697,14 @@ const Home = () => {
                   </p>
                 </div>
               </div>
-              <div className="col-md-4 testimonial-item text-center mb=md-0 mb-3">
+              <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
                 <img
                   className="border rounded-circle p-2 mx-auto mb-3 img-width-height"
                   src="images/team-4.webp"
                 />
                 <h5 className="mb-0">chirag Pandey</h5>
-                <p>Profession</p>
+                <p>Manager (Faculty)</p>
+                <span>FGIIT</span>
                 <div className="testimonial-text bg-light text-center p-4">
                   <p className="mb-0">
                     The accreditation process was seamless and helped us align

@@ -9,6 +9,13 @@ import Slider from "react-slick";
 import Footer from "../components/Footer";
 import { inptaListingAxiosInstance } from "../js/api";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCertificate,
+  faChartSimple,
+  faCoins,
+  faPersonChalkboard,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -106,7 +113,7 @@ const Home = () => {
                     <h5 className="text-white text-uppercase mb-3 animated slideInDown">
                       Welcome to INPTA
                     </h5>
-                    <h1 className="display-3 text-white animated slideInDown">
+                    <h1 className="display-3 text-white animated slideInDown mb-md-0 mb-3">
                       Elevate Your Institution with INPTA Accreditation
                     </h1>
                     <p className="fs-5 text-white mb-4 pb-2">
@@ -132,7 +139,113 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="container-xxl py-5 text-start">
+        {/* <div className="container-xxl py-4 text-start">
+          <div className="container">
+            <div className="row g-5">
+              <div
+                className="col-lg-6 wow order-1 fadeInUp container-min-height d-md-block d-none"
+                data-wow-delay="0.1s"
+              >
+                <div className="position-relative h-100">
+                  <img
+                    className="img-fluid position-absolute w-100 h-100 object-fit-cover"
+                    src="images/about.webp"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div
+                className="col-lg-6 order-0 wow fadeInUp"
+                data-wow-delay="0.3s"
+              >
+                <h6 className="section-title bg-white text-start text-primary pe-3">
+                  INPTA
+                </h6>
+                <h1 className="mb-4 home-title">What Is INPTA?</h1>
+                <div className="d-md-none d-block mb-3">
+                  <img
+                    className="img-fluid w-100 "
+                    src="images/about.webp"
+                    alt=""
+                  />
+                </div>
+                <p className="mb-4">
+                  Welcome to INPTA - India's central government- approved
+                  accreditation body dedicated to revolutionizing the fitness
+                  industry. Our mission is to empower gyms by creating a new
+                  revenue stream through professional trainer certifications and
+                  structured education programs.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div> */}
+
+        <div className="container-xxl py-4 text-start">
+          <div className="container">
+            <div className="row g-5">
+              <div
+                className="col-lg-6 wow fadeInUp container-min-height d-md-block d-none"
+                data-wow-delay="0.1s"
+              >
+                <div className="position-relative h-100">
+                  <img
+                    className="img-fluid position-absolute w-100 h-100 object-fit-cover"
+                    src="images/about.webp"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                <h6 className="section-title bg-white text-start text-primary pe-3">
+                  About INPTA
+                </h6>
+                <h1 className="mb-4 home-title">What Is INPTA?</h1>
+                <div className="d-md-none d-block mb-3">
+                  <img
+                    className="img-fluid w-100 "
+                    src="images/about.webp"
+                    alt=""
+                  />
+                </div>
+                <p className="mb-4">
+                  Welcome to INPTA - India's central government- approved
+                  accreditation body dedicated to revolutionizing the fitness
+                  industry. Our mission is to empower gyms by creating a new
+                  revenue stream through professional trainer certifications and
+                  structured education programs, academies gain access to
+                </p>
+                <div className="row gy-2 gx-4 mb-4">
+                  <div className="col-sm-6">
+                    <p className="mb-0">
+                      <i className="fa fa-arrow-right text-primary me-2"></i>
+                      Internationally Certified Programs
+                    </p>
+                  </div>
+                  <div className="col-sm-6">
+                    <p className="mb-0">
+                      <i className="fa fa-arrow-right text-primary me-2"></i>
+                      Global Networking Opportunities
+                    </p>
+                  </div>
+                  <div className="col-sm-6">
+                    <p className="mb-0">
+                      <i className="fa fa-arrow-right text-primary me-2"></i>
+                      Expert Guidance and Resources
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  className="btn btn-primary py-3 px-5 mt-2"
+                  to="https://fggroup.in/inpta/home-inpta"
+                >
+                  Read More
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <div className="container-xxl py-5 text-start">
           <div className="container">
             <div className="row g-4">
               <div
@@ -197,68 +310,98 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="container-xxl py-5 text-start">
+        </div> */}
+        <div className="container-xxl py-4 text-start">
           <div className="container">
-            <div className="row g-5">
+            <div className="text-center">
+              <h6 className="section-title bg-white text-center text-primary px-3">
+                Fitness Educator
+              </h6>
+              <h1 className="mb-5 home-title">
+                Fulfill Your Dream of <br /> Becoming a Health and Fitness
+                Educator
+              </h1>
+              <p className="mb-5 d-none">
+                Imagine a future where your passion for fitness turns into a
+                legacy of education. At INPTA, we provide the platform to help
+                you achieve just that. Whether you're a gym owner looking to
+                elevate your business or a trainer dreaming of mentoring the
+                next wave of fitness professionals, INPTA is your trusted
+                partner.
+              </p>
+            </div>
+            <div className="row g-4">
               <div
-                className="col-lg-6 wow fadeInUp container-min-height d-md-block d-none"
+                className="col-lg-3 col-sm-6 wow fadeInUp"
                 data-wow-delay="0.1s"
               >
-                <div className="position-relative h-100">
-                  <img
-                    className="img-fluid position-absolute w-100 h-100 object-fit-cover"
-                    src="images/about.webp"
-                    alt=""
-                  />
+                <div className="service-item text-center pt-3">
+                  <div className="p-4">
+                    <FontAwesomeIcon
+                      icon={faCertificate}
+                      className="text-primary mb-4 fa-3x"
+                    />
+                    <h5 className="mb-3">National Recognition</h5>
+                    <p>
+                      Gain credibility with India's central government-approved
+                      accreditation.
+                    </p>
+                  </div>
                 </div>
               </div>
-              <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                <h6 className="section-title bg-white text-start text-primary pe-3">
-                  About INPTA
-                </h6>
-                <h1 className="mb-4 home-title">
-                  Welcome to INPTA Accreditation
-                </h1>
-                <div className="d-md-none d-block mb-3">
-                  <img
-                    className="img-fluid w-100 "
-                    src="images/about.webp"
-                    alt=""
-                  />
-                </div>
-                <p className="mb-4">
-                  The International Network of Professional Training Academies
-                  (INPTA) is a globally recognized organization dedicated to
-                  enhancing the quality of fitness and health education. With
-                  our accreditation, academies gain access to
-                </p>
-                <div className="row gy-2 gx-4 mb-4">
-                  <div className="col-sm-6">
-                    <p className="mb-0">
-                      <i className="fa fa-arrow-right text-primary me-2"></i>
-                      Internationally Certified Programs
-                    </p>
-                  </div>
-                  <div className="col-sm-6">
-                    <p className="mb-0">
-                      <i className="fa fa-arrow-right text-primary me-2"></i>
-                      Global Networking Opportunities
-                    </p>
-                  </div>
-                  <div className="col-sm-6">
-                    <p className="mb-0">
-                      <i className="fa fa-arrow-right text-primary me-2"></i>
-                      Expert Guidance and Resources
+              <div
+                className="col-lg-3 col-sm-6 wow fadeInUp"
+                data-wow-delay="0.3s"
+              >
+                <div className="service-item text-center pt-3">
+                  <div className="p-4">
+                    <FontAwesomeIcon
+                      icon={faPersonChalkboard}
+                      className="text-primary mb-4 fa-3x"
+                    />
+                    <h5 className="mb-3">Teach and Inspire</h5>
+                    <p className="pb-4">
+                      Turn your knowledge into impact by mentoring aspiring
+                      fitness trainers.
                     </p>
                   </div>
                 </div>
-                <Link
-                  className="btn btn-primary py-3 px-5 mt-2"
-                  to="https://fggroup.in/inpta/home-inpta"
-                >
-                  Read More
-                </Link>
+              </div>
+              <div
+                className="col-lg-3 col-sm-6 wow fadeInUp"
+                data-wow-delay="0.5s"
+              >
+                <div className="service-item text-center pt-3">
+                  <div className="p-4">
+                    <FontAwesomeIcon
+                      icon={faChartSimple}
+                      className="text-primary mb-4 fa-3x"
+                    />
+                    <h5 className="mb-3">Professional Growth</h5>
+                    <p className="pb-4">
+                      Transition from being just a trainer to an industry
+                      educator.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="col-lg-3 col-sm-6 wow fadeInUp"
+                data-wow-delay="0.7s"
+              >
+                <div className="service-item text-center pt-3">
+                  <div className="p-4">
+                    <FontAwesomeIcon
+                      icon={faCoins}
+                      className="text-primary mb-4 fa-3x"
+                    />
+                    <h5 className="mb-3">Financial Freedom</h5>
+                    <p className="pb-4">
+                      Open doors to multiple revenue streams through structured
+                      training programs.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -355,7 +498,7 @@ const Home = () => {
             </div>
           </div>
         </div> */}
-        <div className="container-xxl py-5 text-start">
+        <div className="container-xxl py-4 text-start">
           <div className="container">
             <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
               <h6 className="section-title bg-white text-center text-primary px-3">
@@ -586,92 +729,214 @@ const Home = () => {
             </div>
           </div>
         </div>
-        {/* <div className="container-xxl py-5 text-start">
+        <div
+          className="container-xxl py-4 wow fadeInUp text-start"
+          data-wow-delay="0.1s"
+        >
           <div className="container">
-            <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <div className="text-center">
               <h6 className="section-title bg-white text-center text-primary px-3">
-                Expert Instructors
+                Steps
               </h6>
-              <h1 className="mb-5 home-title">Meet Our Expert Instructor</h1>
+              <h1 className="mb-5 home-title">
+                INPTA: The Governing Body for Fitness Transformation
+              </h1>
             </div>
-            <div className="row g-4">
-              <div
-                className="col-lg-3 col-6 wow fadeInUp"
-                data-wow-delay="0.1s"
-              >
-                <div className="team-item bg-light">
-                  <div className="overflow-hidden">
-                    <img
-                      className="img-fluid"
-                      src="images/team-1.webp"
-                      alt=""
-                    />
+            <div className="row justify-content-center">
+              <div className="col-md-4">
+                <div
+                  className="bg-light position-relative px-3 my-5"
+                  style={{ height: "276px" }}
+                >
+                  <div
+                    className="font-weight-bold circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white"
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      top: "-30px",
+                      borderWidth: "4px !important",
+                      backgroundColor: "#1b4681",
+                    }}
+                  >
+                    1
                   </div>
-                  <div className="text-center p-4">
-                    <h5 className="mb-0">Dr. Gautam Jani</h5>
-                    <small>Designation</small>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-3 col-6 wow fadeInUp"
-                data-wow-delay="0.3s"
-              >
-                <div className="team-item bg-light">
-                  <div className="overflow-hidden">
-                    <img
-                      className="img-fluid"
-                      src="images/team-2.webp"
-                      alt=""
-                    />
-                  </div>
-                  <div className="text-center p-4">
-                    <h5 className="mb-0">Foram Desai</h5>
-                    <small>Designation</small>
+                  <div className="px-3 text-center pb-3">
+                    <h4>Affiliation with INPTA</h4>
+                    <p className="font-weight-light my-3">
+                      As a government-approved accreditation body, INPTA
+                      affiliates your gym, giving it national recognition and
+                      credibility.
+                    </p>
                   </div>
                 </div>
               </div>
-              <div
-                className="col-lg-3 col-6 wow fadeInUp"
-                data-wow-delay="0.5s"
-              >
-                <div className="team-item bg-light">
-                  <div className="overflow-hidden">
-                    <img
-                      className="img-fluid"
-                      src="images/team-3.webp"
-                      alt=""
-                    />
+              <div className="col-md-4">
+                <div
+                  className="bg-light position-relative px-3 my-5"
+                  style={{ height: "276px" }}
+                >
+                  <div
+                    className="font-weight-bold circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white"
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      top: "-30px",
+                      borderWidth: "4px !important",
+                      backgroundColor: "#1b4681",
+                    }}
+                  >
+                    2
                   </div>
-                  <div className="text-center p-4">
-                    <h5 className="mb-0">Waqaar qureshi</h5>
-                    <small>Designation</small>
+                  <div className="px-3 text-center pb-3">
+                    <h4>Structured Academy Setup</h4>
+                    <p className="font-weight-light my-1">
+                      INPTA designs the entire academy structure, including:
+                    </p>
+                    <div
+                      className="d-flex mx-auto flex-column text-start"
+                      style={{ width: "100%" }}
+                    >
+                      <div className="d-flex">
+                        <span>-</span>
+                        <p className="ms-1 font-weight-light my-0 text-color-light">
+                          Comprehensive syllabus for training programs
+                        </p>
+                      </div>
+                      <div className="d-flex">
+                        <span>-</span>
+                        <p className="ms-1 font-weight-light my-0 text-color-light">
+                          Study materials, books, and access to the INPTA app
+                        </p>
+                      </div>
+                      <div className="d-flex">
+                        <span>-</span>
+                        <p className="ms-1 font-weight-light my-0 text-color-light">
+                          Operational framework to seamlessly run a professional
+                          academy
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div
-                className="col-lg-3 col-6 wow fadeInUp"
-                data-wow-delay="0.7s"
-              >
-                <div className="team-item bg-light">
-                  <div className="overflow-hidden">
-                    <img
-                      className="img-fluid"
-                      src="images/team-4.webp"
-                      alt=""
-                    />
+              <div className="col-md-4">
+                <div
+                  className="bg-light position-relative px-3 my-5"
+                  style={{ height: "276px" }}
+                >
+                  <div
+                    className="font-weight-bold circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white"
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      top: "-30px",
+                      borderWidth: "4px !important",
+                      backgroundColor: "#1b4681",
+                    }}
+                  >
+                    3
                   </div>
-                  <div className="text-center p-4">
-                    <h5 className="mb-0">Chirag Pandey</h5>
-                    <small>Designation</small>
+                  <div className="px-3 text-center pb-3">
+                    <h4>Train the Trainers - The Core Program</h4>
+                    <p className="font-weight-light my-1">
+                      INPTA's Train the Trainer program is a game- changer:
+                    </p>
+                    <div
+                      className="d-flex mx-auto flex-column text-start"
+                      style={{ width: "100%" }}
+                    >
+                      <div className="d-flex">
+                        <span>-</span>
+                        <p className="ms-1 font-weight-light my-0 text-color-light">
+                          A 3-day intensive workshop transforms trainers into
+                          certified educators.
+                        </p>
+                      </div>
+                      <div className="d-flex">
+                        <span>-</span>
+                        <p className="ms-1 font-weight-light my-0 text-color-light">
+                          Focuses on teaching methodologies, fitness standards,
+                          and professional skills.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div
+                  className="bg-light position-relative px-3 my-5"
+                  style={{ height: "276px" }}
+                >
+                  <div
+                    className="font-weight-bold circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white"
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      top: "-30px",
+                      borderWidth: "4px !important",
+                      backgroundColor: "#1b4681",
+                    }}
+                  >
+                    4
+                  </div>
+                  <div className="px-3 text-center pb-3">
+                    <h4>Marketing and Student Enrollment</h4>
+                    <p className="font-weight-light my-3">
+                      INPTA manages all marketing strategies and student
+                      enrollments for your academy.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div
+                  className="bg-light position-relative px-3 my-5"
+                  style={{ height: "276px" }}
+                >
+                  <div
+                    className="font-weight-bold circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white"
+                    style={{
+                      width: "60px",
+                      height: "60px",
+                      top: "-30px",
+                      borderWidth: "4px !important",
+                      backgroundColor: "#1b4681",
+                    }}
+                  >
+                    5
+                  </div>
+                  <div className="px-3 text-center pb-3">
+                    <h4>Exams and Certifications</h4>
+                    <p className="font-weight-light my-1">
+                      INPTA governs and oversees the entire certification
+                      process, including:
+                    </p>
+                    <div
+                      className="d-flex mx-auto flex-column text-start"
+                      style={{ width: "100%" }}
+                    >
+                      <div className="d-flex">
+                        <span>-</span>
+                        <p className="ms-1 font-weight-light my-0 text-color-light">
+                          Exams, Viva, and Project Evaluations.
+                        </p>
+                      </div>
+                      <div className="d-flex">
+                        <span>-</span>
+                        <p className="ms-1 font-weight-light my-0 text-color-light">
+                          Certification with INPTA's seal of excellence.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         <div
-          className="container-xxl py-5 wow fadeInUp text-start"
+          className="container-xxl py-4 wow fadeInUp text-start"
           data-wow-delay="0.1s"
         >
           <div className="container">
@@ -710,6 +975,200 @@ const Home = () => {
                     The accreditation process was seamless and helped us align
                     with global standards.
                   </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="container-xxl py-4 wow fadeInUp text-start"
+          data-wow-delay="0.1s"
+        >
+          <div className="container">
+            <div className="text-center">
+              <h6 className="section-title bg-white text-center text-primary px-3">
+                Students
+              </h6>
+              <h1 className="mb-5 home-title">Passout Students</h1>
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
+                <img
+                  className="mx-auto mb-3 border-radius-10"
+                  src="images/student/student-1.webp"
+                  alt="student"
+                />
+              </div>
+              <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
+                <img
+                  className="mx-auto mb-3 border-radius-10"
+                  src="images/student/student-2.webp"
+                  alt="student"
+                />
+              </div>
+              <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
+                <img
+                  className="mx-auto mb-3 border-radius-10"
+                  src="images/student/student-3.webp"
+                  alt="student"
+                />
+              </div>
+              <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
+                <img
+                  className="mx-auto mb-3 border-radius-10"
+                  src="images/student/student-4.webp"
+                  alt="student"
+                />
+              </div>
+              <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
+                <img
+                  className="mx-auto mb-3 border-radius-10"
+                  src="images/student/student-5.webp"
+                  alt="student"
+                />
+              </div>
+              <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
+                <img
+                  className="mx-auto mb-3 border-radius-10"
+                  src="images/student/student-6.webp"
+                  alt="student"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="container-xxl py-4 wow fadeInUp text-start"
+          data-wow-delay="0.1s"
+        >
+          <div className="container">
+            <div className="text-center">
+              <h6 className="section-title bg-white text-center text-primary px-3">
+                Books
+              </h6>
+              <h1 className="mb-5 home-title">We Provide Reference Books</h1>
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-md-2 col-6 testimonial-item text-center mb-md-0 mb-3">
+                <img
+                  className="mx-auto mb-3 border-radius-10"
+                  src="images/books/book-anabolic.webp"
+                  alt="books"
+                />
+              </div>
+              <div className="col-md-2 col-6 testimonial-item text-center mb-md-0 mb-3">
+                <img
+                  className="mx-auto mb-3 border-radius-10"
+                  src="images/books/book-dnc.webp"
+                  alt="books"
+                />
+              </div>
+              <div className="col-md-2 col-6 testimonial-item text-center mb-md-0 mb-3">
+                <img
+                  className="mx-auto mb-3 border-radius-10"
+                  src="images/books/book-dpt.webp"
+                  alt="books"
+                />
+              </div>
+              <div className="col-md-2 col-6 testimonial-item text-center mb-md-0 mb-3">
+                <img
+                  className="mx-auto mb-3 border-radius-10"
+                  src="images/books/book-group.webp"
+                  alt="books"
+                />
+              </div>
+              <div className="col-md-2 col-6 testimonial-item text-center mb-md-0 mb-3">
+                <img
+                  className="mx-auto mb-3 border-radius-10"
+                  src="images/books/book-injury.webp"
+                  alt="books"
+                />
+              </div>
+              <div className="col-md-2 col-6 testimonial-item text-center mb-md-0 mb-3">
+                <img
+                  className="mx-auto mb-3 border-radius-10"
+                  src="images/books/book-powerlifting.webp"
+                  alt="books"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="container-xxl py-4 text-start">
+          <div className="container">
+            <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
+              <h6 className="section-title bg-white text-center text-primary px-3">
+                Expert Instructors
+              </h6>
+              <h1 className="mb-5 home-title">Meet Our Expert Instructor</h1>
+            </div>
+            <div className="row g-4">
+              <div
+                className="col-lg-3 col-6 wow fadeInUp"
+                data-wow-delay="0.1s"
+              >
+                <div className="team-item bg-light">
+                  <div className="overflow-hidden">
+                    <img
+                      className="img-fluid"
+                      src="images/team-1.webp"
+                      alt=""
+                    />
+                  </div>
+                  <div className="text-center p-4">
+                    <h5 className="mb-0">Dr. Gautam Jani</h5>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="col-lg-3 col-6 wow fadeInUp"
+                data-wow-delay="0.3s"
+              >
+                <div className="team-item bg-light">
+                  <div className="overflow-hidden">
+                    <img
+                      className="img-fluid"
+                      src="images/team-2.webp"
+                      alt=""
+                    />
+                  </div>
+                  <div className="text-center p-4">
+                    <h5 className="mb-0">Foram Desai</h5>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="col-lg-3 col-6 wow fadeInUp"
+                data-wow-delay="0.5s"
+              >
+                <div className="team-item bg-light">
+                  <div className="overflow-hidden">
+                    <img
+                      className="img-fluid"
+                      src="images/team-3.webp"
+                      alt=""
+                    />
+                  </div>
+                  <div className="text-center p-4">
+                    <h5 className="mb-0">Waqaar qureshi</h5>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="col-lg-3 col-6 wow fadeInUp"
+                data-wow-delay="0.7s"
+              >
+                <div className="team-item bg-light">
+                  <div className="overflow-hidden">
+                    <img
+                      className="img-fluid"
+                      src="images/team-4.webp"
+                      alt=""
+                    />
+                  </div>
+                  <div className="text-center p-4">
+                    <h5 className="mb-0">Chirag Pandey</h5>
+                  </div>
                 </div>
               </div>
             </div>

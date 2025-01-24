@@ -1742,3 +1742,12 @@ button.bg-dark:hover {
     line-height: 45px !important;
   }
 }
+
+.border-radius-10 {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.text-color-light {
+  color: rgb(114, 114, 114);
+}

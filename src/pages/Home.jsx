@@ -114,7 +114,7 @@ const Home = () => {
                       Welcome to INPTA
                     </h5>
                     <h1 className="display-3 text-white animated slideInDown mb-md-0 mb-3">
-                      Elevate Your Institution with INPTA Accreditation
+                      Start Your Own Fitness Accreditation
                     </h1>
                     <p className="fs-5 text-white mb-4 pb-2">
                       Join a globally recognized network of academies shaping
@@ -191,7 +191,7 @@ const Home = () => {
                 <div className="position-relative h-100">
                   <img
                     className="img-fluid position-absolute w-100 h-100 object-fit-cover"
-                    src="images/about.webp"
+                    src="images/home-banner.webp"
                     alt=""
                   />
                 </div>
@@ -200,11 +200,11 @@ const Home = () => {
                 <h6 className="section-title bg-white text-start text-primary pe-3">
                   About INPTA
                 </h6>
-                <h1 className="mb-4 home-title">What Is INPTA?</h1>
+                <h1 className="mb-4 home-title">What is INPTA?</h1>
                 <div className="d-md-none d-block mb-3">
                   <img
                     className="img-fluid w-100 "
-                    src="images/about.webp"
+                    src="images/home-banner.webp"
                     alt=""
                   />
                 </div>
@@ -744,20 +744,8 @@ const Home = () => {
             </div>
             <div className="row justify-content-center">
               <div className="col-md-4">
-                <div
-                  className="bg-light position-relative px-3 my-5"
-                  style={{ height: "276px" }}
-                >
-                  <div
-                    className="font-weight-bold circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white"
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      top: "-30px",
-                      borderWidth: "4px !important",
-                      backgroundColor: "#1b4681",
-                    }}
-                  >
+                <div className="bg-steps position-relative px-3 my-4">
+                  <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     1
                   </div>
                   <div className="px-3 text-center pb-3">
@@ -771,20 +759,8 @@ const Home = () => {
                 </div>
               </div>
               <div className="col-md-4">
-                <div
-                  className="bg-light position-relative px-3 my-5"
-                  style={{ height: "276px" }}
-                >
-                  <div
-                    className="font-weight-bold circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white"
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      top: "-30px",
-                      borderWidth: "4px !important",
-                      backgroundColor: "#1b4681",
-                    }}
-                  >
+                <div className="bg-steps position-relative px-3 my-4">
+                  <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     2
                   </div>
                   <div className="px-3 text-center pb-3">
@@ -820,20 +796,8 @@ const Home = () => {
                 </div>
               </div>
               <div className="col-md-4">
-                <div
-                  className="bg-light position-relative px-3 my-5"
-                  style={{ height: "276px" }}
-                >
-                  <div
-                    className="font-weight-bold circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white"
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      top: "-30px",
-                      borderWidth: "4px !important",
-                      backgroundColor: "#1b4681",
-                    }}
-                  >
+                <div className="bg-steps position-relative px-3 my-4">
+                  <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     3
                   </div>
                   <div className="px-3 text-center pb-3">
@@ -864,20 +828,8 @@ const Home = () => {
                 </div>
               </div>
               <div className="col-md-4">
-                <div
-                  className="bg-light position-relative px-3 my-5"
-                  style={{ height: "276px" }}
-                >
-                  <div
-                    className="font-weight-bold circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white"
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      top: "-30px",
-                      borderWidth: "4px !important",
-                      backgroundColor: "#1b4681",
-                    }}
-                  >
+                <div className="bg-steps position-relative px-3 my-4">
+                  <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     4
                   </div>
                   <div className="px-3 text-center pb-3">
@@ -890,20 +842,8 @@ const Home = () => {
                 </div>
               </div>
               <div className="col-md-4">
-                <div
-                  className="bg-light position-relative px-3 my-5"
-                  style={{ height: "276px" }}
-                >
-                  <div
-                    className="font-weight-bold circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white"
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      top: "-30px",
-                      borderWidth: "4px !important",
-                      backgroundColor: "#1b4681",
-                    }}
-                  >
+                <div className="bg-steps position-relative px-3 my-4">
+                  <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     5
                   </div>
                   <div className="px-3 text-center pb-3">
@@ -951,6 +891,7 @@ const Home = () => {
                 <img
                   className="border rounded-circle p-2 mx-auto mb-3 img-width-height"
                   src="images/team-1.webp"
+                  alt="partner"
                 />
                 <h5 className="mb-0">Gautam Jani</h5>
                 <p>Founder</p>
@@ -962,7 +903,7 @@ const Home = () => {
                   </p>
                 </div>
               </div>
-              <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
+              {/* <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
                 <img
                   className="border rounded-circle p-2 mx-auto mb-3 img-width-height"
                   src="images/team-4.webp"
@@ -976,7 +917,7 @@ const Home = () => {
                     with global standards.
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -1104,7 +1045,7 @@ const Home = () => {
             </div>
             <div className="row g-4">
               <div
-                className="col-lg-3 col-6 wow fadeInUp"
+                className="col-lg-2 col-6 wow fadeInUp"
                 data-wow-delay="0.1s"
               >
                 <div className="team-item bg-light">
@@ -1121,7 +1062,7 @@ const Home = () => {
                 </div>
               </div>
               <div
-                className="col-lg-3 col-6 wow fadeInUp"
+                className="col-lg-2 col-6 wow fadeInUp"
                 data-wow-delay="0.3s"
               >
                 <div className="team-item bg-light">
@@ -1133,12 +1074,12 @@ const Home = () => {
                     />
                   </div>
                   <div className="text-center p-4">
-                    <h5 className="mb-0">Foram Desai</h5>
+                    <h5 className="mb-0">Dt. Foram Desai</h5>
                   </div>
                 </div>
               </div>
               <div
-                className="col-lg-3 col-6 wow fadeInUp"
+                className="col-lg-2 col-6 wow fadeInUp"
                 data-wow-delay="0.5s"
               >
                 <div className="team-item bg-light">
@@ -1150,12 +1091,12 @@ const Home = () => {
                     />
                   </div>
                   <div className="text-center p-4">
-                    <h5 className="mb-0">Waqaar qureshi</h5>
+                    <h5 className="mb-0">Pt. Waqaar Qureshi</h5>
                   </div>
                 </div>
               </div>
               <div
-                className="col-lg-3 col-6 wow fadeInUp"
+                className="col-lg-2 col-6 wow fadeInUp"
                 data-wow-delay="0.7s"
               >
                 <div className="team-item bg-light">
@@ -1167,7 +1108,41 @@ const Home = () => {
                     />
                   </div>
                   <div className="text-center p-4">
-                    <h5 className="mb-0">Chirag Pandey</h5>
+                    <h5 className="mb-0">Dr. Chirag Pandey</h5>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="col-lg-2 col-6 wow fadeInUp"
+                data-wow-delay="0.7s"
+              >
+                <div className="team-item bg-light">
+                  <div className="overflow-hidden">
+                    <img
+                      className="img-fluid"
+                      src="images/team-5.webp"
+                      alt=""
+                    />
+                  </div>
+                  <div className="text-center p-4">
+                    <h5 className="mb-0">Dt. Poonam Patel</h5>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="col-lg-2 col-6 wow fadeInUp"
+                data-wow-delay="0.7s"
+              >
+                <div className="team-item bg-light">
+                  <div className="overflow-hidden">
+                    <img
+                      className="img-fluid"
+                      src="images/team-6.webp"
+                      alt=""
+                    />
+                  </div>
+                  <div className="text-center p-4">
+                    <h5 className="mb-0">Dr. Khamiyan</h5>
                   </div>
                 </div>
               </div>

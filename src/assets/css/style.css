@@ -1727,6 +1727,21 @@ button.bg-dark:hover {
   justify-content: space-between;
 }
 
+.border-radius-10 {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.text-color-light {
+  color: rgb(114, 114, 114);
+}
+
+.bg-steps {
+  background-color: #64a6ff2e;
+  height: 276px;
+  border-radius: 10px;
+}
+
 @media (max-width: 556px) {
   .welcome-sec {
     margin-top: 70px !important;
@@ -1741,13 +1756,15 @@ button.bg-dark:hover {
     font-size: 36px !important;
     line-height: 45px !important;
   }
+  .bg-steps {
+    height: 84%;
+  }
 }
 
-.border-radius-10 {
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.text-color-light {
-  color: rgb(114, 114, 114);
+.step-round {
+  width: 60px;
+  height: 60px;
+  top: -30px;
+  border-width: 4px !important;
+  background-color: #1b4681;
 }

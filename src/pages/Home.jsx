@@ -312,6 +312,70 @@ const Home = () => {
             </div>
           </div>
         </div> */}
+        <section id="values" className="values section mb-3">
+          {/* Section Title */}
+          <div className="container" data-aos="fade-up">
+          <div className="text-center">
+              <h6 className="section-title bg-white text-center text-primary px-3">
+                Fitness Industry
+              </h6>
+              <h1 className="mb-5 home-title">
+              Challenges in India's Health and Fitness Industry
+              </h1>
+            </div>
+         
+          {/* End Section Title */}
+          
+            <div className="row gy-4 p-3">
+              <div className="col-lg-4" data-aos="fade-up" data-aos-delay={100}>
+                <div className="card">
+                  <img
+                    src="images/values-1.png"
+                    className="img-fluid"
+                    alt=""
+                  />
+                  <h3>Ad cupiditate sed est odio</h3>
+                  <p>
+                    Eum ad dolor et. Autem aut fugiat debitis voluptatem
+                    consequuntur sit. Et veritatis id.
+                  </p>
+                </div>
+              </div>
+              {/* End Card Item */}
+              <div className="col-lg-4" data-aos="fade-up" data-aos-delay={200}>
+                <div className="card">
+                  <img
+                    src="images/values-2.png"
+                    className="img-fluid"
+                    alt=""
+                  />
+                  <h3>Voluptatem voluptatum alias</h3>
+                  <p>
+                    Repudiandae amet nihil natus in distinctio suscipit id.
+                    Doloremque ducimus ea sit non.
+                  </p>
+                </div>
+              </div>
+              {/* End Card Item */}
+              <div className="col-lg-4" data-aos="fade-up" data-aos-delay={300}>
+                <div className="card">
+                  <img
+                    src="images/values-3.png"
+                    className="img-fluid"
+                    alt=""
+                  />
+                  <h3>Fugit cupiditate alias nobis.</h3>
+                  <p>
+                    Quam rem vitae est autem molestias explicabo debitis sint.
+                    Vero aliquid quidem commodi.
+                  </p>
+                </div>
+              </div>
+              {/* End Card Item */}
+            </div>
+            </div>
+        </section>
+
         <div className="container-xxl py-4 text-start">
           <div className="container">
             <div className="text-center">

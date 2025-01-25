@@ -669,7 +669,7 @@ const AddListing = () => {
             </div>
           </div>
         )}
-        <div id="main-wrapper">
+        <div id="main-wrapper"> 
           <Header />
           <div className="clearfix" />
           <div className="goodup-dashboard-wrap gray px-4 py-5 add-listing-page">

@@ -181,7 +181,6 @@ const Home = () => {
             </div>
           </div>
         </div> */}
-
         <div className="container-xxl py-4 text-start">
           <div className="container">
             <div className="row g-5">
@@ -315,67 +314,70 @@ const Home = () => {
         <section id="values" className="values section mb-3">
           {/* Section Title */}
           <div className="container" data-aos="fade-up">
-          <div className="text-center">
+            <div className="text-center">
               <h6 className="section-title bg-white text-center text-primary px-3">
                 Fitness Industry
               </h6>
               <h1 className="mb-5 home-title">
-              Challenges in India's Health and Fitness Industry
+                Challenges in India's Health and Fitness Industry
               </h1>
             </div>
-         
-          {/* End Section Title */}
-          
-            <div className="row gy-4 p-3">
-              <div className="col-lg-4" data-aos="fade-up" data-aos-delay={100}>
-                <div className="card">
-                  <img
-                    src="images/values-1.png"
-                    className="img-fluid"
-                    alt=""
-                  />
-                  <h3>Ad cupiditate sed est odio</h3>
-                  <p>
-                    Eum ad dolor et. Autem aut fugiat debitis voluptatem
-                    consequuntur sit. Et veritatis id.
-                  </p>
-                </div>
-              </div>
-              {/* End Card Item */}
-              <div className="col-lg-4" data-aos="fade-up" data-aos-delay={200}>
-                <div className="card">
-                  <img
-                    src="images/values-2.png"
-                    className="img-fluid"
-                    alt=""
-                  />
-                  <h3>Voluptatem voluptatum alias</h3>
-                  <p>
-                    Repudiandae amet nihil natus in distinctio suscipit id.
-                    Doloremque ducimus ea sit non.
-                  </p>
-                </div>
-              </div>
-              {/* End Card Item */}
-              <div className="col-lg-4" data-aos="fade-up" data-aos-delay={300}>
-                <div className="card">
-                  <img
-                    src="images/values-3.png"
-                    className="img-fluid"
-                    alt=""
-                  />
-                  <h3>Fugit cupiditate alias nobis.</h3>
-                  <p>
-                    Quam rem vitae est autem molestias explicabo debitis sint.
-                    Vero aliquid quidem commodi.
-                  </p>
-                </div>
-              </div>
-              {/* End Card Item */}
-            </div>
-            </div>
-        </section>
 
+            {/* End Section Title */}
+            <div className="row gy-4 p-3">
+              <div className="col-md-4" data-aos="fade-up" data-aos-delay={100}>
+                <div className="card">
+                  <img src="images/img-1.webp" className="img-fluid" alt="" />
+                  <h3>Scarcity of Fitness Academies</h3>
+                  <p>
+                    There is a severe lack of professional academies dedicated
+                    to fitness education, leaving aspiring trainers and fitness
+                    enthusiasts without proper resources to develop their
+                    skills.
+                  </p>
+                </div>
+              </div>
+              {/* End Card Item */}
+              <div className="col-md-4" data-aos="fade-up" data-aos-delay={200}>
+                <div className="card">
+                  <img src="images/img-2.webp" className="img-fluid" alt="" />
+                  <h3>Uncertified Trainers and Dietitians</h3>
+                  <p>
+                    Many trainers and nutritionists lack recognized
+                    certifications, leading to reduced trust, poor service
+                    quality, and unprofessional practices across the industry.
+                  </p>
+                </div>
+              </div>
+              {/* End Card Item */}
+              <div className="col-md-4" data-aos="fade-up" data-aos-delay={300}>
+                <div className="card">
+                  <img src="images/img-3.webp" className="img-fluid" alt="" />
+                  <h3>Lack of Qualified Fitness Educators</h3>
+                  <p>
+                    The fitness sector faces a dire shortage of skilled
+                    educators who can mentor the next generation of trainers,
+                    leaving a gap in structured, high-quality learning
+                    opportunities.
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-4 d-none" data-aos="fade-up" data-aos-delay={300}>
+                <div className="card">
+                  <img src="images/values-3.png" className="img-fluid" alt="" />
+                  <h3>Underutilized Space and Revenue Potential</h3>
+                  <p>
+                    The fitness sector faces a dire shortage of skilled
+                    educators who can mentor the next generation of trainers,
+                    leaving a gap in structured, high-quality learning
+                    opportunities.
+                  </p>
+                </div>
+              </div>
+              {/* End Card Item */}
+            </div>
+          </div>
+        </section>
         <div className="container-xxl py-4 text-start">
           <div className="container">
             <div className="text-center">

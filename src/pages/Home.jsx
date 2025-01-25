@@ -37,7 +37,7 @@ const Home = () => {
     arrows: false,
   };
 
-  const [educationData, setEducationData] = useState([]);
+  const [educationData, setEducationData] = useState();
   const [loadingOne, setLoadingOne] = useState(false);
 
   const fetchInptaData = async () => {
@@ -47,6 +47,7 @@ const Home = () => {
       const response = await inptaListingAxiosInstance.post("/get-educations");
       const fetchedBusinessData = response.data.data;
       setEducationData(fetchedBusinessData);
+      console.log("fetchedBusinessData :- ", fetchedBusinessData);
     } catch (error) {
       console.error("Error in Getting Business Data:", error);
     }
@@ -113,8 +114,8 @@ const Home = () => {
                     <h5 className="text-white text-uppercase mb-3 animated slideInDown">
                       Welcome to INPTA
                     </h5>
-                    <h1 className="display-3 text-white animated slideInDown mb-md-0 mb-3">
-                      Start Your Own Fitness Accreditation
+                    <h1 className="display-3 text-white animated slideInDown mb-md-0 mb-3 welcome-title">
+                      Transform Your Institution with INPTA Accreditation
                     </h1>
                     <p className="fs-5 text-white mb-4 pb-2">
                       Join a globally recognized network of academies shaping
@@ -191,7 +192,7 @@ const Home = () => {
                 <div className="position-relative h-100">
                   <img
                     className="img-fluid position-absolute w-100 h-100 object-fit-cover"
-                    src="images/home-banner.webp"
+                    src="images/about-banner.webp"
                     alt=""
                   />
                 </div>
@@ -204,7 +205,7 @@ const Home = () => {
                 <div className="d-md-none d-block mb-3">
                   <img
                     className="img-fluid w-100 "
-                    src="images/home-banner.webp"
+                    src="images/about-banner.webp"
                     alt=""
                   />
                 </div>
@@ -498,97 +499,98 @@ const Home = () => {
             </div>
           </div>
         </div> */}
-        <div className="container-xxl py-4 text-start">
-          <div className="container">
-            <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
-              <h6 className="section-title bg-white text-center text-primary px-3">
-                Popular Courses
-              </h6>
-              <h1 className="mb-5 home-title">
-                INPTA's Most Popular Certification Programs
-              </h1>
-            </div>
-            <div className="row g-4 justify-content-center">
-              {educationData.map((education) => {
-                const description = education?.description;
-                const truncatedDescription =
-                  description?.length > 110
-                    ? description?.substring(0, 110) + "..."
-                    : description;
-                return (
-                  <div
-                    className="col-lg-4 col-md-6 wow fadeInUp"
-                    data-wow-delay="0.1s"
-                  >
-                    <div className="Goodup-grid-wrap course-item">
-                      <Link
-                        to={`/view-listing?listing_id=${education._id}`}
-                        className="text-dark Goodup-grid-upper"
-                      >
-                        <div className="Goodup-grid-thumb overflow-hidden">
-                          <img
-                            className="img-fluid"
-                            src={`https://files.fggroup.in/${education?.images?.[0]}`}
-                            alt={education.title}
-                          />
-                        </div>
+        {educationData && educationData.length >= 0 && (
+          <div className="container-xxl py-4 text-start">
+            <div className="container">
+              <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 className="section-title bg-white text-center text-primary px-3">
+                  Popular Courses
+                </h6>
+                <h1 className="mb-5 home-title">
+                  INPTA's Most Popular Certification Programs
+                </h1>
+              </div>
+              <div className="row g-4 justify-content-center">
+                {educationData.map((education) => {
+                  const description = education?.description;
+                  const truncatedDescription =
+                    description?.length > 110
+                      ? description?.substring(0, 110) + "..."
+                      : description;
+                  return (
+                    <div
+                      className="col-lg-4 col-md-6 wow fadeInUp"
+                      data-wow-delay="0.1s"
+                    >
+                      <div className="Goodup-grid-wrap course-item">
+                        <Link
+                          to={`/view-listing?listing_id=${education._id}`}
+                          className="text-dark Goodup-grid-upper"
+                        >
+                          <div className="Goodup-grid-thumb overflow-hidden">
+                            <img
+                              className="img-fluid"
+                              src={`https://files.fggroup.in/${education?.images?.[0]}`}
+                              alt={education.title}
+                            />
+                          </div>
 
-                        <div className="Goodup-rating overlay">
-                          <div className="Goodup-pr-average high">
-                            {(education.review_stats.average_rating &&
-                              education.review_stats.average_rating.toFixed(
-                                1
-                              )) ||
-                              "0"}
-                          </div>
-                          <div className="Goodup-aldeio">
-                            <div className="Goodup-rates">
-                              {[...Array(5)].map((_, index) => (
-                                <i
-                                  className="fas fa-star"
-                                  key={index}
-                                  style={{
-                                    color:
-                                      index <
-                                      education.review_stats.average_rating
-                                        ? "#F09000"
-                                        : "#ccc",
-                                  }}
-                                />
-                              ))}
+                          <div className="Goodup-rating overlay">
+                            <div className="Goodup-pr-average high">
+                              {(education.review_stats.average_rating &&
+                                education.review_stats.average_rating.toFixed(
+                                  1
+                                )) ||
+                                "0"}
                             </div>
-                            <div className="Goodup-all-review">
-                              <span>
-                                {education.review_stats.total_ratings} Rating
-                              </span>
+                            <div className="Goodup-aldeio">
+                              <div className="Goodup-rates">
+                                {[...Array(5)].map((_, index) => (
+                                  <i
+                                    className="fas fa-star"
+                                    key={index}
+                                    style={{
+                                      color:
+                                        index <
+                                        education.review_stats.average_rating
+                                          ? "#F09000"
+                                          : "#ccc",
+                                    }}
+                                  />
+                                ))}
+                              </div>
+                              <div className="Goodup-all-review">
+                                <span>
+                                  {education.review_stats.total_ratings} Rating
+                                </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </Link>
-                      <div className="Goodup-grid-fl-wrap text-start py-3 px-0 pb-0">
-                        <h5 className="mb-2 ps-2">{education.title}</h5>
-                        <div className="ps-2 pb-1">
-                          <small className="text-center pt-2">
-                            {truncatedDescription}
-                          </small>
-                        </div>
-                        <div className="Goodup-grid-footer py-2 pb-2 ps-2 mt-2">
-                          <div className="Goodup-ft-first">
-                            <div className="Goodup-location">
-                              <i className="fas fa-map-marker-alt me-2 theme-cl text-primary" />
-                              {education.locations[0].city +
-                                ", " +
-                                education.locations[0].state}
+                        </Link>
+                        <div className="Goodup-grid-fl-wrap text-start py-3 px-0 pb-0">
+                          <h5 className="mb-2 ps-2">{education.title}</h5>
+                          <div className="ps-2 pb-1">
+                            <small className="text-center pt-2">
+                              {truncatedDescription}
+                            </small>
+                          </div>
+                          <div className="Goodup-grid-footer py-2 pb-2 ps-2 mt-2">
+                            <div className="Goodup-ft-first">
+                              <div className="Goodup-location">
+                                <i className="fas fa-map-marker-alt me-2 theme-cl text-primary" />
+                                {education.locations[0].city +
+                                  ", " +
+                                  education.locations[0].state}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
 
-              {/* <div
+                {/* <div
                 className="col-lg-4 col-md-6 wow fadeInUp"
                 data-wow-delay="0.1s"
               >
@@ -726,9 +728,10 @@ const Home = () => {
                   </div>
                 </div>
               </div> */}
+              </div>
             </div>
           </div>
-        </div>
+        )}
         <div
           className="container-xxl py-4 wow fadeInUp text-start"
           data-wow-delay="0.1s"
@@ -896,7 +899,7 @@ const Home = () => {
                 <h5 className="mb-0">Gautam Jani</h5>
                 <p>Founder</p>
                 <span>FGIIT</span>
-                <div className="testimonial-text bg-light text-center p-4">
+                <div className="testimonial-text bg-light text-center p-4 py-3 mt-2">
                   <p className="mb-0">
                     INPTA transformed our academy's reputation. Students now
                     trust our courses more than ever!
@@ -990,42 +993,42 @@ const Home = () => {
               <h1 className="mb-5 home-title">We Provide Reference Books</h1>
             </div>
             <div className="row justify-content-center">
-              <div className="col-md-2 col-6 testimonial-item text-center mb-md-0 mb-3">
+              <div className="col-md-2 col-6 px-md-4 px-1 testimonial-item text-center mb-md-0 mb-3">
                 <img
                   className="mx-auto mb-3 border-radius-10"
                   src="images/books/book-anabolic.webp"
                   alt="books"
                 />
               </div>
-              <div className="col-md-2 col-6 testimonial-item text-center mb-md-0 mb-3">
+              <div className="col-md-2 col-6 px-md-4 px-1 testimonial-item text-center mb-md-0 mb-3">
                 <img
                   className="mx-auto mb-3 border-radius-10"
                   src="images/books/book-dnc.webp"
                   alt="books"
                 />
               </div>
-              <div className="col-md-2 col-6 testimonial-item text-center mb-md-0 mb-3">
+              <div className="col-md-2 col-6 px-md-4 px-1 testimonial-item text-center mb-md-0 mb-3">
                 <img
                   className="mx-auto mb-3 border-radius-10"
                   src="images/books/book-dpt.webp"
                   alt="books"
                 />
               </div>
-              <div className="col-md-2 col-6 testimonial-item text-center mb-md-0 mb-3">
+              <div className="col-md-2 col-6 px-md-4 px-1 testimonial-item text-center mb-md-0 mb-3">
                 <img
                   className="mx-auto mb-3 border-radius-10"
                   src="images/books/book-group.webp"
                   alt="books"
                 />
               </div>
-              <div className="col-md-2 col-6 testimonial-item text-center mb-md-0 mb-3">
+              <div className="col-md-2 col-6 px-md-4 px-1 testimonial-item text-center mb-md-0 mb-3">
                 <img
                   className="mx-auto mb-3 border-radius-10"
                   src="images/books/book-injury.webp"
                   alt="books"
                 />
               </div>
-              <div className="col-md-2 col-6 testimonial-item text-center mb-md-0 mb-3">
+              <div className="col-md-2 col-6 px-md-4 px-1 testimonial-item text-center mb-md-0 mb-3">
                 <img
                   className="mx-auto mb-3 border-radius-10"
                   src="images/books/book-powerlifting.webp"

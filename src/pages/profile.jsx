@@ -248,7 +248,9 @@ const Profile = () => {
                                   <div className="row">
                                     <div className="col-12">
                                       <div className="form-group">
-                                        <label className="mb-1">First Name</label>
+                                        <label className="mb-1">
+                                          First Name
+                                        </label>
                                         <input
                                           type="text"
                                           className="form-control rounded"
@@ -261,7 +263,9 @@ const Profile = () => {
                                     </div>
                                     <div className="col-12">
                                       <div className="form-group">
-                                        <label className="mb-1">Last Name</label>
+                                        <label className="mb-1">
+                                          Last Name
+                                        </label>
                                         <input
                                           type="text"
                                           className="form-control rounded"
@@ -338,7 +342,8 @@ const Profile = () => {
                                         >
                                           <div className="Uploadphoto">
                                             <span>
-                                              <i className="fas fa-upload" /> Upload Photo
+                                              <i className="fas fa-upload" />{" "}
+                                              Upload Photo
                                             </span>
                                           </div>
                                         </label>
@@ -350,7 +355,9 @@ const Profile = () => {
 
                               <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <div className="form-group">
-                                  <label className="mb-1">Block No/Building No</label>
+                                  <label className="mb-1">
+                                    Block No/Building No
+                                  </label>
                                   <input
                                     type="text"
                                     className="form-control rounded"
@@ -364,7 +371,9 @@ const Profile = () => {
 
                               <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <div className="form-group">
-                                  <label className="mb-1">Street/Colony Name</label>
+                                  <label className="mb-1">
+                                    Street/Colony Name
+                                  </label>
                                   <input
                                     type="text"
                                     className="form-control rounded"
@@ -420,16 +429,31 @@ const Profile = () => {
                             </div>
 
                             <div className="row">
-                              <div className="col-4">
+                              <div className="col-2">
                                 <div
                                   className="upload-photo-btn"
                                   onClick={handleSubmit}
                                 >
                                   <div className="Uploadphoto">
-                                  <i class="fa fa-check mr-2" aria-hidden="true"></i>
-                                    <span>
-                                    Update
-                                    </span>
+                                    <i
+                                      class="fa fa-check mr-2"
+                                      aria-hidden="true"
+                                    ></i>
+                                    <span>Update</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="col-4">
+                                <div
+                                  className="upload-photo-btn"
+                                  onClick={handleLogout}
+                                >
+                                  <div className="Uploadphoto">
+                                    <i
+                                      class="fa fa-check mr-2"
+                                      aria-hidden="true"
+                                    ></i>
+                                    <span>Log Out</span>
                                   </div>
                                 </div>
                               </div>
@@ -455,7 +479,12 @@ const Profile = () => {
               )}
             </div>
           </div>
-          <a id="tops-button" className="top-scroll" title="Back to top" href="#">
+          <a
+            id="tops-button"
+            className="top-scroll"
+            title="Back to top"
+            href="#"
+          >
             <i className="ti-arrow-up" />
           </a>
         </div>

@@ -239,10 +239,10 @@ function Header() {
         </div>
         <Modal.Body className="p-5">
           <a
-            className="nav-brand d-flex justify-content-center align-items-center"
+            className="nav-brand d-flex justify-content-center align-items-center mb-2"
             href="#"
           >
-            <img src="images/inpta-logo.webp" className="logo" alt="" />
+            <img src="images/inpta-logo.webp" className="logo" alt="" width="40%" />
           </a>
           <h3 className="text-center">Welcome</h3>
           <div class="text-center mb-5">

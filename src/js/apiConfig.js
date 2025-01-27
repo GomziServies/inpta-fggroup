@@ -1,7 +1,7 @@
 const hostname = window.location.hostname;
 
 let baseUrl;
-if (hostname === 'inpta-fggroup.vercel.app') {
+if (hostname === 'https://inpta-fggroup.vercel.app') {
   baseUrl = 'https://api.fggroup.in';
 } else if (hostname === 'test-gyms.fggroup.in') {
   baseUrl = 'https://dev-api.fggroup.in';

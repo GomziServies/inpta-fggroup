@@ -1,49 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { sendInquiry } from "../assets/js/contact-us";
 import axiosInstance from "../js/api";
-import "../assets/css/style.css";
+import { Button, Form, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
 
-function Header() {
-  const [isFixed, setIsFixed] = useState(false);
+function ContactPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [course, setCourse] = useState("");
+  const [message, setMessage] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
+  const [userData, setUserData] = useState({});
+
   const [showModal, setShowModal] = useState(false);
   const [mobileNumber, setMobileNumber] = React.useState("");
   const [currentStep, setCurrentStep] = React.useState("login");
   const [otpDialogOpen, setOtpDialogOpen] = React.useState(false);
   const [otpCode, setOtpCode] = React.useState("");
-  const [isLogin, setIsLogin] = useState(false);
 
-  const handleShow = (event) => {
-    event.preventDefault();
+  const handleShow = () => {
     setShowModal(true);
   };
 
   const handleClose = () => setShowModal(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY >= 50) {
-        setIsFixed(true);
-      } else {
-        setIsFixed(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    const LoginToken = localStorage.getItem("authorization");
-    if (LoginToken) {
-      setIsLogin(true);
-    }
-  }, []);
 
   const handleLoginSubmit = async () => {
     try {
@@ -85,7 +65,7 @@ function Header() {
         getUserData();
         setOtpDialogOpen(false);
         toast.success("OTP Verified!");
-        setIsLogin(true)
+        setIsLogin(true);
 
         const IsInptaUser = response.data.data.active_services.find(
           (service) => service === "INPTA-LISTING"
@@ -94,6 +74,8 @@ function Header() {
         if (!IsInptaUser) {
           await axiosInstance.post("/account/enable-inpta-listing");
         }
+
+        handleApplyForInquiry();
       } else {
         toast.error("Failed to verify OTP. Please try again.");
       }
@@ -102,128 +84,149 @@ function Header() {
     }
   };
 
+  const handleGoBack = () => {
+    setCurrentStep("login");
+  };
+
   const getUserData = async () => {
     try {
       const response = await axiosInstance.get("/account/profile");
       localStorage.setItem("user_info", JSON.stringify(response.data.data));
+      setUserData(response?.data?.data?.user);
     } catch (error) {
       console.error("Error in handleAgreeAndConfirm:", error);
     }
   };
 
-  const handleGoBack = () => {
-    setCurrentStep("login");
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const handleApplyForInquiry = async () => {
+    try {
+      const LoginToken = await localStorage.getItem("authorization");
+      if (!LoginToken) {
+        handleShow();
+      } else {
+        let modifiedMessage = `${message}\n\n: ${course}`;
+        await sendInquiry(
+          name,
+          email,
+          userData?.mobile,
+          course,
+          modifiedMessage,
+          window.location.href,
+          null,
+          null,
+          null
+        );
+        setName("");
+        setEmail("");
+        setPhoneNumber("");
+        setCourse("");
+        setMessage("");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-  function openside() {
-    document.getElementById("demo").style.width = "100%";
-  }
-
-  function sideclose() {
-    document.getElementById("demo").style.width = "0px";
-  }
-
   return (
     <>
-      <div className="container-fluid main p-0 m-0">
-        <div className="d-lg-block d-none log">
-          <Link to="/">
-            <div>
-              <img src="images/inpta-logo.webp" width="80%" alt="Fg Group" />
+      <section>
+        <div className="container-xxl py-5">
+          <div className="container">
+            <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
+              <h6 className="section-title bg-white text-center text-primary px-3">
+                Contact Us
+              </h6>
+              <h1 className="mb-5">Contact For Any Query</h1>
             </div>
-          </Link>
-        </div>
-        <div className="d-lg-none d-sm-block t0 log1">
-          <Link to="/">
-            <div>
-              <img src="images/inpta-logo.webp" width="100%" alt="Fg Group" />
-            </div>
-          </Link>
-        </div>
-        <div className="lang">
-          <ul>
-            <li>
-              <Link to="/">
-                <p className="m-0">Home</p>
-              </Link>
-            </li>
-            <li>
-              <Link to="/all-listing">
-                <p className="m-0">Listing</p>
-              </Link>
-            </li>
-            {isLogin ? (
-              <li>
-                <Link to="/profile">Profile</Link>
-              </li>
-            ) : (
-              ""
-            )}
-          </ul>
-        </div>
-        <div className="side" id="demo">
-          <span className="closebtn" onClick={sideclose}>
-            ×
-          </span>
-          <Link to="/" style={{ marginTop: 50 }}>
-            <img
-              className="lazy mx-auto"
-              src="images/inpta-logo.webp"
-              width="17%"
-              alt="Fg Group"
-            />
-          </Link>
-          <Link to="/">Home</Link>
-          <Link to="/all-listing">Listing</Link>
-          {isLogin ? <Link to="/profile">Profile</Link> : ""}
-          <div className="d-flex justify-content-center mt-3">
-            {isLogin ? (
-              <Link
-                to="/add-listing"
-                class="add-list-btn w-75 d-md-none d-block"
+            <div className="row g-4">
+              <div
+                className="col-lg-6 col-md-6 wow fadeInUp"
+                data-wow-delay="0.3s"
               >
-                <i class="fas fa-plus me-2"></i>Add Listing
-              </Link>
-            ) : (
-              <Link to="/login" class="add-list-btn w-75 d-md-none d-block">
-                <i class="fas fa-plus me-2"></i>Add Listing
-              </Link>
-            )}
+                <iframe
+                  className="position-relative rounded w-100 h-100"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2707.136526656638!2d72.83842927353027!3d21.220501781168633!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04ee63ed3cc6b%3A0x6328012d841aebd!2sAbhushan%20Bunglows!5e1!3m2!1sen!2sin!4v1737972221349!5m2!1sen!2sin"
+                  frameBorder={0}
+                  style={{ minHeight: 300, border: 0 }}
+                  allowFullScreen=""
+                  aria-hidden="false"
+                  tabIndex={0}
+                />
+              </div>
+              <div
+                className="col-lg-6 col-md-12 wow fadeInUp"
+                data-wow-delay="0.5s"
+              >
+                <div className="row g-3">
+                  <div className="col-md-6">
+                    <div className="form-floating">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Your Name"
+                      />
+                      <label htmlFor="name">Your Name</label>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="form-floating">
+                      <input
+                        type="email"
+                        className="form-control"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Your Email"
+                      />
+                      <label htmlFor="email">Your Email</label>
+                    </div>
+                  </div>
+                  <div className="col-12">
+                    <div className="form-floating">
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="subject"
+                        value={course}
+                        onChange={(e) => setCourse(e.target.value)}
+                        placeholder="Subject"
+                      />
+                      <label htmlFor="subject">Subject</label>
+                    </div>
+                  </div>
+                  <div className="col-12">
+                    <div className="form-floating">
+                      <textarea
+                        className="form-control"
+                        placeholder="Leave a message here"
+                        id="message"
+                        style={{ height: 150 }}
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                      />
+                      <label htmlFor="message">Message</label>
+                    </div>
+                  </div>
+                  <div className="col-12">
+                    <button
+                      className="btn btn-primary w-100 py-3"
+                      onClick={handleApplyForInquiry}
+                    >
+                      Send Message
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <span
-          className="d-lg-none d-sm-block btnn"
-          style={{ cursor: "pointer", fontSize: 20, color: "black" }}
-          onClick={openside}
-        >
-          ☰
-        </span>
-        <div className="login d-lg-block d-none">
-          <ul>
-            {isLogin ? (
-              ""
-            ) : (
-              <li>
-                <a href="#" onClick={handleShow} className="ft-bold">
-                  <i className="fas fa-sign-in-alt me-2 theme-cl" />
-                  Sign In
-                </a>
-              </li>
-            )}
-            <li className="mx-0" style={{ cursor: "pointer" }}>
-              {isLogin ? (
-                <Link to="/add-listing" class="add-list-btn">
-                  <i class="fas fa-plus me-2"></i>Add Listing
-                </Link>
-              ) : (
-                <Link to="/login" class="add-list-btn">
-                  <i class="fas fa-plus me-2"></i>Add Listing
-                </Link>
-              )}
-            </li>
-          </ul>
-        </div>
-      </div>
+      </section>
 
       <Modal
         show={showModal && currentStep === "login"}
@@ -240,7 +243,12 @@ function Header() {
             className="nav-brand d-flex justify-content-center align-items-center mb-2"
             href="#"
           >
-            <img src="images/inpta-logo.webp" className="logo" alt="logo" width="40%" />
+            <img
+              src="images/inpta-logo.webp"
+              className="logo"
+              alt="logo"
+              width="40%"
+            />
           </a>
           <h3 className="text-center">Welcome</h3>
           <div class="text-center mb-5">
@@ -289,7 +297,12 @@ function Header() {
             className="nav-brand d-flex justify-content-center align-items-center"
             href="#"
           >
-            <img src="images/inpta-logo.webp" className="logo" alt="logo" width="40%" />
+            <img
+              src="images/inpta-logo.webp"
+              className="logo"
+              alt="logo"
+              width="40%"
+            />
           </a>
           <div class="text-center mb-4">
             <h4 class="m-0 ft-medium">OTP Verification</h4>
@@ -332,4 +345,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default ContactPage;

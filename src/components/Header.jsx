@@ -89,12 +89,12 @@ function Header() {
         toast.success("OTP Verified!");
         setIsLogin(true)
 
-        const IsBusinessUser = response.data.data.active_services.find(
-          (service) => service === "BUSINESS-LISTING"
+        const IsInptaUser = response.data.data.active_services.find(
+          (service) => service === "INPTA-LISTING"
         );
 
-        if (!IsBusinessUser) {
-          await axiosInstance.post("/account/enable-business-listing");
+        if (!IsInptaUser) {
+          await axiosInstance.post("/account/enable-inpta-listing");
         }
       } else {
         toast.error("Failed to verify OTP. Please try again.");
@@ -242,7 +242,7 @@ function Header() {
             className="nav-brand d-flex justify-content-center align-items-center mb-2"
             href="#"
           >
-            <img src="images/inpta-logo.webp" className="logo" alt="" width="40%" />
+            <img src="images/inpta-logo.webp" className="logo" alt="logo" width="40%" />
           </a>
           <h3 className="text-center">Welcome</h3>
           <div class="text-center mb-5">
@@ -291,7 +291,7 @@ function Header() {
             className="nav-brand d-flex justify-content-center align-items-center"
             href="#"
           >
-            <img src="images/inpta-logo.webp" className="logo" alt="" />
+            <img src="images/inpta-logo.webp" className="logo" alt="logo" width="40%" />
           </a>
           <div class="text-center mb-4">
             <h4 class="m-0 ft-medium">OTP Verification</h4>

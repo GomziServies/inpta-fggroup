@@ -125,7 +125,7 @@ const Login = () => {
         <div id="main-wrapper">
           <Header />
           <div className="clearfix" />
-          <section className="gray text-start" style={{ marginTop: "20px" }}>
+          <section className="gray text-start d-flex align-items-center" style={{ marginTop: "70px", height: '70vh' }}>
             <div className="container">
               <div className="row align-items-start justify-content-center p-3">
                 <div className="col-xl-5 col-lg-8 col-md-12">
@@ -136,7 +136,12 @@ const Login = () => {
                           className="nav-brand d-flex justify-content-center align-items-center"
                           href="#"
                         >
-                          <img src="images/logo.png" className="logo" alt="" />
+                          <img
+                            src="images/inpta-logo.webp"
+                            className="logo"
+                            alt="logo"
+                            width="40%"
+                          />
                         </a>
                         <h3 className="text-center">Welcome</h3>
                         <div class="text-center mb-5">
@@ -175,7 +180,12 @@ const Login = () => {
                           className="nav-brand d-flex justify-content-center align-items-center"
                           href="#"
                         >
-                          <img src="images/logo.png" className="logo" alt="" />
+                          <img
+                            src="images/inpta-logo.webp"
+                            className="logo"
+                            alt="logo"
+                            width="40%"
+                          />
                         </a>
                         <div class="text-center mb-5">
                           <h4 class="m-0 ft-medium">OTP Verification</h4>
@@ -228,46 +238,6 @@ const Login = () => {
                       <h3>You have already Logged in</h3>
                     </div>
                   )}
-                </div>
-              </div>
-            </div>
-          </section>
-          <section
-            className="space bg-cover text-start"
-            style={{
-              background: "#03343b url(images/landing-bg.png) no-repeat",
-            }}
-          >
-            <div className="container py-5">
-              <div className="row justify-content-center">
-                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                  <div className="sec_title position-relative text-center mb-5">
-                    <h2 className="ft-bold text-light whastapp-title">
-                      Join GOMZI Today and Discover Exclusive Deals - Connect
-                      with Us Instantly!
-                    </h2>
-                    <h6 className="text-light mb-0 d-md-block d-none">
-                      Unlock Success with GOMZI - Connect Now over whatsapp for
-                      Advance Perks!
-                    </h6>
-                    <p className="ft-bold text-light mt-4"></p>
-                  </div>
-                </div>
-              </div>
-              <div className="row align-items-center justify-content-center">
-                <div className="col-xl-7 col-lg-10 col-md-12 col-sm-12 col-12">
-                  <form className="rounded p-1">
-                    <div className="d-flex justify-content-center">
-                      <div className="form-group mb-0">
-                        <WhatsappBtn
-                          message={
-                            "Hello, I wanted to know more about Business Listing."
-                          }
-                          options={{ pageRef: true }}
-                        />
-                      </div>
-                    </div>
-                  </form>
                 </div>
               </div>
             </div>

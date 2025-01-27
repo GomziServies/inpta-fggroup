@@ -704,7 +704,7 @@
   padding: 12px;
   font-size: 14px;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 #main-wrapper-profile .form-control:focus {
@@ -748,6 +748,7 @@
   height: 250px;
   border-radius: 50%;
   margin-top: 30px;
+  object-fit: cover;
 }
 
 #tops-button {
@@ -1813,4 +1814,100 @@ button.bg-dark:hover {
 
 .values .card:hover img {
   transform: scale(1);
+}
+
+.loader-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.loader-background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.spinner-box {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+.spinner-box-image {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+.spinner-box.spinner-width {
+  width: 100px;
+  height: 100px;
+}
+
+.three-quarter-spinner {
+  width: 70px;
+  height: 70px;
+  border: 7px solid #1b4681;
+  border-top: 5px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear 0s infinite;
+}
+.three-quarter-spinner-image {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #1b4681;
+  border-top: 5px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear 0s infinite;
+}
+.three-quarter-spinner-width {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #1b4681;
+  border-top: 2px solid transparent;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+.list-img {
+  width: 30%;
+}
+
+@media (max-width: 768px) {
+  .list-img {
+    width: 80%;
+  }
+}
+
+.view-list-btn {
+  padding: 10px 20px;
+  font-weight: 500;
+  color: #ffffff !important;
+  background: #1b4681;
+  border-radius: 4px;
 }

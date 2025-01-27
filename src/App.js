@@ -9,6 +9,7 @@ import AddListing from "./pages/add-listing";
 import AllListing from "./pages/all-listing";
 import ListingView from "./pages/view-listing";
 import UpdateListing from "./pages/update-listing";
+import ViewAllListing from "./pages/view-all-listing";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/add-listing" element={<AddListing />} />
         <Route path="/update-listing" element={<UpdateListing />} />
+        <Route path="/view-all-listing" element={<ViewAllListing />} />
       </Routes>
       <ScrollRestoration />
     </div>

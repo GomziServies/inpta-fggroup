@@ -330,6 +330,26 @@ const AllListing = () => {
                     </div>
                   );
                 })}
+                {educationData.length === 0 && !loadingOne && (
+                  <div className="col-12 d-flex flex-column align-items-center">
+                    <img
+                      src="/images/listing-not-found.webp"
+                      alt="listing"
+                      className="list-img"
+                    />
+                    <h4>No Listing Data Found</h4>
+                    <Link to="/add-listing" class="add-list-btn mt-2">
+                      <i class="fas fa-plus me-2"></i>Add Listing
+                    </Link>
+                  </div>
+                )}
+                {loadingOne && (
+                  <div className="w-100 d-flex justify-content-center">
+                    <div class="spinner-box spinner-width">
+                      <div class="three-quarter-spinner three-quarter-spinner-width"></div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </section>

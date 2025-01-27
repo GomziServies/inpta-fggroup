@@ -31,29 +31,29 @@ const AddListing = () => {
   }, []);
 
   const [formData, setFormData] = useState({
-    title: "demo title",
-    description: "demo description",
-    address_line_1: "Gomzi-2",
-    address_line_2: "demo katargam",
-    area: "katargam",
-    landmark: "demo.url",
-    city: "surat",
-    country: "India",
-    state: "gujarat",
-    pin_code: "395004",
-    contactNumber: "8866842520",
-    whatsappNumber: "8866842520",
+    title: "",
+    description: "",
+    address_line_1: "",
+    address_line_2: "",
+    area: "",
+    landmark: "",
+    city: "",
+    country: "",
+    state: "",
+    pin_code: "",
+    contactNumber: "",
+    whatsappNumber: "",
     services: [],
-    tags: ["demo", "test"],
-    website: "https://fggroup.in/",
-    email: "fitnesswithgomzi@gmail.com",
+    tags: [],
+    website: "",
+    email: "",
     branch: "",
   });
   const [inptaHours, setInptaHours] = useState([
     { day: "Mon", open: "10:00 AM", close: "07:00 PM" },
   ]);
   const [faqs, setFaqs] = useState([
-    { question: "i have question?", answer: "here is your answer." },
+    { question: "", answer: "" },
   ]);
   const [socialMediaLinks, setSocialMediaLinks] = useState([
     { platform: "Instagram", link: "Instagram.com" },
@@ -266,52 +266,6 @@ const AddListing = () => {
   };
 
   // ----------------------------------------------------------------------------------
-
-  const [userData, setUserData] = useState({
-    first_name: "",
-    last_name: "",
-    mobile: "",
-    email: "",
-    address_line_1: " ",
-    address_line_2: " ",
-    city: "",
-    state: "",
-    pin_code: "",
-    profilePhoto: null,
-    profile_image: null,
-  });
-
-  const getUserData = async () => {
-    try {
-      const response = await axiosInstance.get("/account/profile");
-      const userData = response.data.data;
-      if (userData) {
-        const addressData = userData.user.address || {};
-
-        setUserData((prevData) => ({
-          ...prevData,
-          first_name: userData.user.first_name || "",
-          last_name: userData.user.last_name || "",
-          mobile: userData.user.mobile || "",
-          email: userData.user.email || "",
-          address_line_1: addressData.address_line_1 || "Enter Address",
-          address_line_2: addressData.address_line_2 || "",
-          city: addressData.city || "",
-          state: addressData.state || "",
-          country: addressData.country || "",
-          pin_code: addressData.pin_code || "",
-          profilePhoto:
-            "https://files.fggroup.in/" + (userData.user.profile_image || ""),
-        }));
-      }
-    } catch (error) {
-      console.error("Error in getUserData:", error);
-    }
-  };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
 
   const handleAddFaq = () => {
     setFaqs([...faqs, { question: "", answer: "" }]);

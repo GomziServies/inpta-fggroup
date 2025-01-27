@@ -14,14 +14,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const Profile = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingOne, setLoadingOne] = useState(false);
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 1000);
+  // }, []);
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -40,6 +40,7 @@ const Profile = () => {
   const [isLogin, setIsLogin] = useState(false);
 
   const getUserData = async () => {
+    setLoading(true);
     try {
       const response = await axiosInstance.get("/account/profile");
       const userData = response.data.data;
@@ -65,6 +66,7 @@ const Profile = () => {
     } catch (error) {
       console.error("Error in getUserData:", error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -428,8 +430,8 @@ const Profile = () => {
                               </div>
                             </div>
 
-                            <div className="row">
-                              <div className="col-2">
+                            <div className="d-flex">
+                              <div className="me-3">
                                 <div
                                   className="upload-photo-btn"
                                   onClick={handleSubmit}
@@ -443,16 +445,17 @@ const Profile = () => {
                                   </div>
                                 </div>
                               </div>
-                              <div className="col-4">
+                              <div>
                                 <div
-                                  className="upload-photo-btn"
+                                  className="upload-photo-btn bg-danger"
                                   onClick={handleLogout}
                                 >
                                   <div className="Uploadphoto">
-                                    <i
+                                    {/* <i
                                       class="fa fa-check mr-2"
                                       aria-hidden="true"
-                                    ></i>
+                                    ></i> */}
+                                    <i className="fas fa-sign-in-alt me-2 theme-cl" />
                                     <span>Log Out</span>
                                   </div>
                                 </div>
@@ -493,13 +496,13 @@ const Profile = () => {
       </>
       <ToastContainer />
 
-      {isLoading && (
+      {/* {isLoading && (
         <div className="loader-background">
           <div className="spinner-box">
             <div className="three-quarter-spinner"></div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

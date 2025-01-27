@@ -132,7 +132,6 @@ const ListingView = () => {
       );
       const fetchedReviewsData = response.data.data;
       setUserReviewData(fetchedReviewsData);
-      
     } catch (error) {
       console.error("Error in Getting Reviews Data:", error);
     }
@@ -370,62 +369,51 @@ const ListingView = () => {
                       <div className="jbd-details mb-4">
                         <h5 className="ft-bold fs-lg">Recommended Reviews</h5>
                         <div className="reviews-comments-wrap w-100">
-                          {userReviewsData.map((review, index) => (
-                            <div className="reviews-comments-item">
-                              <div className="review-comments-avatar">
-                                <img
-                                  src={`https://files.fggroup.in/${review.createdBy_user.profile_image}`}
-                                  className="img-fluid"
-                                  onError={(e) => {
-                                    e.target.src = User_img;
-                                  }}
-                                  alt=""
-                                />
-                              </div>
-                              <div className="reviews-comments-item-text">
-                                <h4>
-                                  <a href="#">
-                                    {review.createdBy_user.user_name}
-                                  </a>
-                                  <span className="reviews-comments-item-date">
-                                    <i class="fa fa-calendar me-1"></i>
-                                    {new Date(
-                                      review.createdAt
-                                    ).toLocaleDateString()}
-                                  </span>
-                                </h4>
-                                {/* <span className="agd-location">
-                                  {review.helpful_count}{" "}
-                                  {review.helpful_count === 1
-                                    ? "Review"
-                                    : "Reviews"}
-                                </span> */}
-                                <div className="listing-rating high">
-                                  {Array.from({ length: review.rating }).map(
-                                    (_, starIndex) => (
-                                      <StarIcon
-                                        key={starIndex}
-                                        sx={{
-                                          fontSize: "16px",
-                                          color: "#FFAE11",
+                          {userReviewsData.map((review, index) => {
+                            return (
+                              <div className="reviews-comments-item">
+                                <div className="review-comments-avatar">
+                                  <img
+                                    src={`https://files.fggroup.in/${review.createdBy_user.profile_image}`}
+                                    className="img-fluid"
+                                    onError={(e) => {
+                                      e.target.src = User_img;
+                                    }}
+                                    alt=""
+                                  />
+                                </div>
+                                <div className="reviews-comments-item-text">
+                                  <h4>
+                                    <a href="#">
+                                      {review.createdBy_user.user_name}
+                                    </a>
+                                    <span className="reviews-comments-item-date">
+                                      <i class="fa fa-calendar me-1"></i>
+                                      {new Date(
+                                        review.createdAt
+                                      ).toLocaleDateString()}
+                                    </span>
+                                  </h4>
+                                  <div className="listing-rating high">
+                                    {[...Array(5)].map((_, index) => (
+                                      <i
+                                        className="fas fa-star"
+                                        key={index}
+                                        style={{
+                                          color:
+                                            index < review.rating
+                                              ? "#F09000"
+                                              : "#ccc",
                                         }}
                                       />
-                                    )
-                                  )}
-                                  {Array.from({
-                                    length: 5 - review.rating,
-                                  }).map((_, starIndex) => (
-                                    <StarIcon
-                                      key={starIndex}
-                                      sx={{ fontSize: "16px", color: "#000" }}
-                                    />
-                                  ))}
+                                    ))}
+                                  </div>
+                                  <div className="clearfix" />
+                                  <p>{review.comment}</p>
                                 </div>
-                                <div className="clearfix" />
-                                <p>{review.comment}</p>
                               </div>
-                            </div>
-                          ))}
+                            );
+                          })}
                           {userReviewsData?.length === 0 && (
                             <h5>No Review Found</h5>
                           )}
@@ -635,7 +623,7 @@ const ListingView = () => {
                             color: "#000",
                             border: "1.5px solid #ccc",
                             borderRadius: "5px",
-                            fontWeight: '550'
+                            fontWeight: "550",
                           }}
                         >
                           {tag}
@@ -656,7 +644,7 @@ const ListingView = () => {
                             color: "#000",
                             border: "1.5px solid #ccc",
                             borderRadius: "5px",
-                            fontWeight: '550'
+                            fontWeight: "550",
                           }}
                         >
                           {course}

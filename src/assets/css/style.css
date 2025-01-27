@@ -1739,7 +1739,7 @@ button.bg-dark:hover {
 
 .bg-steps {
   background-color: #64a6ff2e;
-  height: 276px;
+  height: 220px;
   border-radius: 10px;
 }
 
@@ -1761,7 +1761,7 @@ button.bg-dark:hover {
   }
   .display-3 {
     font-size: 36px !important;
-    line-height: 1 !important;
+    line-height: 1.1 !important;
   }
   .home-title {
     font-size: 28px !important;
@@ -1806,6 +1806,7 @@ button.bg-dark:hover {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 18px;
+  line-height: 30px !important;
 }
 
 .values .card:hover {
@@ -1911,3 +1912,4 @@ button.bg-dark:hover {
   background: #1b4681;
   border-radius: 4px;
 }
+

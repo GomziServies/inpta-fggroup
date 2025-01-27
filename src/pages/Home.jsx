@@ -108,7 +108,7 @@ const Home = () => {
           </div>
         )}
         <Header />
-        <div className="welcome-sec container-fluid p-0 mb-5 text-start">
+        <div className="welcome-sec container-fluid p-0 mb-5 text-start mt-5">
           <div className="position-relative">
             <img
               className="img-fluid d-md-block d-none"
@@ -130,11 +130,12 @@ const Home = () => {
                       Welcome to INPTA
                     </h5>
                     <h1 className="display-3 text-white animated slideInDown mb-md-0 mb-3 welcome-title">
-                      Transform Your Institution with INPTA Accreditation
+                      INPTA certification ke saath apne sansthan ko badlein
                     </h1>
-                    <p className="fs-5 text-white mb-4 pb-2">
-                      Join a globally recognized network of academies shaping
-                      the future of fitness and health education.
+                    <p className="fs-5 text-white mb-4 pb-2 mt-3">
+                      Fitness aur health education ke bhavishya ko aakar dene
+                      wale world-class accredited academies ke network mein
+                      juden
                     </p>
                     <a
                       href="https://fggroup.in/inpta/home-inpta"
@@ -224,29 +225,34 @@ const Home = () => {
                   />
                 </div>
                 <p className="mb-4">
-                  Welcome to INPTA - India's central government- approved
-                  accreditation body dedicated to revolutionizing the fitness
-                  industry. Our mission is to empower gyms by creating a new
-                  revenue stream through professional trainer certifications and
-                  structured education programs, academies gain access to
+                  INPTA is India's government-approved accreditation body
+                  transforming the fitness industry. We empower gyms with new
+                  revenue streams through professional trainer certifications
+                  and structured education programs. Our offerings include,
                 </p>
                 <div className="row gy-2 gx-4 mb-4">
                   <div className="col-sm-6">
                     <p className="mb-0">
                       <i className="fa fa-arrow-right text-primary me-2"></i>
-                      Internationally Certified Programs
+                      Government-Approved Accreditation
                     </p>
                   </div>
                   <div className="col-sm-6">
                     <p className="mb-0">
                       <i className="fa fa-arrow-right text-primary me-2"></i>
-                      Global Networking Opportunities
+                      Revenue Growth for Gyms/Academy
                     </p>
                   </div>
                   <div className="col-sm-6">
                     <p className="mb-0">
                       <i className="fa fa-arrow-right text-primary me-2"></i>
-                      Expert Guidance and Resources
+                      International Recognition
+                    </p>
+                  </div>
+                  <div className="col-sm-6">
+                    <p className="mb-0">
+                      <i className="fa fa-arrow-right text-primary me-2"></i>
+                      Expert Resources & Networking
                     </p>
                   </div>
                 </div>
@@ -331,9 +337,9 @@ const Home = () => {
           <div className="container" data-aos="fade-up">
             <div className="text-center">
               <h6 className="section-title bg-white text-center text-primary px-3">
-                Fitness Industry
+                Fitness industry transformation
               </h6>
-              <h1 className="mb-5 home-title">
+              <h1 className="mt-1 mb-5 home-title">
                 Challenges in India's Health and Fitness Industry
               </h1>
             </div>
@@ -403,7 +409,7 @@ const Home = () => {
               <h6 className="section-title bg-white text-center text-primary px-3">
                 Fitness Educator
               </h6>
-              <h1 className="mb-5 home-title">
+              <h1 className="mt-1 mb-5 home-title">
                 Fulfill Your Dream of <br /> Becoming a Health and Fitness
                 Educator
               </h1>
@@ -714,9 +720,9 @@ const Home = () => {
           <div className="container">
             <div className="text-center">
               <h6 className="section-title bg-white text-center text-primary px-3">
-                Steps
+                Accreditation Steps
               </h6>
-              <h1 className="mb-5 home-title">
+              <h1 className="mt-1 mb-5 home-title">
                 INPTA: The Governing Body for Fitness Transformation
               </h1>
             </div>
@@ -726,12 +732,11 @@ const Home = () => {
                   <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     1
                   </div>
-                  <div className="px-3 text-center pb-3">
-                    <h4>Affiliation with INPTA</h4>
+                  <div className="text-center pb-3">
+                    <h4>National Recognition & Credibility</h4>
                     <p className="font-weight-light my-3">
-                      As a government-approved accreditation body, INPTA
-                      affiliates your gym, giving it national recognition and
-                      credibility.
+                      INPTA affiliation grants your gym official,
+                      government-approved status.
                     </p>
                   </div>
                 </div>
@@ -741,12 +746,13 @@ const Home = () => {
                   <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     2
                   </div>
-                  <div className="px-3 text-center pb-3">
+                  <div className="text-center pb-3">
                     <h4>Structured Academy Setup</h4>
                     <p className="font-weight-light my-1">
-                      INPTA designs the entire academy structure, including:
+                      We provide a complete academy blueprint: syllabus, study
+                      materials, INPTA app access, and operational framework.
                     </p>
-                    <div
+                    {/* <div
                       className="d-flex mx-auto flex-column text-start"
                       style={{ width: "100%" }}
                     >
@@ -769,7 +775,7 @@ const Home = () => {
                           academy
                         </p>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -778,12 +784,14 @@ const Home = () => {
                   <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     3
                   </div>
-                  <div className="px-3 text-center pb-3">
-                    <h4>Train the Trainers - The Core Program</h4>
+                  <div className="text-center pb-3">
+                    <h4>Train the Trainer Program</h4>
                     <p className="font-weight-light my-1">
-                      INPTA's Train the Trainer program is a game- changer:
+                      A 3-day intensive workshop that transforms trainers into
+                      certified educators, focusing on teaching methods, fitness
+                      standards, and professional skills.
                     </p>
-                    <div
+                    {/* <div
                       className="d-flex mx-auto flex-column text-start"
                       style={{ width: "100%" }}
                     >
@@ -801,7 +809,7 @@ const Home = () => {
                           and professional skills.
                         </p>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -810,10 +818,10 @@ const Home = () => {
                   <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     4
                   </div>
-                  <div className="px-3 text-center pb-3">
-                    <h4>Marketing and Student Enrollment</h4>
+                  <div className="text-center pb-3">
+                    <h4>Marketing & Student Enrollment</h4>
                     <p className="font-weight-light my-3">
-                      INPTA manages all marketing strategies and student
+                      INPTA handles all marketing strategies and student
                       enrollments for your academy.
                     </p>
                   </div>
@@ -824,13 +832,14 @@ const Home = () => {
                   <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     5
                   </div>
-                  <div className="px-3 text-center pb-3">
-                    <h4>Exams and Certifications</h4>
+                  <div className="text-center pb-3">
+                    <h4>Exams & Certification</h4>
                     <p className="font-weight-light my-1">
-                      INPTA governs and oversees the entire certification
-                      process, including:
+                      We manage the entire certification process, including
+                      exams, viva, and project evaluations, awarding
+                      certifications with INPTA's seal of excellence.
                     </p>
-                    <div
+                    {/* <div
                       className="d-flex mx-auto flex-column text-start"
                       style={{ width: "100%" }}
                     >
@@ -846,7 +855,7 @@ const Home = () => {
                           Certification with INPTA's seal of excellence.
                         </p>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -862,7 +871,7 @@ const Home = () => {
               <h6 className="section-title bg-white text-center text-primary px-3">
                 Testimonials
               </h6>
-              <h1 className="mb-5 home-title">What Our Partners Say</h1>
+              <h1 className="mt-1 mb-5 home-title">What Our Partners Say</h1>
             </div>
             <div className="row justify-content-center">
               <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
@@ -876,26 +885,26 @@ const Home = () => {
                 <span>FGIIT</span>
                 <div className="testimonial-text bg-light text-center p-4 py-3 mt-2">
                   <p className="mb-0">
-                    INPTA transformed our academy's reputation. Students now
-                    trust our courses more than ever!
+                    INPTA elevated our academy's reputation, gaining students'
+                    trust.
                   </p>
                 </div>
               </div>
-              {/* <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
+              <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
                 <img
                   className="border rounded-circle p-2 mx-auto mb-3 img-width-height"
                   src="images/team-4.webp"
                 />
-                <h5 className="mb-0">chirag Pandey</h5>
-                <p>Manager (Faculty)</p>
-                <span>FGIIT</span>
+                <h5 className="mb-0">Chirag Pandey</h5>
+                <p>Dietitian</p>
+                <span>FWG</span>
                 <div className="testimonial-text bg-light text-center p-4">
                   <p className="mb-0">
-                    The accreditation process was seamless and helped us align
-                    with global standards.
+                    INPTA's process helped us meet international fitness
+                    standards effortless
                   </p>
                 </div>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
@@ -906,9 +915,9 @@ const Home = () => {
           <div className="container">
             <div className="text-center">
               <h6 className="section-title bg-white text-center text-primary px-3">
-                Students
+                Inpta success story
               </h6>
-              <h1 className="mb-5 home-title">Passout Students</h1>
+              <h1 className="mt-1 mb-5 home-title">Passout Students</h1>
             </div>
             <div className="row justify-content-center">
               <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
@@ -963,9 +972,11 @@ const Home = () => {
           <div className="container">
             <div className="text-center">
               <h6 className="section-title bg-white text-center text-primary px-3">
-                Books
+                Education book support
               </h6>
-              <h1 className="mb-5 home-title">We Provide Reference Books</h1>
+              <h1 className="mt-1 mb-5 home-title">
+                We Provide Reference Books
+              </h1>
             </div>
             <div className="row justify-content-center">
               <div className="col-md-2 col-6 px-md-4 px-1 testimonial-item text-center mb-md-0 mb-3">
@@ -1019,7 +1030,9 @@ const Home = () => {
               <h6 className="section-title bg-white text-center text-primary px-3">
                 Expert Instructors
               </h6>
-              <h1 className="mb-5 home-title">Meet Our Expert Instructor</h1>
+              <h1 className="mt-1 mb-5 home-title">
+                Meet Our Expert Instructor
+              </h1>
             </div>
             <div className="row g-4">
               <div
@@ -1034,7 +1047,7 @@ const Home = () => {
                       alt=""
                     />
                   </div>
-                  <div className="text-center p-4">
+                  <div className="text-center py-4">
                     <h5 className="mb-0">Dr. Gautam Jani</h5>
                   </div>
                 </div>
@@ -1051,7 +1064,7 @@ const Home = () => {
                       alt=""
                     />
                   </div>
-                  <div className="text-center p-4">
+                  <div className="text-center py-4">
                     <h5 className="mb-0">Dt. Foram Desai</h5>
                   </div>
                 </div>
@@ -1068,7 +1081,7 @@ const Home = () => {
                       alt=""
                     />
                   </div>
-                  <div className="text-center p-4">
+                  <div className="text-center py-4">
                     <h5 className="mb-0">Pt. Waqaar Qureshi</h5>
                   </div>
                 </div>
@@ -1085,7 +1098,7 @@ const Home = () => {
                       alt=""
                     />
                   </div>
-                  <div className="text-center p-4">
+                  <div className="text-center py-4">
                     <h5 className="mb-0">Dr. Chirag Pandey</h5>
                   </div>
                 </div>
@@ -1102,7 +1115,7 @@ const Home = () => {
                       alt=""
                     />
                   </div>
-                  <div className="text-center p-4">
+                  <div className="text-center py-4">
                     <h5 className="mb-0">Dt. Poonam Patel</h5>
                   </div>
                 </div>
@@ -1119,7 +1132,7 @@ const Home = () => {
                       alt=""
                     />
                   </div>
-                  <div className="text-center p-4">
+                  <div className="text-center py-4">
                     <h5 className="mb-0">Dr. Khamiyan</h5>
                   </div>
                 </div>
@@ -1127,6 +1140,96 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <section>
+          <div className="container-xxl py-5">
+            <div className="container">
+              <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 className="section-title bg-white text-center text-primary px-3">
+                  Contact Us
+                </h6>
+                <h1 className="mb-5">Contact For Any Query</h1>
+              </div>
+              <div className="row g-4">
+                <div
+                  className="col-lg-6 col-md-6 wow fadeInUp"
+                  data-wow-delay="0.3s"
+                >
+                  <iframe
+                    className="position-relative rounded w-100 h-100"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2707.136526656638!2d72.83842927353027!3d21.220501781168633!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be04ee63ed3cc6b%3A0x6328012d841aebd!2sAbhushan%20Bunglows!5e1!3m2!1sen!2sin!4v1737972221349!5m2!1sen!2sin"
+                    frameBorder={0}
+                    style={{ minHeight: 300, border: 0 }}
+                    allowFullScreen=""
+                    aria-hidden="false"
+                    tabIndex={0}
+                  />
+                </div>
+                <div
+                  className="col-lg-6 col-md-12 wow fadeInUp"
+                  data-wow-delay="0.5s"
+                >
+                  <form>
+                    <div className="row g-3">
+                      <div className="col-md-6">
+                        <div className="form-floating">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="name"
+                            placeholder="Your Name"
+                          />
+                          <label htmlFor="name">Your Name</label>
+                        </div>
+                      </div>
+                      <div className="col-md-6">
+                        <div className="form-floating">
+                          <input
+                            type="email"
+                            className="form-control"
+                            id="email"
+                            placeholder="Your Email"
+                          />
+                          <label htmlFor="email">Your Email</label>
+                        </div>
+                      </div>
+                      <div className="col-12">
+                        <div className="form-floating">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="subject"
+                            placeholder="Subject"
+                          />
+                          <label htmlFor="subject">Subject</label>
+                        </div>
+                      </div>
+                      <div className="col-12">
+                        <div className="form-floating">
+                          <textarea
+                            className="form-control"
+                            placeholder="Leave a message here"
+                            id="message"
+                            style={{ height: 150 }}
+                            defaultValue={""}
+                          />
+                          <label htmlFor="message">Message</label>
+                        </div>
+                      </div>
+                      <div className="col-12">
+                        <button
+                          className="btn btn-primary w-100 py-3"
+                          type="submit"
+                        >
+                          Send Message
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         <Footer />
       </>
     </div>

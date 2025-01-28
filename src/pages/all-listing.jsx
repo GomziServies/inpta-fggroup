@@ -6,7 +6,6 @@ import Header from "../components/Header";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Footer from "../components/Footer";
-import WhatsappBtn from "../components/WhatsappBtn";
 import { inptaListingAxiosInstance } from "../js/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -14,7 +13,6 @@ import Swal from "sweetalert2";
 
 const AllListing = () => {
   const [loading, setLoading] = useState(true);
-  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -154,7 +152,7 @@ const AllListing = () => {
             />
           </section>
           <section>
-            <div className="container-xxl py-5 text-start mt-5">
+            <div className="container-xxl py-5 text-start margintop">
               <div className="container">
                 <div className="row g-5">
                   <div
@@ -221,7 +219,7 @@ const AllListing = () => {
               </div>
             </div>
           </section>
-          <section class="space min gray py-5">
+          <section class="space min gray py-2 margintop mb-5">
             <div class="container">
               <div class="row justify-content-center">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -233,59 +231,51 @@ const AllListing = () => {
               </div>
               <div className="row g-4 justify-content-center">
                 {educationData.map((education) => {
+                  const description = education?.description;
+                  const truncatedDescription =
+                    description?.length > 90
+                      ? description?.substring(0, 90) + "..."
+                      : description;
                   return (
                     <div
                       className="col-lg-4 col-md-6 wow fadeInUp"
                       data-wow-delay="0.1s"
                     >
-                      <div className="course-item bg-light">
-                        <Link
-                          to={`/view-listing?listing_id=${education._id}`}
-                          className="text-dark"
-                        >
-                          <div className="position-relative overflow-hidden">
-                            <img
-                              className="img-fluid"
-                              src={`https://files.fggroup.in/${education?.images?.[0]}`}
-                              alt={education.title}
-                            />
-                            <div className="accepted-btn">
-                              {/* <a
+                      <div className="course-item">
+                        <div className="position-relative overflow-hidden">
+                          <img
+                            className="img-fluid"
+                            src={`https://files.fggroup.in/${education?.images?.[0]}`}
+                            alt={education.title}
+                          />
+                          <div className="accepted-btn">
+                            {/* <a
                                 href="#"
                                 className="flex-shrink-0 btn btn-sm btn-success px-3 border-end"
                               >
                                 Accepted
                               </a> */}
-                              {education.approval_status.status ===
-                              "APPROVED" ? (
-                                <div className="Goodup-status open me-2">
-                                  APPROVED
-                                </div>
-                              ) : education.approval_status.status ===
-                                "REJECTED" ? (
-                                <div className="Goodup-status bg-danger">
-                                  REJECTED
-                                </div>
-                              ) : education.approval_status.status ===
-                                "PENDING" ? (
-                                <div className="Goodup-status pending">
-                                  PENDING
-                                </div>
-                              ) : (
-                                ""
-                              )}
-                            </div>
+                            {education.approval_status.status === "APPROVED" ? (
+                              <div className="Goodup-status open me-2">
+                                APPROVED
+                              </div>
+                            ) : education.approval_status.status ===
+                              "REJECTED" ? (
+                              <div className="Goodup-status bg-danger">
+                                REJECTED
+                              </div>
+                            ) : education.approval_status.status ===
+                              "PENDING" ? (
+                              <div className="Goodup-status pending">
+                                PENDING
+                              </div>
+                            ) : (
+                              ""
+                            )}
                           </div>
-                        </Link>
+                        </div>
                         <div className="text-center p-4 pb-0">
-                          <h3 className="mb-0">
-                            <Link
-                              to={`/view-listing?listing_id=${education._id}`}
-                              className="text-dark"
-                            >
-                              {education.title}
-                            </Link>{" "}
-                          </h3>
+                          <h3 className="mb-0">{education.title}</h3>
                           <div className="mb-3">
                             {/* {[...Array(5)].map((_, index) => (
                                 <i
@@ -306,7 +296,7 @@ const AllListing = () => {
                               <small className="fa fa-star text-primary"></small>
                               <small className="fa fa-star text-primary"></small> */}
                           </div>
-                          <p className="mb-4">{education.description}</p>
+                          <p className="mb-4">{truncatedDescription}</p>
                         </div>
                         <div className="d-flex border-top">
                           <div class="w-100 d-flex justify-content-center mt-3 mb-3">

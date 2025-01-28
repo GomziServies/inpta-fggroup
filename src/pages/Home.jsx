@@ -109,7 +109,7 @@ const Home = () => {
           </div>
         )}
         <Header />
-        <div className="welcome-sec container-fluid p-0 mb-5 text-start mt-5">
+        <div className="welcome-sec container-fluid p-0 mb-5 text-start margintop">
           <div className="position-relative">
             <img
               className="img-fluid d-md-block d-none"
@@ -140,14 +140,14 @@ const Home = () => {
                     </p>
                     <a
                       href="https://fggroup.in/inpta/home-inpta"
-                      className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft"
+                      className="btn btn-primary py-md-3 mt-2 px-md-5 me-3 animated slideInLeft"
                       target="_blank"
                     >
                       Learn More
                     </a>
                     <a
                       href="/add-listing"
-                      className="btn btn-light py-md-3 px-md-5 animated slideInRight"
+                      className="btn btn-light py-md-3 mt-2 px-md-5 animated slideInRight"
                     >
                       Apply for Accreditation
                     </a>
@@ -207,7 +207,7 @@ const Home = () => {
               >
                 <div className="position-relative h-100">
                   <img
-                    className="img-fluid position-absolute w-100 h-100 object-fit-cover"
+                    className="img-fluid position-absolute w-100 h-100 border-radius-10 object-fit-cover"
                     src="images/about-banner.webp"
                     alt=""
                   />
@@ -333,12 +333,12 @@ const Home = () => {
             </div>
           </div>
         </div> */}
-        <section id="values" className="values section mb-3">
+        <section id="values" className="values section mb-3 margintop">
           {/* Section Title */}
           <div className="container" data-aos="fade-up">
             <div className="text-center">
               <h6 className="section-title bg-white text-center text-primary px-3">
-                Fitness industry transformation
+                Fitness transformation
               </h6>
               <h1 className="mt-1 mb-5 home-title">
                 Challenges in India's Health and Fitness Industry
@@ -347,7 +347,7 @@ const Home = () => {
 
             {/* End Section Title */}
             <div className="row gy-4 p-3">
-              <div className="col-md-4" data-aos="fade-up" data-aos-delay={100}>
+              <div className="col-md-4 fitness-card" data-aos="fade-up" data-aos-delay={100}>
                 <div className="card">
                   <img src="images/img-1.webp" className="img-fluid" alt="" />
                   <h3>Scarcity of Fitness Academies</h3>
@@ -404,7 +404,7 @@ const Home = () => {
             </div>
           </div>
         </section>
-        <div className="container-xxl py-4 text-start">
+        <div className="container-xxl py-4 text-start margintop">
           <div className="container">
             <div className="text-center">
               <h6 className="section-title bg-white text-center text-primary px-3">
@@ -591,7 +591,7 @@ const Home = () => {
             </div>
           </div>
         </div> */}
-        <div className="container-xxl py-4 text-start">
+        <div className="container-xxl py-4 text-start margintop">
           <div className="container">
             <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
               <h6 className="section-title bg-white text-center text-primary px-3">
@@ -715,7 +715,7 @@ const Home = () => {
           </div>
         </div>
         <div
-          className="container-xxl py-4 wow fadeInUp text-start"
+          className="container-xxl py-4 wow fadeInUp text-start margintop"
           data-wow-delay="0.1s"
         >
           <div className="container">
@@ -728,7 +728,7 @@ const Home = () => {
               </h1>
             </div>
             <div className="row justify-content-center">
-              <div className="col-md-4">
+              <div className="col-md-4 mt-4">
                 <div className="bg-steps position-relative px-3 my-4">
                   <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     1
@@ -742,7 +742,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-4 mt-4">
                 <div className="bg-steps position-relative px-3 my-4">
                   <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     2
@@ -780,7 +780,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-4 mt-4">
                 <div className="bg-steps position-relative px-3 my-4">
                   <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     3
@@ -814,7 +814,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-4 mt-4">
                 <div className="bg-steps position-relative px-3 my-4">
                   <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     4
@@ -828,7 +828,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-4 mt-4">
                 <div className="bg-steps position-relative px-3 my-4">
                   <div className="font-weight-bold step-round circle text-white rounded-circle d-flex align-items-center justify-content-center mx-auto position-relative border border-white">
                     5
@@ -864,7 +864,7 @@ const Home = () => {
           </div>
         </div>
         <div
-          className="container-xxl py-4 wow fadeInUp text-start"
+          className="container-xxl py-4 wow fadeInUp text-start box-shadow-testing margintop"
           data-wow-delay="0.1s"
         >
           <div className="container">
@@ -884,7 +884,7 @@ const Home = () => {
                 <h5 className="mb-0">Gautam Jani</h5>
                 <p>Founder</p>
                 <span>FGIIT</span>
-                <div className="testimonial-text bg-light text-center p-4 py-3 mt-2">
+                <div className="testimonial-text text-center p-4 py-3 mt-2">
                   <p className="mb-0">
                     INPTA elevated our academy's reputation, gaining students'
                     trust.
@@ -899,7 +899,7 @@ const Home = () => {
                 <h5 className="mb-0">Chirag Pandey</h5>
                 <p>Dietitian</p>
                 <span>FWG</span>
-                <div className="testimonial-text bg-light text-center p-4">
+                <div className="testimonial-text text-center p-4">
                   <p className="mb-0">
                     INPTA's process helped us meet international fitness
                     standards effortless
@@ -910,7 +910,7 @@ const Home = () => {
           </div>
         </div>
         <div
-          className="container-xxl py-4 wow fadeInUp text-start"
+          className="container-xxl py-4 wow fadeInUp text-start margintop"
           data-wow-delay="0.1s"
         >
           <div className="container">
@@ -967,7 +967,7 @@ const Home = () => {
           </div>
         </div>
         <div
-          className="container-xxl py-4 wow fadeInUp text-start"
+          className="container-xxl py-4 wow fadeInUp text-start margintop"
           data-wow-delay="0.1s"
         >
           <div className="container">
@@ -1025,7 +1025,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="container-xxl py-4 text-start">
+        <div className="container-xxl py-4 text-start margintop">
           <div className="container">
             <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
               <h6 className="section-title bg-white text-center text-primary px-3">
@@ -1100,7 +1100,7 @@ const Home = () => {
                     />
                   </div>
                   <div className="text-center py-4">
-                    <h5 className="mb-0">Dr. Chirag Pandey</h5>
+                    <h5 className="mb-0">Dt. Chirag Pandey</h5>
                   </div>
                 </div>
               </div>
@@ -1134,7 +1134,7 @@ const Home = () => {
                     />
                   </div>
                   <div className="text-center py-4">
-                    <h5 className="mb-0">Dr. Khamiyan</h5>
+                    <h5 className="mb-0">Dr. Khemiyan</h5>
                   </div>
                 </div>
               </div>

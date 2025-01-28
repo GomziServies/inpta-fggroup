@@ -227,7 +227,7 @@ const Profile = () => {
         <Header />
         <div id="main-wrapper-profile">
           <div className="clearfix" />
-          <div className="goodup-dashboard-wrap px-4 py-5">
+          <div className="goodup-dashboard-wrap px-4 py-5 mt-3">
             <div className="goodup-dashboard-content text-start">
               {isLogin ? (
                 <div className="dashboard-widg-bar d-block">

@@ -235,7 +235,7 @@ const ListingView = () => {
           <Header />
           <div className="clearfix" />
 
-          <section className="py-5 position-relative text-start view-listing-page mt-5">
+          <section className="py-5 position-relative text-start view-listing-page margintop">
             <div className="container">
               <div className="row">
                 <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 p-3">

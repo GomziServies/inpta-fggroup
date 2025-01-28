@@ -5,7 +5,6 @@ import "../assets/css/style.css";
 import Header from "../components/Header";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 import Footer from "../components/Footer";
 import { inptaListingAxiosInstance } from "../js/api";
 import { Link } from "react-router-dom";
@@ -26,17 +25,6 @@ const Home = () => {
       setLoading(false);
     }, 1000);
   }, []);
-
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    arrows: false,
-  };
 
   const [educationData, setEducationData] = useState([]);
   const [loadingOne, setLoadingOne] = useState(false);

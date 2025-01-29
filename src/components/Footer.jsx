@@ -33,7 +33,7 @@ function Footer() {
             <div className="col-lg-4">
               <h4 className="text-white mb-3">Contact</h4>
               <p className="mb-2">
-                <i className="fa fa-map-marker-alt me-3"></i>2, Abhushan Bunglows, Near Alkapuri Char Rasta, Katargam, Surat-395004
+                <i className="fa fa-map-marker-alt me-3"></i>2, Gomzi, Near Sumul dairy road, Katargam, Surat-395004
               </p>
               <p className="mb-2">
                 <i className="fa fa-phone-alt me-3"></i>+91 63540 51487

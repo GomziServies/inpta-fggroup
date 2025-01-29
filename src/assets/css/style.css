@@ -164,6 +164,9 @@
   .lang ul li a {
     color: #000;
   }
+  .service-item h5{
+    font-size: 18px;
+  }
 }
 
 .login {
@@ -361,6 +364,9 @@
     height: 100%;
     object-fit: cover;
   }
+  .service-item h5{
+    font-size: 16px;
+  }
 }
 
 .header-carousel .owl-nav {
@@ -449,6 +455,9 @@
 }
 
 /*** Service ***/
+.service-item h5{
+  font-size: 22px;
+}
 .service-item {
   background-color: white;
   box-shadow:  0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
@@ -532,6 +541,7 @@
   .testimonial-carousel::after {
     width: 200px;
   }
+  
 }
 
 @media (min-width: 992px) {
@@ -861,6 +871,10 @@
   resize: vertical;
   min-height: 180px;
 }
+.add-listing-page textarea.height-line {
+  resize: vertical;
+  min-height: auto !important;
+}
 
 .add-listing-page select.form-control {
   background-color: #ffffff;
@@ -1056,6 +1070,9 @@
 
   .add-listing-page .form-group {
     margin-bottom: 10px;
+  }
+  .service-item h5{
+    font-size: 18px;
   }
 }
 
@@ -1753,10 +1770,10 @@ button.bg-dark:hover {
   padding: 12px;
   background-color: white;
   box-shadow:  0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
-  margin: 10px;
 }
 .display-3 {
   line-height: 1 !important;
+  font-size: 50px;
 }
 
 .home-title {

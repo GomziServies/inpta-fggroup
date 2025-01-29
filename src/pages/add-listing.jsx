@@ -52,9 +52,7 @@ const AddListing = () => {
   const [inptaHours, setInptaHours] = useState([
     { day: "Mon", open: "10:00 AM", close: "07:00 PM" },
   ]);
-  const [faqs, setFaqs] = useState([
-    { question: "", answer: "" },
-  ]);
+  const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
   const [socialMediaLinks, setSocialMediaLinks] = useState([
     { platform: "Instagram", link: "Instagram.com" },
     { platform: "Facebook", link: "Facebook.com" },
@@ -623,7 +621,7 @@ const AddListing = () => {
             </div>
           </div>
         )}
-        <div id="main-wrapper"> 
+        <div id="main-wrapper">
           <Header />
           <div className="clearfix" />
           <div className="goodup-dashboard-wrap gray px-4 py-5 add-listing-page margintop">
@@ -632,6 +630,172 @@ const AddListing = () => {
                 <div className="row">
                   <div className="col-xl-12 col-md-12 col-sm-12">
                     <div className="submit-form">
+                      <div className="dashboard-list-wraps bg-white rounded mb-4">
+                        <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
+                          <div className="dashboard-list-wraps-flx">
+                            <h4 className="mb-0 ft-medium fs-md">
+                              <i className="fa fa-file me-2 theme-cl fs-sm" />
+                              Personal Info
+                            </h4>
+                          </div>
+                        </div>
+                        <div className="dashboard-list-wraps-body py-3 px-3">
+                          <div className="row">
+                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                              <div className="form-group">
+                                <label className="mb-1">Name</label>
+                                <input
+                                  type="text"
+                                  className="form-control rounded"
+                                  placeholder="Enter Name"
+                                  value={formData.email}
+                                  onChange={(e) =>
+                                    handleInputChange("email", e.target.value)
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                              <div className="form-group">
+                                <label className="mb-1">Email</label>
+                                <input
+                                  type="text"
+                                  className="form-control rounded"
+                                  placeholder="Enter Email"
+                                  value={formData.email}
+                                  onChange={(e) =>
+                                    handleInputChange("email", e.target.value)
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                              <div className="form-group">
+                                <label className="mb-1">City</label>
+                                <input
+                                  type="text"
+                                  className="form-control rounded"
+                                  placeholder="Enter city"
+                                  value={formData.city}
+                                  onChange={(e) =>
+                                    handleInputChange("city", e.target.value)
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                              <div className="form-group">
+                                <label className="mb-1">Details</label>
+                                <textarea
+                                  className="form-control rounded ht-150"
+                                  placeholder="Describe..."
+                                  defaultValue={""}
+                                  value={formData.description}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      "description",
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                              <div className="form-group">
+                                <label className="mb-1">
+                                  Current Job Specification
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control rounded"
+                                  placeholder="Enter Job Specification"
+                                  value={formData.email}
+                                  onChange={(e) =>
+                                    handleInputChange("email", e.target.value)
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                              <div className="form-group">
+                                <label className="mb-1">
+                                  Education Qaulification
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control rounded"
+                                  placeholder="Enter Qaulification"
+                                  value={formData.email}
+                                  onChange={(e) =>
+                                    handleInputChange("email", e.target.value)
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                              <div className="form-group">
+                                <label className="mb-1">
+                                  What do you want to start your own academy in
+                                  health and fitness industry ?
+                                </label>
+                                <textarea
+                                  rows={4}
+                                  className="form-control rounded height-line"
+                                  placeholder="Describe..."
+                                  defaultValue={""}
+                                  value={formData.description}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      "description",
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                              <div className="form-group">
+                                <label className="mb-1">
+                                  What experties you carried currently ?
+                                </label>
+                                <textarea
+                                  rows={4}
+                                  className="form-control rounded height-line"
+                                  placeholder="Describe..."
+                                  defaultValue={""}
+                                  value={formData.description}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      "description",
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                              <div className="form-group">
+                                <label className="mb-1">
+                                  What certification you have did earlier ?
+                                </label>
+                                <textarea
+                                  rows={4}
+                                  className="form-control rounded height-line"
+                                  placeholder="Describe..."
+                                  defaultValue={""}
+                                  value={formData.description}
+                                  onChange={(e) =>
+                                    handleInputChange(
+                                      "description",
+                                      e.target.value
+                                    )
+                                  }
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div className="dashboard-list-wraps bg-white rounded mb-4">
                         <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                           <div className="dashboard-list-wraps-flx">
@@ -822,6 +986,7 @@ const AddListing = () => {
                           </div>
                         </div>
                       </div>
+                     
                       <div className="dashboard-list-wraps bg-white rounded mb-4">
                         <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                           <div className="dashboard-list-wraps-flx">
@@ -867,20 +1032,6 @@ const AddListing = () => {
                                       "address_line_2",
                                       e.target.value
                                     )
-                                  }
-                                />
-                              </div>
-                            </div>
-                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                              <div className="form-group">
-                                <label className="mb-1">City</label>
-                                <input
-                                  type="text"
-                                  className="form-control rounded"
-                                  placeholder="Enter city"
-                                  value={formData.city}
-                                  onChange={(e) =>
-                                    handleInputChange("city", e.target.value)
                                   }
                                 />
                               </div>
@@ -981,20 +1132,7 @@ const AddListing = () => {
                                 />
                               </div>
                             </div>
-                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                              <div className="form-group">
-                                <label className="mb-1">Email</label>
-                                <input
-                                  type="text"
-                                  className="form-control rounded"
-                                  placeholder="Enter Email"
-                                  value={formData.email}
-                                  onChange={(e) =>
-                                    handleInputChange("email", e.target.value)
-                                  }
-                                />
-                              </div>
-                            </div>
+
                             <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                               <div className="form-group">
                                 <label className="mb-1">Website</label>

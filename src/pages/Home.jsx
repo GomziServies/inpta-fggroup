@@ -878,7 +878,7 @@ const Home = () => {
                   />
                   <h5 className="mb-0">Foram Desai</h5>
                   <p>Founder</p>
-                  <span>FGIIT</span>
+                  <span>FGIIT Vesu</span>
                   <div className="testimonial-text text-center p-4 py-3 mt-2">
                     <p className="mb-0">
                       INPTA elevated our academy's reputation, gaining students'
@@ -895,11 +895,11 @@ const Home = () => {
                   />
                   <h5 className="mb-0">Chirag Pandey</h5>
                   <p>Dietitian</p>
-                  <span>FWG</span>
+                  <span>FWG Adajan</span>
                   <div className="testimonial-text text-center p-4">
                     <p className="mb-0">
-                      INPTA's process helped us meet international fitness
-                      standards effortless
+                      INPTA's accreditation process made it seamless for us to
+                      align with global fitness benchmarks.
                     </p>
                   </div>
                 </div>
@@ -912,11 +912,11 @@ const Home = () => {
                   />
                   <h5 className="mb-0">Chirag Chandleker</h5>
                   <p>Owner</p>
-                  <span>FWG</span>
+                  <span>FGIIT Katargam</span>
                   <div className="testimonial-text text-center p-4">
                     <p className="mb-0">
-                      INPTA's process helped us meet international fitness
-                      standards effortless
+                      Thanks to INPTA, we effortlessly elevated our standards to
+                      meet international fitness criteria.
                     </p>
                   </div>
                 </div>
@@ -929,11 +929,11 @@ const Home = () => {
                   />
                   <h5 className="mb-0">Mayank Surani</h5>
                   <p>Owner</p>
-                  <span>FWG</span>
+                  <span>FGIIT Adajan</span>
                   <div className="testimonial-text text-center p-4">
                     <p className="mb-0">
-                      INPTA's process helped us meet international fitness
-                      standards effortless
+                      INPTA guided us in achieving top-tier fitness standards
+                      with ease and efficiency.
                     </p>
                   </div>
                 </div>
@@ -956,21 +956,21 @@ const Home = () => {
               <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
                 <img
                   className="mx-auto mb-3 border-radius-10"
-                  src="images/student/student-1.webp"
+                  src="images/student/student-7.webp"
                   alt="student"
                 />
               </div>
               <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
                 <img
                   className="mx-auto mb-3 border-radius-10"
-                  src="images/student/student-2.webp"
+                  src="images/student/student-8.webp"
                   alt="student"
                 />
               </div>
               <div className="col-md-4 testimonial-item text-center mb-md-0 mb-3">
                 <img
                   className="mx-auto mb-3 border-radius-10"
-                  src="images/student/student-3.webp"
+                  src="images/student/student-9.webp"
                   alt="student"
                 />
               </div>

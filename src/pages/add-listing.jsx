@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Helmet } from "react-helmet";
 import "../assets/css/style.css";
 import Header from "../components/Header";
-import { Link } from "react-router-dom";
 import axiosInstance, { inptaListingAxiosInstance } from "../js/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -49,6 +48,15 @@ const AddListing = () => {
     email: "",
     branch: "",
   });
+  const [personalDetailsData, setPersonalDetailsData] = useState({
+    description: "",
+    question1: "",
+    question2: "",
+    question3: "",
+    question4: "",
+    question5: "",
+  });
+  const [userUpdateData, setUserUpdateData] = useState({});
   const [inptaHours, setInptaHours] = useState([
     { day: "Mon", open: "10:00 AM", close: "07:00 PM" },
   ]);
@@ -58,26 +66,11 @@ const AddListing = () => {
     { platform: "Facebook", link: "Facebook.com" },
     { platform: "YouTube", link: "YouTube.com" },
   ]);
-  const [selectedListingCategory, setSelectedListingCategory] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedFacilities, setSelectedFacilities] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingOne, setLoadingOne] = useState(false);
   const [loadingTwo, setLoadingTwo] = useState(false);
-
-  const facilities = [
-    { value: "WiFi", label: "WiFi" },
-    { value: "Steam Bath", label: "Steam Bath" },
-    { value: "Air Conditioner", label: "Air Conditioner" },
-    { value: "Parking", label: "Parking" },
-    { value: "Locker", label: "Locker" },
-    { value: "Changing room", label: "Changing room" },
-    { value: "Lounge area", label: "Lounge area" },
-    { value: "Personal trainers", label: "Personal trainers" },
-    { value: "Massage", label: "Massage" },
-  ];
   const [selectedCourseOffered, setSelectedCourseOffered] = useState("");
 
   const handleSelectChange = (selectedOptions) => {
@@ -116,6 +109,26 @@ const AddListing = () => {
       label: "Injury Rehabilitation Workshop",
     },
   ];
+
+  const [userData, setUserData] = useState({});
+
+  const getUserData = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get("/account/profile");
+      const userData = response.data.data;
+      if (userData) {
+        setUserData(userData.user);
+      }
+    } catch (error) {
+      console.error("Error in getUserData:", error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   // ----------------------------------------------------------------------------------
 
@@ -295,6 +308,20 @@ const AddListing = () => {
     }
   };
 
+  const handlePersonalInputChange = (field, value) => {
+    setPersonalDetailsData((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+
+  const handleUserInputChange = (field, value) => {
+    setUserUpdateData((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+
   const uploadLogo = async () => {
     let logoUrl = "";
 
@@ -380,12 +407,32 @@ const AddListing = () => {
     return uploadedUrls;
   };
 
+  const updateData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axiosInstance.post(
+        "/account/update-profile",
+        userUpdateData
+      );
+      if (response.data.data) {
+        getUserData();
+        toast.success("User data updated successfully");
+      } else {
+        console.error("Failed to update user data");
+        toast.error("Error updating user data");
+      }
+    } catch (error) {
+      console.error("Error updating user data:", error);
+      toast.error("Error updating user data");
+    }
+    setIsLoading(false);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     try {
       const uploadedUrls = await uploadFeatureImage();
-
       const logoUrl = await uploadLogo();
 
       const postData = {
@@ -395,22 +442,19 @@ const AddListing = () => {
         course_offered: formData.course_offered,
         logo: logoUrl,
         images: uploadedUrls.flat(),
-        // services: selectedFacilities.map((facilities) => facilities.value),
         tags: formData.tags,
+        personal_details: {
+          description: personalDetailsData.description,
+          question1: personalDetailsData.question1,
+          question2: personalDetailsData.question2,
+          question3: personalDetailsData.question3,
+          question4: personalDetailsData.question4,
+          question5: personalDetailsData.question5,
+        },
         social_media: socialMediaLinks.map((link) => ({
           social_media_type: link.platform.toLowerCase(),
           link: link.link,
         })),
-        listing_category:
-          selectedListingCategory.length > 0
-            ? selectedListingCategory
-            : [selectedListingCategory],
-        category:
-          selectedCategory.length > 0 ? selectedCategory : [selectedCategory],
-        amount: {
-          paid_amount: formData.paid_amount,
-          discount_amount: formData.discount_amount,
-        },
         locations: [
           {
             location_name: formData.branch,
@@ -458,6 +502,7 @@ const AddListing = () => {
       };
 
       await inptaListingAxiosInstance.post("/create-listing", postData);
+      updateData();
 
       setIsLoading(false);
       toast.success("Listing created successfully!", {
@@ -469,19 +514,6 @@ const AddListing = () => {
       toast.error(error?.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      localStorage.removeItem("authorization");
-      localStorage.removeItem("user_info");
-      toast.success("Logout Successful!");
-      window.location.href = "/login";
-    } catch (error) {
-      console.error("Error in handleAgreeAndConfirm:", error);
-
-      toast.error("Logout Failed. Please try again.");
     }
   };
 
@@ -558,43 +590,6 @@ const AddListing = () => {
     setInptaHours(allDaysTime);
   };
 
-  const categoryAmounts = {
-    Affordable: 30000,
-    Standard: 45000,
-    Premium: 90000,
-  };
-
-  useEffect(() => {
-    if (selectedCategory && categoryAmounts[selectedCategory]) {
-      setFormData((prev) => ({
-        ...prev,
-        paid_amount: categoryAmounts[selectedCategory].toString(),
-        discount_amount: "",
-        discount_percent: "",
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        paid_amount: "",
-        discount_amount: "",
-        discount_percent: "",
-      }));
-    }
-  }, [selectedCategory]);
-
-  // Effect to calculate discount percent based on discount amount
-  useEffect(() => {
-    const amount = parseFloat(formData.paid_amount);
-    const discountAmount = parseFloat(formData.discount_amount);
-    if (!isNaN(amount) && !isNaN(discountAmount)) {
-      const discountPercent = ((discountAmount / amount) * 100).toFixed(2);
-      setFormData((prev) => ({
-        ...prev,
-        discount_percent: discountPercent,
-      }));
-    }
-  }, [formData.discount_amount]);
-
   return (
     <div>
       <Helmet>
@@ -648,9 +643,15 @@ const AddListing = () => {
                                   type="text"
                                   className="form-control rounded"
                                   placeholder="Enter Name"
-                                  value={formData.email}
+                                  value={
+                                    userUpdateData.first_name ||
+                                    userData.first_name
+                                  }
                                   onChange={(e) =>
-                                    handleInputChange("email", e.target.value)
+                                    handleUserInputChange(
+                                      "first_name",
+                                      e.target.value
+                                    )
                                   }
                                 />
                               </div>
@@ -662,9 +663,12 @@ const AddListing = () => {
                                   type="text"
                                   className="form-control rounded"
                                   placeholder="Enter Email"
-                                  value={formData.email}
+                                  value={userUpdateData.email || userData.email}
                                   onChange={(e) =>
-                                    handleInputChange("email", e.target.value)
+                                    handleUserInputChange(
+                                      "email",
+                                      e.target.value
+                                    )
                                   }
                                 />
                               </div>
@@ -676,9 +680,15 @@ const AddListing = () => {
                                   type="text"
                                   className="form-control rounded"
                                   placeholder="Enter city"
-                                  value={formData.city}
+                                  value={
+                                    userUpdateData.city ||
+                                    userData?.address?.city
+                                  }
                                   onChange={(e) =>
-                                    handleInputChange("city", e.target.value)
+                                    handleUserInputChange(
+                                      "city",
+                                      e.target.value
+                                    )
                                   }
                                 />
                               </div>
@@ -690,9 +700,9 @@ const AddListing = () => {
                                   className="form-control rounded ht-150"
                                   placeholder="Describe..."
                                   defaultValue={""}
-                                  value={formData.description}
+                                  value={personalDetailsData.description}
                                   onChange={(e) =>
-                                    handleInputChange(
+                                    handlePersonalInputChange(
                                       "description",
                                       e.target.value
                                     )
@@ -709,9 +719,12 @@ const AddListing = () => {
                                   type="text"
                                   className="form-control rounded"
                                   placeholder="Enter Job Specification"
-                                  value={formData.email}
+                                  value={personalDetailsData.question1}
                                   onChange={(e) =>
-                                    handleInputChange("email", e.target.value)
+                                    handlePersonalInputChange(
+                                      "question1",
+                                      e.target.value
+                                    )
                                   }
                                 />
                               </div>
@@ -725,9 +738,12 @@ const AddListing = () => {
                                   type="text"
                                   className="form-control rounded"
                                   placeholder="Enter Qaulification"
-                                  value={formData.email}
+                                  value={personalDetailsData.question2}
                                   onChange={(e) =>
-                                    handleInputChange("email", e.target.value)
+                                    handlePersonalInputChange(
+                                      "question2",
+                                      e.target.value
+                                    )
                                   }
                                 />
                               </div>
@@ -736,17 +752,17 @@ const AddListing = () => {
                               <div className="form-group">
                                 <label className="mb-1">
                                   What do you want to start your own academy in
-                                  health and fitness industry ?
+                                  health and fitness industry?
                                 </label>
                                 <textarea
                                   rows={4}
                                   className="form-control rounded height-line"
-                                  placeholder="Describe..."
+                                  placeholder="Answer..."
                                   defaultValue={""}
-                                  value={formData.description}
+                                  value={personalDetailsData.question3}
                                   onChange={(e) =>
-                                    handleInputChange(
-                                      "description",
+                                    handlePersonalInputChange(
+                                      "question3",
                                       e.target.value
                                     )
                                   }
@@ -756,17 +772,17 @@ const AddListing = () => {
                             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                               <div className="form-group">
                                 <label className="mb-1">
-                                  What experties you carried currently ?
+                                  What experties you carried currently?
                                 </label>
                                 <textarea
                                   rows={4}
                                   className="form-control rounded height-line"
-                                  placeholder="Describe..."
+                                  placeholder="Answer..."
                                   defaultValue={""}
-                                  value={formData.description}
+                                  value={personalDetailsData.question4}
                                   onChange={(e) =>
-                                    handleInputChange(
-                                      "description",
+                                    handlePersonalInputChange(
+                                      "question4",
                                       e.target.value
                                     )
                                   }
@@ -776,17 +792,17 @@ const AddListing = () => {
                             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                               <div className="form-group">
                                 <label className="mb-1">
-                                  What certification you have did earlier ?
+                                  What certification you have did earlier?
                                 </label>
                                 <textarea
                                   rows={4}
                                   className="form-control rounded height-line"
-                                  placeholder="Describe..."
+                                  placeholder="Answer..."
                                   defaultValue={""}
-                                  value={formData.description}
+                                  value={personalDetailsData.question5}
                                   onChange={(e) =>
-                                    handleInputChange(
-                                      "description",
+                                    handlePersonalInputChange(
+                                      "question5",
                                       e.target.value
                                     )
                                   }
@@ -986,7 +1002,7 @@ const AddListing = () => {
                           </div>
                         </div>
                       </div>
-                     
+
                       <div className="dashboard-list-wraps bg-white rounded mb-4">
                         <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                           <div className="dashboard-list-wraps-flx">

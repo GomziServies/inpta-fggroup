@@ -50,6 +50,15 @@ const UpdateListing = () => {
     logo: "",
     course_offered: [],
   });
+  const [personalDetailsData, setPersonalDetailsData] = useState({
+    description: "",
+    question1: "",
+    question2: "",
+    question3: "",
+    question4: "",
+    question5: "",
+  });
+  const [userUpdateData, setUserUpdateData] = useState({});
   const [tagsData, setTagsData] = useState([]);
   const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
   const [photoOnlyUrl, setPhotoOnlyUrl] = useState([]);
@@ -58,7 +67,6 @@ const UpdateListing = () => {
     { platform: "Facebook", link: "" },
     { platform: "YouTube", link: "" },
   ]);
-  const [selectedListingCategory, setSelectedListingCategory] = useState("");
   const [selectedCourseOffered, setSelectedCourseOffered] = useState("");
   const [approvedData, setApprovedData] = useState("");
   const [inptaHours, setInptaHours] = useState([
@@ -70,7 +78,6 @@ const UpdateListing = () => {
   const [loadingNew, setLoadingNew] = useState(false);
   const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
   const [selectedType, setSelectedType] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
 
   const [userData, setUserData] = useState({
     first_name: "",
@@ -162,8 +169,7 @@ const UpdateListing = () => {
   };
 
   const [inptaPhotos, setInptaPhotos] = useState([]);
-  const [currentInptaPhotoIndex, setCurrentInptaPhotoIndex] =
-    useState(null);
+  const [currentInptaPhotoIndex, setCurrentInptaPhotoIndex] = useState(null);
   const [logoImage, setLogoImage] = useState(null);
   const [logoPreview, setLogoPreview] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
@@ -467,6 +473,20 @@ const UpdateListing = () => {
     }
   };
 
+  const handlePersonalInputChange = (field, value) => {
+    setPersonalDetailsData((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+
+  const handleUserInputChange = (field, value) => {
+    setUserUpdateData((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+
   const getInptaData = async () => {
     try {
       const response = await inptaListingAxiosInstance.get(
@@ -523,8 +543,8 @@ const UpdateListing = () => {
       setSocialMediaLinks(social_media);
       setApprovedData(approval_status);
 
-      setTagsData(fetchedInptaData.tags)
-      setSelectedType(fetchedInptaData.type)
+      setTagsData(fetchedInptaData.tags);
+      setSelectedType(fetchedInptaData.type);
       setFormData({
         title: fetchedInptaData.title || "",
         description: fetchedInptaData.description || "",
@@ -555,7 +575,14 @@ const UpdateListing = () => {
           )?.value || "",
         branch: address.location_name || "",
       });
-
+      setPersonalDetailsData({
+        description: fetchedInptaData?.personal_details?.description,
+        question1: fetchedInptaData?.personal_details?.question1,
+        question2: fetchedInptaData?.personal_details?.question2,
+        question3: fetchedInptaData?.personal_details?.question3,
+        question4: fetchedInptaData?.personal_details?.question4,
+        question5: fetchedInptaData?.personal_details?.question5,
+      });
       setSelectedCourseOffered(
         fetchedInptaData.course_offered?.map((course) => ({
           label: course,
@@ -566,7 +593,6 @@ const UpdateListing = () => {
       setFaqs(faqData);
       setLogoImage(logoImg);
       setLogoPreview(logoImg);
-      setSelectedListingCategory(fetchedInptaData.listing_category);
     } catch (error) {
       console.error("Error in Getting INPTA Data:", error);
     }
@@ -575,6 +601,25 @@ const UpdateListing = () => {
   useEffect(() => {
     getInptaData();
   }, []);
+
+  const updateData = async () => {
+    try {
+      const response = await axiosInstance.post(
+        "/account/update-profile",
+        userUpdateData
+      );
+      if (response.data.data) {
+        getUserData();
+        toast.success("User data updated successfully");
+      } else {
+        console.error("Failed to update user data");
+        toast.error("Error updating user data");
+      }
+    } catch (error) {
+      console.error("Error updating user data:", error);
+      toast.error("Error updating user data");
+    }
+  };
 
   const handleSubmit = async (event) => {
     setLoadingNew(true);
@@ -592,12 +637,14 @@ const UpdateListing = () => {
           social_media_type: link.social_media_type,
           link: link.link,
         })),
-        listing_category:
-          selectedListingCategory.length > 0
-            ? selectedListingCategory
-            : [selectedListingCategory],
-        category:
-          selectedCategory.length > 0 ? selectedCategory : [selectedCategory],
+        personal_details: {
+          description: personalDetailsData.description,
+          question1: personalDetailsData.question1,
+          question2: personalDetailsData.question2,
+          question3: personalDetailsData.question3,
+          question4: personalDetailsData.question4,
+          question5: personalDetailsData.question5,
+        },
         locations: [
           {
             location_name: formData.branch,
@@ -645,6 +692,7 @@ const UpdateListing = () => {
       };
 
       await inptaListingAxiosInstance.patch("/update-listing", postData);
+      updateData();
       getInptaData();
 
       toast.success("INPTA Data Updated successfully!", {
@@ -805,9 +853,7 @@ const UpdateListing = () => {
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>
-          Update Your INPTA Listing - Keep Your Information Current
-        </title>
+        <title>Update Your INPTA Listing - Keep Your Information Current</title>
         <meta
           name="description"
           content="Update your inpta details to maintain accurate information and improve visibility. Ensure your listing reflects the latest services and offerings!"
@@ -899,9 +945,15 @@ const UpdateListing = () => {
                                   type="text"
                                   className="form-control rounded"
                                   placeholder="Enter Name"
-                                  value={formData.email}
+                                  value={
+                                    userUpdateData.first_name ||
+                                    userData.first_name
+                                  }
                                   onChange={(e) =>
-                                    handleInputChange("email", e.target.value)
+                                    handleUserInputChange(
+                                      "first_name",
+                                      e.target.value
+                                    )
                                   }
                                 />
                               </div>
@@ -913,9 +965,12 @@ const UpdateListing = () => {
                                   type="text"
                                   className="form-control rounded"
                                   placeholder="Enter Email"
-                                  value={formData.email}
+                                  value={userUpdateData.email || userData.email}
                                   onChange={(e) =>
-                                    handleInputChange("email", e.target.value)
+                                    handleUserInputChange(
+                                      "email",
+                                      e.target.value
+                                    )
                                   }
                                 />
                               </div>
@@ -927,9 +982,15 @@ const UpdateListing = () => {
                                   type="text"
                                   className="form-control rounded"
                                   placeholder="Enter city"
-                                  value={formData.city}
+                                  value={
+                                    userUpdateData.city ||
+                                    userData?.city
+                                  }
                                   onChange={(e) =>
-                                    handleInputChange("city", e.target.value)
+                                    handleUserInputChange(
+                                      "city",
+                                      e.target.value
+                                    )
                                   }
                                 />
                               </div>
@@ -941,9 +1002,9 @@ const UpdateListing = () => {
                                   className="form-control rounded ht-150"
                                   placeholder="Describe..."
                                   defaultValue={""}
-                                  value={formData.description}
+                                  value={personalDetailsData.description}
                                   onChange={(e) =>
-                                    handleInputChange(
+                                    handlePersonalInputChange(
                                       "description",
                                       e.target.value
                                     )
@@ -960,9 +1021,12 @@ const UpdateListing = () => {
                                   type="text"
                                   className="form-control rounded"
                                   placeholder="Enter Job Specification"
-                                  value={formData.email}
+                                  value={personalDetailsData.question1}
                                   onChange={(e) =>
-                                    handleInputChange("email", e.target.value)
+                                    handlePersonalInputChange(
+                                      "question1",
+                                      e.target.value
+                                    )
                                   }
                                 />
                               </div>
@@ -976,9 +1040,12 @@ const UpdateListing = () => {
                                   type="text"
                                   className="form-control rounded"
                                   placeholder="Enter Qaulification"
-                                  value={formData.email}
+                                  value={personalDetailsData.question2}
                                   onChange={(e) =>
-                                    handleInputChange("email", e.target.value)
+                                    handlePersonalInputChange(
+                                      "question2",
+                                      e.target.value
+                                    )
                                   }
                                 />
                               </div>
@@ -992,12 +1059,12 @@ const UpdateListing = () => {
                                 <textarea
                                   rows={4}
                                   className="form-control rounded height-line"
-                                  placeholder="Describe..."
+                                  placeholder="Answer..."
                                   defaultValue={""}
-                                  value={formData.description}
+                                  value={personalDetailsData.question3}
                                   onChange={(e) =>
-                                    handleInputChange(
-                                      "description",
+                                    handlePersonalInputChange(
+                                      "question3",
                                       e.target.value
                                     )
                                   }
@@ -1012,12 +1079,12 @@ const UpdateListing = () => {
                                 <textarea
                                   rows={4}
                                   className="form-control rounded height-line"
-                                  placeholder="Describe..."
+                                  placeholder="Answer..."
                                   defaultValue={""}
-                                  value={formData.description}
+                                  value={personalDetailsData.question4}
                                   onChange={(e) =>
-                                    handleInputChange(
-                                      "description",
+                                    handlePersonalInputChange(
+                                      "question4",
                                       e.target.value
                                     )
                                   }
@@ -1032,12 +1099,12 @@ const UpdateListing = () => {
                                 <textarea
                                   rows={4}
                                   className="form-control rounded height-line"
-                                  placeholder="Describe..."
+                                  placeholder="Answer..."
                                   defaultValue={""}
-                                  value={formData.description}
+                                  value={personalDetailsData.question5}
                                   onChange={(e) =>
-                                    handleInputChange(
-                                      "description",
+                                    handlePersonalInputChange(
+                                      "question5",
                                       e.target.value
                                     )
                                   }
@@ -1504,10 +1571,7 @@ const UpdateListing = () => {
                                             type="file"
                                             accept="image/*"
                                             onChange={(event) =>
-                                              handleCropInptaPhoto(
-                                                event,
-                                                index
-                                              )
+                                              handleCropInptaPhoto(event, index)
                                             }
                                             style={{ display: "none" }}
                                             id={`photoInput-${index}`}
@@ -1807,12 +1871,7 @@ const UpdateListing = () => {
         </Modal.Footer>
       </Modal>
 
-      <Modal
-        show={inptaShow}
-        onHide={handleInptaClose}
-        size="lg"
-        centered
-      >
+      <Modal show={inptaShow} onHide={handleInptaClose} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>Crop INPTA Image</Modal.Title>
         </Modal.Header>

@@ -443,6 +443,7 @@ const AddListing = () => {
         logo: logoUrl,
         images: uploadedUrls.flat(),
         tags: formData.tags,
+        listing_category: ["listing"],
         personal_details: {
           description: personalDetailsData.description,
           question1: personalDetailsData.question1,
@@ -1054,6 +1055,20 @@ const AddListing = () => {
                             </div>
                             <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                               <div className="form-group">
+                                <label className="mb-1">City</label>
+                                <input
+                                  type="text"
+                                  className="form-control rounded"
+                                  placeholder="Enter city"
+                                  value={formData.city}
+                                  onChange={(e) =>
+                                    handleInputChange("city", e.target.value)
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                              <div className="form-group">
                                 <label className="mb-1">State</label>
                                 <input
                                   type="text"
@@ -1148,7 +1163,20 @@ const AddListing = () => {
                                 />
                               </div>
                             </div>
-
+                            <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                              <div className="form-group">
+                                <label className="mb-1">Email</label>
+                                <input
+                                  type="text"
+                                  className="form-control rounded"
+                                  placeholder="Enter Email"
+                                  value={formData.email}
+                                  onChange={(e) =>
+                                    handleInputChange("email", e.target.value)
+                                  }
+                                />
+                              </div>
+                            </div>
                             <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                               <div className="form-group">
                                 <label className="mb-1">Website</label>

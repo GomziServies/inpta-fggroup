@@ -48,13 +48,13 @@ function Footer() {
                 <Link className="btn btn-outline-light btn-social" to="https://api.whatsapp.com/send?phone=6354051487&text=Hello">
                   <i className="fab fa-whatsapp"></i>
                 </Link>
-                <Link className="btn btn-outline-light btn-social" to="https://instagram.com/gomzi2712?igshid=Y2IzZGU1MTFhOQ==">
+                <Link className="btn btn-outline-light btn-social" to="https://www.instagram.com/fgiit.surat/">
                   <i className="fab fa-instagram"></i>
                 </Link>
                 <Link className="btn btn-outline-light btn-social" to="https://www.facebook.com/gajani2">
                   <i className="fab fa-facebook-f"></i>
                 </Link>
-                <Link className="btn btn-outline-light btn-social" to="https://www.youtube.com/@GautamJaniOffcial">
+                <Link className="btn btn-outline-light btn-social" to="https://www.youtube.com/@fgiitsurat5121">
                   <i className="fab fa-youtube"></i>
                 </Link>
                 <Link className="btn btn-outline-light btn-social" to="https://www.linkedin.com/in/gautam-jani-561a50161">

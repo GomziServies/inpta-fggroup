@@ -164,7 +164,7 @@
   .lang ul li a {
     color: #000;
   }
-  .service-item h5{
+  .service-item h5 {
     font-size: 18px;
   }
 }
@@ -364,7 +364,7 @@
     height: 100%;
     object-fit: cover;
   }
-  .service-item h5{
+  .service-item h5 {
     font-size: 16px;
   }
 }
@@ -455,12 +455,12 @@
 }
 
 /*** Service ***/
-.service-item h5{
+.service-item h5 {
   font-size: 22px;
 }
 .service-item {
   background-color: white;
-  box-shadow:  0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
   transition: 0.5s;
   height: 250px;
 }
@@ -483,7 +483,7 @@
   border-radius: 10px;
   overflow: hidden;
   background-color: white;
-  box-shadow:  0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
 }
 
 .category img,
@@ -541,7 +541,6 @@
   .testimonial-carousel::after {
     width: 200px;
   }
-  
 }
 
 @media (min-width: 992px) {
@@ -1071,7 +1070,7 @@
   .add-listing-page .form-group {
     margin-bottom: 10px;
   }
-  .service-item h5{
+  .service-item h5 {
     font-size: 18px;
   }
 }
@@ -1725,7 +1724,7 @@ button.bg-dark:hover {
 
 .Goodup-grid-wrap {
   background-color: white;
-  box-shadow:  0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
   padding: 10px;
   border-radius: 6px;
   margin-bottom: 30px;
@@ -1762,14 +1761,14 @@ button.bg-dark:hover {
 
 .bg-steps {
   background-color: white;
-  box-shadow:  0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
   height: 220px;
   border-radius: 10px;
 }
-.box-shadow-testing .testimonial-item{
+.box-shadow-testing .testimonial-item {
   padding: 12px;
   background-color: white;
-  box-shadow:  0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
 }
 .display-3 {
   line-height: 1 !important;
@@ -1780,11 +1779,11 @@ button.bg-dark:hover {
   font-size: 40px !important;
   line-height: 50px !important;
 }
-.margintop{
+.margintop {
   margin-top: 70px;
 }
 @media (max-width: 556px) {
-  .margintop{
+  .margintop {
     margin-top: 50px;
   }
   .welcome-sec {
@@ -1819,10 +1818,9 @@ button.bg-dark:hover {
   text-shadow: 0px 0px 10px #181d38;
 }
 
-
 .values .card {
   background-color: white;
-  box-shadow:  0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
+  box-shadow: 0 1.01rem 0.55rem rgba(0, 0, 0, 0.075);
   padding: 30px;
   text-align: center;
   transition: 0.3s;
@@ -1947,3 +1945,107 @@ button.bg-dark:hover {
   border-radius: 4px;
 }
 
+.ply1 {
+  position: relative;
+}
+
+.black-before::before,
+.review-box::before {
+  top: 0;
+  opacity: 0.4;
+  content: "";
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.black-before::before {
+  position: absolute;
+  background-color: #000;
+  border-radius: 10px 10px 0 0;
+  z-index: 1;
+  height: 100%;
+}
+
+.video-btn a {
+  position: absolute;
+  right: 0;
+  display: table;
+  top: 50%;
+  -moz-transform: translateY(-50%) translateX(-50%);
+  -webkit-transform: translateY(-50%) translateX(-50%);
+  transform: translateY(-50%) translateX(-50%);
+  z-index: 3;
+  left: 52%;
+}
+
+.video-btn a {
+  text-align: center;
+}
+
+.newthing {
+  background-color: #fff;
+  border-radius: 100%;
+  color: #00afef;
+  display: flex;
+  margin-right: 25px;
+  line-height: 50px;
+  font-size: 18px !important;
+  align-items: center;
+  margin-left: 0;
+  height: 50px;
+  width: 50px;
+  justify-content: center;
+}
+
+.newthing::after,
+.newthing::before {
+  -webkit-animation: 1.8s infinite effct;
+  -moz-animation: 1.8s infinite effct;
+  -o-animation: 1.8s infinite effct;
+  animation: 1.8s infinite effct;
+  background-color: #fff;
+  border-radius: 100%;
+  margin: -20px;
+  bottom: 0;
+  display: block;
+  left: 0;
+  opacity: 0;
+  right: 0;
+}
+
+.newthing i {
+  font-size: 20px;
+  margin-left: 3px;
+  color: var(--primary-color) !important;
+}
+
+.newthing {
+  position: relative;
+}
+
+.newthing::after,
+.newthing::before {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  top: 0;
+}
+
+@media (max-width: 575px) {
+  .newthing {
+    font-size: 16px !important;
+    height: 40px;
+    width: 40px;
+  }
+
+  .video-btn a {
+    left: 53%;
+  }
+}
+
+.video-img {
+  border-radius: 10px;
+  overflow: hidden;
+}

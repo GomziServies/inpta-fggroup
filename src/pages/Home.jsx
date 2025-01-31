@@ -16,6 +16,8 @@ import {
   faPersonChalkboard,
 } from "@fortawesome/free-solid-svg-icons";
 import ContactPage from "../components/ContactForm";
+import ModalVideo from "react-modal-video";
+import "react-modal-video/css/modal-video.min.css";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -62,8 +64,27 @@ const Home = () => {
     fetchInptaData();
   }, []);
 
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [videoUrlPopUp, setVideoUrlPopUp] = useState("");
+
+  const openVideoModal = (url) => {
+    setIsVideoOpen(true);
+    setVideoUrlPopUp(url);
+  };
+
+  const closeVideoModal = () => {
+    setIsVideoOpen(false);
+    setVideoUrlPopUp("");
+  };
+
   return (
     <div>
+      <ModalVideo
+        channel="youtube"
+        isOpen={isVideoOpen}
+        videoId={videoUrlPopUp}
+        onClose={closeVideoModal}
+      />
       <link
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
         rel="stylesheet"
@@ -195,11 +216,32 @@ const Home = () => {
                 data-wow-delay="0.1s"
               >
                 <div className="position-relative h-100">
-                  <img
+                  {/* <img
                     className="img-fluid position-absolute w-100 h-100 border-radius-10 object-fit-cover"
                     src="images/about-banner.webp"
                     alt=""
-                  />
+                  /> */}
+                  <div className="video-img">
+                    <div className="ply1 black-before">
+                      <img
+                        width="100%"
+                        style={{ borderRadius: "10px 10px 0px 0px" }}
+                        alt="client journey"
+                        src="images/about-banner.webp"
+                      />
+                      <div className="video-btn">
+                        <a
+                          onClick={() => openVideoModal("L8OFnO8llJw")}
+                          data-flashy-type="video"
+                          className="custom"
+                        >
+                          <span className="newthing">
+                            <i className="fas fa-play"></i>
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
@@ -208,11 +250,32 @@ const Home = () => {
                 </h6>
                 <h1 className="mb-4 home-title">What is INPTA?</h1>
                 <div className="d-md-none d-block mb-3">
-                  <img
+                  <div className="video-img">
+                    <div className="ply1 black-before">
+                      <img
+                        width="100%"
+                        style={{ borderRadius: "10px 10px 0px 0px" }}
+                        alt="client journey"
+                        src="images/about-banner.webp"
+                      />
+                      <div className="video-btn">
+                        <a
+                          onClick={() => openVideoModal("L8OFnO8llJw")}
+                          data-flashy-type="video"
+                          className="custom"
+                        >
+                          <span className="newthing">
+                            <i className="fas fa-play"></i>
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  {/* <img
                     className="img-fluid w-100 "
                     src="images/about-banner.webp"
                     alt=""
-                  />
+                  /> */}
                 </div>
                 <p className="mb-4">
                   INPTA is India's government-approved accreditation body

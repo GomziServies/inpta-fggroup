@@ -1026,7 +1026,7 @@ const TPRegistrationListing = () => {
                                     </div>
                                   </div>
                                 </div>
-                                <div className="col-12 d-flex justify-content-center">
+                                <div className="col-12">
                                   <FormControlLabel
                                     control={
                                       <Checkbox

@@ -693,6 +693,181 @@ const TPRegistrationListing = () => {
                             <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                               <div className="dashboard-list-wraps-flx">
                                 <h4 className="mb-0 ft-medium fs-md">
+                                  <i className="fas fa-map-marker-alt me-2 theme-cl fs-sm" />
+                                  Personal Info
+                                </h4>
+                              </div>
+                            </div>
+                            <div className="dashboard-list-wraps-body bg-white py-3 px-3">
+                              <div className="row">
+                                <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                  <div className="form-group">
+                                    <label className="mb-1">
+                                      Full Name
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control rounded"
+                                      placeholder="Enter Full Name"
+                                      value={formData.address_line_1}
+                                      onChange={(e) =>
+                                        handleInputChange(
+                                          "address_line_1",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+                                  <div className="form-group">
+                                    <label className="mb-1">
+                                      Email
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control rounded"
+                                      placeholder="Enter Email"
+                                      value={formData.address_line_1}
+                                      onChange={(e) =>
+                                        handleInputChange(
+                                          "address_line_1",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                  <div className="form-group">
+                                    <label className="mb-1">
+                                      Home No/Building Name/Home Name
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control rounded"
+                                      placeholder="Enter Home No/Building Name/Home Name"
+                                      value={formData.address_line_1}
+                                      onChange={(e) =>
+                                        handleInputChange(
+                                          "address_line_1",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                  <div className="form-group">
+                                    <label className="mb-1">
+                                      Road Name/Area/Colony
+                                    </label>
+                                    <input
+                                      type="text"
+                                      className="form-control rounded"
+                                      placeholder="Enter Road Name/Area/Colony"
+                                      value={formData.address_line_2}
+                                      onChange={(e) =>
+                                        handleInputChange(
+                                          "address_line_2",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                  <div className="form-group">
+                                    <label className="mb-1">City</label>
+                                    <input
+                                      type="text"
+                                      className="form-control rounded"
+                                      placeholder="Enter city"
+                                      value={formData.city}
+                                      onChange={(e) =>
+                                        handleInputChange(
+                                          "city",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                  <div className="form-group">
+                                    <label className="mb-1">State</label>
+                                    <input
+                                      type="text"
+                                      className="form-control rounded"
+                                      placeholder="Enter state"
+                                      value={formData.state}
+                                      onChange={(e) =>
+                                        handleInputChange(
+                                          "state",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                  <div className="form-group">
+                                    <label className="mb-1">Country</label>
+                                    <input
+                                      type="text"
+                                      className="form-control rounded"
+                                      placeholder="Enter Country"
+                                      value={formData.country}
+                                      onChange={(e) =>
+                                        handleInputChange(
+                                          "country",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                  <div className="form-group">
+                                    <label className="mb-1">Pin Code</label>
+                                    <input
+                                      type="text"
+                                      className="form-control rounded"
+                                      placeholder="Enter Pin Code"
+                                      value={formData.pin_code}
+                                      onChange={(e) =>
+                                        handleInputChange(
+                                          "pin_code",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                                <div className="col-12">
+                                  <div className="form-group">
+                                    <label className="mb-1">Address Link</label>
+                                    <input
+                                      type="text"
+                                      className="form-control rounded"
+                                      placeholder="Enter Address Link"
+                                      value={formData.direction_link}
+                                      onChange={(e) =>
+                                        handleInputChange(
+                                          "direction_link",
+                                          e.target.value
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="dashboard-list-wraps bg-white rounded mb-4">
+                            <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
+                              <div className="dashboard-list-wraps-flx">
+                                <h4 className="mb-0 ft-medium fs-md">
                                   <i className="fa fa-camera me-2 theme-cl fs-sm" />
                                   Image &amp; Gallery Option
                                 </h4>
@@ -764,9 +939,9 @@ const TPRegistrationListing = () => {
                                     onChange={handleCropLogoChange}
                                   />
                                 </div>
-                                <div className="col-12 mt-3">
+                                <div className="col-md-6 mt-4">
                                   <label className="mb-1">
-                                    Featured Image{" "}
+                                    Washroom Image{" "}
                                   </label>
                                   {inptaPhotos && inptaPhotos.length > 0 ? (
                                     <div>
@@ -875,13 +1050,606 @@ const TPRegistrationListing = () => {
                                   <label className="smart-text">
                                     Maximum file size per Image: 2 MB.
                                   </label>
-                                  <div>
-                                    <label className="smart-text">
-                                      Required Images: Washroom, Dustbin,
-                                      Medical Kit, Gym Area (More then 500
-                                      square feet), Reception, Staff
-                                    </label>
-                                  </div>
+                                  <input
+                                    id="featureInput"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={handleCropInptaPhoto}
+                                    sx={{ mt: 2, mb: 2 }}
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Dustbin Image{" "}
+                                  </label>
+                                  {inptaPhotos && inptaPhotos.length > 0 ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        {loadingTwo && (
+                                          <div className="loader-background-image position-absolute">
+                                            <div className="spinner-box-image">
+                                              <div className="three-quarter-spinner-image"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                        {inptaPhotos.map((photo, index) => (
+                                          <div
+                                            key={index}
+                                            style={{
+                                              width: "200px",
+                                              position: "relative",
+                                              marginBottom: "10px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                              }}
+                                            >
+                                              <img
+                                                src={
+                                                  photo.preview
+                                                    ? photo.preview
+                                                    : photo
+                                                }
+                                                alt={`INPTA Photo ${index + 1}`}
+                                                style={{
+                                                  maxWidth: "100%",
+                                                  height: "auto",
+                                                  marginBottom: "5px",
+                                                }}
+                                              />
+                                              <IconButton
+                                                onClick={() =>
+                                                  handleRemoveInptaPhoto(index)
+                                                }
+                                                className="px-1 py-1"
+                                                style={{
+                                                  position: "absolute",
+                                                  top: 4,
+                                                  right: 15,
+                                                  backgroundColor:
+                                                    "rgba(255, 255, 255, 0.8)",
+                                                }}
+                                              >
+                                                <DeleteIcon
+                                                  style={{ color: "#ff3838" }}
+                                                />
+                                              </IconButton>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(event) =>
+                                                  handleCropInptaPhoto(
+                                                    event,
+                                                    index
+                                                  )
+                                                }
+                                                style={{ display: "none" }}
+                                                id={`photoInput-${index}`}
+                                              />
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={handleSelectFeature}
+                                        >
+                                          Add Feature Image
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="featured-image"
+                                      onClick={handleSelectFeature}
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Featured Image</p>
+                                    </div>
+                                  )}
+                                  <label className="smart-text">
+                                    Maximum file size per Image: 2 MB.
+                                  </label>
+                                  <input
+                                    id="featureInput"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={handleCropInptaPhoto}
+                                    sx={{ mt: 2, mb: 2 }}
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Medical Kit Image{" "}
+                                  </label>
+                                  {inptaPhotos && inptaPhotos.length > 0 ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        {loadingTwo && (
+                                          <div className="loader-background-image position-absolute">
+                                            <div className="spinner-box-image">
+                                              <div className="three-quarter-spinner-image"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                        {inptaPhotos.map((photo, index) => (
+                                          <div
+                                            key={index}
+                                            style={{
+                                              width: "200px",
+                                              position: "relative",
+                                              marginBottom: "10px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                              }}
+                                            >
+                                              <img
+                                                src={
+                                                  photo.preview
+                                                    ? photo.preview
+                                                    : photo
+                                                }
+                                                alt={`INPTA Photo ${index + 1}`}
+                                                style={{
+                                                  maxWidth: "100%",
+                                                  height: "auto",
+                                                  marginBottom: "5px",
+                                                }}
+                                              />
+                                              <IconButton
+                                                onClick={() =>
+                                                  handleRemoveInptaPhoto(index)
+                                                }
+                                                className="px-1 py-1"
+                                                style={{
+                                                  position: "absolute",
+                                                  top: 4,
+                                                  right: 15,
+                                                  backgroundColor:
+                                                    "rgba(255, 255, 255, 0.8)",
+                                                }}
+                                              >
+                                                <DeleteIcon
+                                                  style={{ color: "#ff3838" }}
+                                                />
+                                              </IconButton>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(event) =>
+                                                  handleCropInptaPhoto(
+                                                    event,
+                                                    index
+                                                  )
+                                                }
+                                                style={{ display: "none" }}
+                                                id={`photoInput-${index}`}
+                                              />
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={handleSelectFeature}
+                                        >
+                                          Add Feature Image
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="featured-image"
+                                      onClick={handleSelectFeature}
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Featured Image</p>
+                                    </div>
+                                  )}
+                                  <label className="smart-text">
+                                    Maximum file size per Image: 2 MB.
+                                  </label>
+                                  <input
+                                    id="featureInput"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={handleCropInptaPhoto}
+                                    sx={{ mt: 2, mb: 2 }}
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Gym Area Image (More then 500 square feet){" "}
+                                  </label>
+                                  {inptaPhotos && inptaPhotos.length > 0 ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        {loadingTwo && (
+                                          <div className="loader-background-image position-absolute">
+                                            <div className="spinner-box-image">
+                                              <div className="three-quarter-spinner-image"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                        {inptaPhotos.map((photo, index) => (
+                                          <div
+                                            key={index}
+                                            style={{
+                                              width: "200px",
+                                              position: "relative",
+                                              marginBottom: "10px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                              }}
+                                            >
+                                              <img
+                                                src={
+                                                  photo.preview
+                                                    ? photo.preview
+                                                    : photo
+                                                }
+                                                alt={`INPTA Photo ${index + 1}`}
+                                                style={{
+                                                  maxWidth: "100%",
+                                                  height: "auto",
+                                                  marginBottom: "5px",
+                                                }}
+                                              />
+                                              <IconButton
+                                                onClick={() =>
+                                                  handleRemoveInptaPhoto(index)
+                                                }
+                                                className="px-1 py-1"
+                                                style={{
+                                                  position: "absolute",
+                                                  top: 4,
+                                                  right: 15,
+                                                  backgroundColor:
+                                                    "rgba(255, 255, 255, 0.8)",
+                                                }}
+                                              >
+                                                <DeleteIcon
+                                                  style={{ color: "#ff3838" }}
+                                                />
+                                              </IconButton>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(event) =>
+                                                  handleCropInptaPhoto(
+                                                    event,
+                                                    index
+                                                  )
+                                                }
+                                                style={{ display: "none" }}
+                                                id={`photoInput-${index}`}
+                                              />
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={handleSelectFeature}
+                                        >
+                                          Add Feature Image
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="featured-image"
+                                      onClick={handleSelectFeature}
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Featured Image</p>
+                                    </div>
+                                  )}
+                                  <label className="smart-text">
+                                    Maximum file size per Image: 2 MB.
+                                  </label>
+                                  <input
+                                    id="featureInput"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={handleCropInptaPhoto}
+                                    sx={{ mt: 2, mb: 2 }}
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Reception Image{" "}
+                                  </label>
+                                  {inptaPhotos && inptaPhotos.length > 0 ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        {loadingTwo && (
+                                          <div className="loader-background-image position-absolute">
+                                            <div className="spinner-box-image">
+                                              <div className="three-quarter-spinner-image"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                        {inptaPhotos.map((photo, index) => (
+                                          <div
+                                            key={index}
+                                            style={{
+                                              width: "200px",
+                                              position: "relative",
+                                              marginBottom: "10px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                              }}
+                                            >
+                                              <img
+                                                src={
+                                                  photo.preview
+                                                    ? photo.preview
+                                                    : photo
+                                                }
+                                                alt={`INPTA Photo ${index + 1}`}
+                                                style={{
+                                                  maxWidth: "100%",
+                                                  height: "auto",
+                                                  marginBottom: "5px",
+                                                }}
+                                              />
+                                              <IconButton
+                                                onClick={() =>
+                                                  handleRemoveInptaPhoto(index)
+                                                }
+                                                className="px-1 py-1"
+                                                style={{
+                                                  position: "absolute",
+                                                  top: 4,
+                                                  right: 15,
+                                                  backgroundColor:
+                                                    "rgba(255, 255, 255, 0.8)",
+                                                }}
+                                              >
+                                                <DeleteIcon
+                                                  style={{ color: "#ff3838" }}
+                                                />
+                                              </IconButton>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(event) =>
+                                                  handleCropInptaPhoto(
+                                                    event,
+                                                    index
+                                                  )
+                                                }
+                                                style={{ display: "none" }}
+                                                id={`photoInput-${index}`}
+                                              />
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={handleSelectFeature}
+                                        >
+                                          Add Feature Image
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="featured-image"
+                                      onClick={handleSelectFeature}
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Featured Image</p>
+                                    </div>
+                                  )}
+                                  <label className="smart-text">
+                                    Maximum file size per Image: 2 MB.
+                                  </label>
+                                  <input
+                                    id="featureInput"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={handleCropInptaPhoto}
+                                    sx={{ mt: 2, mb: 2 }}
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Staff Image{" "}
+                                  </label>
+                                  {inptaPhotos && inptaPhotos.length > 0 ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        {loadingTwo && (
+                                          <div className="loader-background-image position-absolute">
+                                            <div className="spinner-box-image">
+                                              <div className="three-quarter-spinner-image"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                        {inptaPhotos.map((photo, index) => (
+                                          <div
+                                            key={index}
+                                            style={{
+                                              width: "200px",
+                                              position: "relative",
+                                              marginBottom: "10px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                              }}
+                                            >
+                                              <img
+                                                src={
+                                                  photo.preview
+                                                    ? photo.preview
+                                                    : photo
+                                                }
+                                                alt={`INPTA Photo ${index + 1}`}
+                                                style={{
+                                                  maxWidth: "100%",
+                                                  height: "auto",
+                                                  marginBottom: "5px",
+                                                }}
+                                              />
+                                              <IconButton
+                                                onClick={() =>
+                                                  handleRemoveInptaPhoto(index)
+                                                }
+                                                className="px-1 py-1"
+                                                style={{
+                                                  position: "absolute",
+                                                  top: 4,
+                                                  right: 15,
+                                                  backgroundColor:
+                                                    "rgba(255, 255, 255, 0.8)",
+                                                }}
+                                              >
+                                                <DeleteIcon
+                                                  style={{ color: "#ff3838" }}
+                                                />
+                                              </IconButton>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(event) =>
+                                                  handleCropInptaPhoto(
+                                                    event,
+                                                    index
+                                                  )
+                                                }
+                                                style={{ display: "none" }}
+                                                id={`photoInput-${index}`}
+                                              />
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={handleSelectFeature}
+                                        >
+                                          Add Feature Image
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="featured-image"
+                                      onClick={handleSelectFeature}
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Featured Image</p>
+                                    </div>
+                                  )}
+                                  <label className="smart-text">
+                                    Maximum file size per Image: 2 MB.
+                                  </label>
                                   <input
                                     id="featureInput"
                                     type="file"
@@ -927,12 +1695,12 @@ const TPRegistrationListing = () => {
                                 <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
                                   <div className="form-group">
                                     <label className="mb-1">
-                                      Upload GCT Certificate
+                                      Upload GST Certificate
                                     </label>
                                     <input
                                       type="file"
                                       className="form-control rounded"
-                                      placeholder="Upload GCT Certificate"
+                                      placeholder="Upload GST Certificate"
                                       value={personalDetailsData.question2}
                                       onChange={(e) =>
                                         handlePersonalInputChange(
@@ -947,19 +1715,17 @@ const TPRegistrationListing = () => {
                             </div>
                           </div>
                           <div className="dashboard-list-wraps bg-white rounded mb-4">
+                            <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
+                              <div className="dashboard-list-wraps-flx">
+                                <h4 className="mb-0 ft-medium fs-md">
+                                  <i class="fa fa-file-invoice me-2 theme-cl fs-sm"></i>
+                                  Payment Info
+                                </h4>
+                              </div>
+                            </div>
                             <div className="dashboard-list-wraps-body bg-white py-3 px-3">
                               <div className="row justify-content-center">
                                 <div className="col-12 mb-3 border bg-white p-3 br-15 d-none d-md-block">
-                                  <div className="col-12 p-0">
-                                    <p className="f-pop-sembol f-16 mb-0 text-center pb-3 mb-2 border-bottom">
-                                      <b className="text-center">
-                                        Training & Placement
-                                      </b>
-                                    </p>
-                                    <p className="f-pop-sembol f-16 mb-0">
-                                      Price Details:
-                                    </p>
-                                  </div>
                                   <div className="col-12 p-0 mt-2">
                                     <ul className="list-unstyled border-bottom">
                                       <li className="d-block mb-3">
@@ -971,7 +1737,7 @@ const TPRegistrationListing = () => {
                                           </div>
                                           <div className="d-inline-block p-0 text-right">
                                             <p className="m-0 f-rob-med f-16">
-                                              ₹ {10000 || 0} /-
+                                              ₹ {80000 || 0} /-
                                             </p>
                                           </div>
                                         </div>
@@ -1003,7 +1769,7 @@ const TPRegistrationListing = () => {
                                           <div className="d-inline-block p-0 text-right">
                                             <p className="m-0 f-rob-med f-16">
                                               <span className="f-rob-med f-16 text-green text-uppercase ml-1">
-                                                ₹ {10000 || 0} /-
+                                                ₹ {80000 || 0} /-
                                               </span>
                                             </p>
                                           </div>
@@ -1020,7 +1786,7 @@ const TPRegistrationListing = () => {
                                       </div>
                                       <div className="d-inline-block">
                                         <p className="m-0 f-rob-med f-16">
-                                          ₹ {10000 || 0} /-
+                                          ₹ {80000 || 0} /-
                                         </p>
                                       </div>
                                     </div>

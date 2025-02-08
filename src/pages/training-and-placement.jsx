@@ -7,16 +7,12 @@ import axiosInstance, { inptaListingAxiosInstance } from "../js/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { IconButton } from "@mui/material";
-import { TagInput } from "rsuite";
 import "rsuite/dist/rsuite.min.css";
 import { Modal } from "react-bootstrap";
 import Cropper from "react-easy-crop";
 import Footer from "../components/Footer";
-import Select from "react-select";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
@@ -30,86 +26,27 @@ const TPRegistrationListing = () => {
   }, []);
 
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    address_line_1: "",
-    address_line_2: "",
-    area: "",
-    landmark: "",
-    city: "",
-    country: "",
-    state: "",
-    pin_code: "",
-    contactNumber: "",
-    whatsappNumber: "",
-    services: [],
-    tags: [],
-    website: "",
-    email: "",
-    branch: "",
+    description: "Testing Description",
+    address_line_1: "Gomzi-2",
+    address_line_2: "Abhushan Bunglows, Near Alkapuri Char Rasta, Katargam",
+    city: "surat",
+    country: "India",
+    state: "Gujarat",
+    pin_code: "395004",
+    contactNumber: "8866761664",
+    whatsappNumber: "8866761664",
+    direction_link: "https://fggroup.in/",
+    website: "https://fggroup.in/",
+    email: "brijesh21p@gmail.com",
   });
   const [personalDetailsData, setPersonalDetailsData] = useState({
-    description: "",
-    question1: "",
-    question2: "",
-    question3: "",
-    question4: "",
-    question5: "",
+    work_experience: "2 years",
+    qualification: "BCA Complete",
   });
   const [userUpdateData, setUserUpdateData] = useState({});
-  const [inptaHours, setInptaHours] = useState([
-    { day: "Mon", open: "10:00 AM", close: "07:00 PM" },
-  ]);
-  const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
-  const [socialMediaLinks, setSocialMediaLinks] = useState([
-    { platform: "Instagram", link: "Instagram.com" },
-    { platform: "Facebook", link: "Facebook.com" },
-    { platform: "YouTube", link: "YouTube.com" },
-  ]);
-  const [selectedType, setSelectedType] = useState("");
   const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingOne, setLoadingOne] = useState(false);
-  const [loadingTwo, setLoadingTwo] = useState(false);
-  const [selectedCourseOffered, setSelectedCourseOffered] = useState("");
-
-  const handleSelectChange = (selectedOptions) => {
-    setSelectedCourseOffered(selectedOptions);
-    const selectedValues = selectedOptions.map((option) => option.value);
-    setFormData((prevState) => ({
-      ...prevState,
-      course_offered: selectedValues,
-    }));
-  };
-
-  const courseOfferedOption = [
-    { value: "Nutri Trainer Course", label: "Nutri Trainer Course" },
-    {
-      value: "Diploma In Personal Training Course",
-      label: "Diploma In Personal Training Course",
-    },
-    {
-      value: "Diploma In Nutrition Course",
-      label: "Diploma In Nutrition Course",
-    },
-    {
-      value: "Anabolic Androgenic Steroids",
-      label: "Anabolic Androgenic Steroids",
-    },
-    {
-      value: "Group Instructor Master Class",
-      label: "Group Instructor Master Class",
-    },
-    {
-      value: "Powerlifting Coach Workshop",
-      label: "Powerlifting Coach Workshop",
-    },
-    {
-      value: "Injury Rehabilitation Workshop",
-      label: "Injury Rehabilitation Workshop",
-    },
-  ];
-
   const [userData, setUserData] = useState({});
 
   const getUserData = async () => {
@@ -132,33 +69,26 @@ const TPRegistrationListing = () => {
 
   // ----------------------------------------------------------------------------------
 
-  const [inptaPhotos, setInptaPhotos] = useState([]);
-  const [featurePreview, setFeaturePreview] = useState(null);
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(null);
-  const [currentInptaPhotoIndex, setCurrentInptaPhotoIndex] = useState(null);
-  const [logoImage, setLogoImage] = useState(null);
-  const [logoPreview, setLogoPreview] = useState(null);
+  const [aadhaarPreview, setAadhaarPreview] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
-  const [inptaImageSrc, setInptaImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [inptaCrop, setInptaCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  const [inptaZoom, setInptaZoom] = useState(1);
   const [show, setShow] = useState(false);
-  const [inptaShow, setInptaShow] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState(null);
-  const [inptaPhoto, setInptaPhoto] = useState(null);
 
   const onCropComplete = useCallback((croppedArea, profilePhoto, context) => {
-    if (context === "logo") {
+    if (context === "aadhaar") {
       setProfilePhoto(profilePhoto);
-      handleLogoChange(profilePhoto);
-    } else if (context === "feature") {
-      setInptaPhoto(profilePhoto);
+      handleAadhaarChange(profilePhoto);
     }
   }, []);
 
-  const handleLogoChange = (event) => {
+  const handleSelectAadhaar = () => {
+    const fileInput = document.getElementById("aadhaarInput");
+    fileInput.click();
+  };
+
+  const handleAadhaarChange = (event) => {
     const file = profilePhoto;
 
     if (file instanceof File) {
@@ -167,16 +97,15 @@ const TPRegistrationListing = () => {
         return;
       }
       const previewUrl = URL.createObjectURL(file);
-      setLogoPreview(previewUrl);
+      setAadhaarPreview(previewUrl);
     }
 
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setLogoImage(file);
         setFormData((prevData) => ({
           ...prevData,
-          logo: reader.result,
+          aadhaar: reader.result,
         }));
       };
       reader.readAsDataURL(file);
@@ -184,16 +113,13 @@ const TPRegistrationListing = () => {
   };
 
   const handleCropComplete = async (context) => {
-    if (imageSrc && (profilePhoto || inptaPhoto)) {
+    if (imageSrc && profilePhoto) {
       try {
         const croppedImg = await getCroppedImg(imageSrc, profilePhoto);
-        if (context === "logo") {
-          setLogoPreview(croppedImg);
+        if (context === "aadhaar") {
+          setAadhaarPreview(croppedImg);
           setProfilePhoto(croppedImg);
           setShow(false);
-        } else if (context === "feature") {
-          setFeaturePreview(croppedImg);
-          setInptaShow(false);
         }
       } catch (error) {
         console.error("Error cropping the image:", error);
@@ -205,11 +131,7 @@ const TPRegistrationListing = () => {
     setShow(false);
   };
 
-  const handleInptaClose = () => {
-    setInptaShow(false);
-  };
-
-  const handleCropLogoChange = (event) => {
+  const handleCropAadhaarChange = (event) => {
     setLoadingOne(true);
     const file = event.target.files?.[0];
     if (file) {
@@ -223,76 +145,7 @@ const TPRegistrationListing = () => {
     setLoadingOne(false);
   };
 
-  const handleSelectLogo = () => {
-    const fileInput = document.getElementById("logoInput");
-    fileInput.click();
-  };
-
-  const handleRemoveInptaPhoto = (index) => {
-    const newPhotos = [...inptaPhotos];
-    newPhotos.splice(index, 1);
-    setInptaPhotos([...newPhotos]);
-  };
-
-  const handleSelectFeature = () => {
-    const fileInput = document.getElementById("featureInput");
-    fileInput.click();
-  };
-
-  const handleCropInptaPhoto = (event, index) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setInptaImageSrc(reader.result);
-        setCurrentInptaPhotoIndex(index);
-        setInptaShow(true);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleInptaCropComplete = async () => {
-    setLoadingTwo(true);
-    if (inptaImageSrc && inptaPhoto) {
-      try {
-        const croppedImg = await getCroppedImg(inptaImageSrc, inptaPhoto);
-        const updatedPhotos = [...inptaPhotos];
-        if (currentPhotoIndex !== null) {
-          updatedPhotos[currentPhotoIndex] = {
-            file: null,
-            preview: croppedImg,
-          };
-        } else {
-          updatedPhotos.push({ file: null, preview: croppedImg });
-        }
-        setInptaPhotos(updatedPhotos);
-        setFeaturePreview(croppedImg);
-        setInptaShow(false);
-      } catch (error) {
-        console.error("Error cropping the photos:", error);
-      }
-    }
-    setLoadingTwo(false);
-  };
-
   // ----------------------------------------------------------------------------------
-
-  const handleAddFaq = () => {
-    setFaqs([...faqs, { question: "", answer: "" }]);
-  };
-
-  const handleRemoveFaq = (index) => {
-    const updatedFaqs = [...faqs];
-    updatedFaqs.splice(index, 1);
-    setFaqs(updatedFaqs);
-  };
-
-  const handleFaqChange = (index, field, value) => {
-    const updatedFaqs = [...faqs];
-    updatedFaqs[index][field] = value;
-    setFaqs(updatedFaqs);
-  };
 
   const handleInputChange = (field, value) => {
     if (field === "services" || field === "tags") {
@@ -322,8 +175,8 @@ const TPRegistrationListing = () => {
     }));
   };
 
-  const uploadLogo = async () => {
-    let logoUrl = "";
+  const uploadAadhaar = async () => {
+    let aadhaarUrl = "";
 
     try {
       let croppedBlob = profilePhoto;
@@ -342,69 +195,24 @@ const TPRegistrationListing = () => {
       }
 
       if (croppedBlob) {
-        const logoFormData = new FormData();
-        logoFormData.append("files", croppedBlob);
+        const aadhaarFormData = new FormData();
+        aadhaarFormData.append("files", croppedBlob);
 
-        const logoResponse = await axiosInstance.post(
+        const aadhaarResponse = await axiosInstance.post(
           "/file-upload",
-          logoFormData
+          aadhaarFormData
         );
 
-        const logoUrl = logoResponse.data.data.fileURLs[0];
-        return logoUrl;
+        const aadhaarUrl = aadhaarResponse.data.data.fileURLs[0];
+        return aadhaarUrl;
       }
     } catch (error) {
-      console.error("Error uploading Logo file:", error);
-      toast.error("Error uploading Logo file. Please try again.", {
+      console.error("Error uploading Aadhaar file:", error);
+      toast.error("Error uploading Aadhaar file. Please try again.", {
         position: toast.POSITION.TOP_RIGHT,
       });
       throw error;
     }
-  };
-
-  const uploadFeatureImage = async () => {
-    let uploadedUrls = [];
-    try {
-      const photoUrls = await Promise.all(
-        inptaPhotos.map(async (photo) => {
-          let croppedBlobInpta = photo.preview;
-
-          if (typeof photo.preview === "string") {
-            const byteString = atob(photo.preview.split(",")[1]);
-            const mimeString = photo.preview
-              .split(",")[0]
-              .split(":")[1]
-              .split(";")[0];
-            const ab = new ArrayBuffer(byteString.length);
-            const ia = new Uint8Array(ab);
-            for (let i = 0; i < byteString.length; i++) {
-              ia[i] = byteString.charCodeAt(i);
-            }
-            croppedBlobInpta = new Blob([ab], { type: mimeString });
-          } else if (!(photo.preview instanceof Blob)) {
-            throw new Error(
-              "Invalid file type: Photo must be a Blob, File, or Base64 string."
-            );
-          }
-          const photoFormData = new FormData();
-          photoFormData.append("files", croppedBlobInpta);
-
-          const photoResponse = await axiosInstance.post(
-            "/file-upload",
-            photoFormData
-          );
-          return photoResponse.data.data.fileURLs;
-        })
-      );
-
-      uploadedUrls = photoUrls.flat();
-    } catch (error) {
-      console.error("Error uploading Feature files:", error);
-      toast.error("Error uploading Feature files. Please try again.", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    }
-    return uploadedUrls;
   };
 
   const updateData = async () => {
@@ -432,30 +240,15 @@ const TPRegistrationListing = () => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const uploadedUrls = await uploadFeatureImage();
-      const logoUrl = await uploadLogo();
+      const aadhaarUrl = await uploadAadhaar();
 
       const postData = {
-        type: selectedType,
-        title: formData.title,
         description: formData.description,
-        course_offered: formData.course_offered,
-        logo: logoUrl,
-        images: uploadedUrls.flat(),
-        tags: formData.tags,
-        listing_category: ["listing"],
+        aadhaar_card: aadhaarUrl,
         personal_details: {
-          description: personalDetailsData.description,
-          question1: personalDetailsData.question1,
-          question2: personalDetailsData.question2,
-          question3: personalDetailsData.question3,
-          question4: personalDetailsData.question4,
-          question5: personalDetailsData.question5,
+          work_experience: personalDetailsData.work_experience,
+          qualification: personalDetailsData.qualification,
         },
-        social_media: socialMediaLinks.map((link) => ({
-          social_media_type: link.platform.toLowerCase(),
-          link: link.link,
-        })),
         locations: [
           {
             location_name: formData.branch,
@@ -465,7 +258,6 @@ const TPRegistrationListing = () => {
             state: formData.state,
             country: "india",
             pin_code: formData.pin_code,
-            landmark: formData.landmark,
             direction_link: formData.direction_link,
             contact: {
               contact_type: "mobile",
@@ -487,22 +279,11 @@ const TPRegistrationListing = () => {
             value: formData.whatsappNumber,
           },
         ],
-        faqs: faqs.map((faq) => ({
-          question: faq.question,
-          answer: faq.answer,
-        })),
-        timings: inptaHours.map((timeSlot) => ({
-          title: timeSlot.day,
-          timings: [
-            {
-              from_time: timeSlot.open,
-              to_time: timeSlot.close,
-            },
-          ],
-        })),
       };
 
-      await inptaListingAxiosInstance.post("/create-listing", postData);
+      console.log('postData :- ', postData)
+
+      await inptaListingAxiosInstance.post("/create-tp-listing", postData);
       updateData();
 
       setIsLoading(false);
@@ -516,79 +297,6 @@ const TPRegistrationListing = () => {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
-  };
-
-  const [times, setTimes] = useState({
-    Monday: { opening: "Opening Time", closing: "Closing Time" },
-    Tuesday: { opening: "Opening Time", closing: "Closing Time" },
-    Wednesday: { opening: "Opening Time", closing: "Closing Time" },
-    Thursday: { opening: "Opening Time", closing: "Closing Time" },
-    Friday: { opening: "Opening Time", closing: "Closing Time" },
-    Saturday: { opening: "Opening Time", closing: "Closing Time" },
-    Sunday: { opening: "Opening Time", closing: "Closing Time" },
-  });
-
-  const [sameForAll, setSameForAll] = useState(false);
-
-  const timeOptions = [
-    "01:00 AM",
-    "02:00 AM",
-    "03:00 AM",
-    "04:00 AM",
-    "05:00 AM",
-    "06:00 AM",
-    "07:00 AM",
-    "08:00 AM",
-    "09:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "12:00 AM",
-    "01:00 PM",
-    "02:00 PM",
-    "03:00 PM",
-    "04:00 PM",
-    "05:00 PM",
-    "06:00 PM",
-    "07:00 PM",
-    "08:00 PM",
-    "09:00 PM",
-    "10:00 PM",
-    "11:00 PM",
-    "12:00 PM",
-    "Closed",
-  ];
-
-  const handleTimeChange = (day, field, value) => {
-    const updatedTimes = { ...times };
-    updatedTimes[day][field] = value;
-
-    if (sameForAll) {
-      Object.keys(updatedTimes).forEach((key) => {
-        updatedTimes[key] = { ...updatedTimes[day] };
-      });
-    }
-    setTimes(updatedTimes);
-  };
-
-  const handleCheckboxChange = (checked) => {
-    setSameForAll(checked);
-    if (checked) {
-      const mondayTimes = times.Monday;
-      const updatedTimes = { ...times };
-      Object.keys(updatedTimes).forEach((day) => {
-        updatedTimes[day] = { ...mondayTimes };
-      });
-      setTimes(updatedTimes);
-    }
-  };
-
-  const getInptaHours = () => {
-    const allDaysTime = Object.keys(times).map((day) => ({
-      day,
-      open: times[day].opening,
-      close: times[day].closing,
-    }));
-    setInptaHours(allDaysTime);
   };
 
   return (
@@ -817,10 +525,10 @@ const TPRegistrationListing = () => {
                                       type="text"
                                       className="form-control rounded"
                                       placeholder="Enter Job Specification"
-                                      value={personalDetailsData.question1}
+                                      value={personalDetailsData.work_experience}
                                       onChange={(e) =>
                                         handlePersonalInputChange(
-                                          "question1",
+                                          "work_experience",
                                           e.target.value
                                         )
                                       }
@@ -830,23 +538,23 @@ const TPRegistrationListing = () => {
                                 <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                   <div className="form-group">
                                     <label className="mb-1">
-                                      Education Qaulification
+                                      Education Qualification
                                     </label>
                                     <input
                                       type="text"
                                       className="form-control rounded"
-                                      placeholder="Enter Qaulification"
-                                      value={personalDetailsData.question2}
+                                      placeholder="Enter Qualification"
+                                      value={personalDetailsData.qualification}
                                       onChange={(e) =>
                                         handlePersonalInputChange(
-                                          "question2",
+                                          "qualification",
                                           e.target.value
                                         )
                                       }
                                     />
                                   </div>
                                 </div>
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                {/* <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                   <div className="form-group">
                                     <label className="mb-1">
                                       Upload Aadhaar Card
@@ -854,18 +562,19 @@ const TPRegistrationListing = () => {
                                     <input
                                       type="file"
                                       className="form-control rounded"
-                                      placeholder="Enter Qaulification"
-                                      value={personalDetailsData.question2}
-                                      onChange={(e) =>
-                                        handlePersonalInputChange(
-                                          "question2",
-                                          e.target.value
-                                        )
-                                      }
+                                      placeholder="Enter Qualification"
+                                      value={showAadhaar}
+                                      onChange={handleCropAadhaarChange}
+                                      // onChange={(e) =>
+                                      //   handlePersonalInputChange(
+                                      //     "qualification",
+                                      //     e.target.value
+                                      //   )
+                                      // }
                                     />
                                   </div>
-                                </div>
-                                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                </div> */}
+                                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
                                   <div className="form-group">
                                     <label className="mb-1">Objective</label>
                                     <textarea
@@ -881,6 +590,70 @@ const TPRegistrationListing = () => {
                                       }
                                     />
                                   </div>
+                                </div>
+
+                                <div className="col-12">
+                                  <label className="mb-1">Upload Aadhaar Card</label>
+
+                                  {aadhaarPreview ? (
+                                    <div className="position-relative">
+                                      {loadingOne && (
+                                        <div className="w-100 d-flex justify-content-center position-absolute">
+                                          <div class="spinner-box spinner-width">
+                                            <div class="three-quarter-spinner three-quarter-spinner-width"></div>
+                                          </div>
+                                        </div>
+                                      )}
+                                      <img
+                                        src={aadhaarPreview}
+                                        alt="Aadhaar Preview"
+                                        id="single-aadhaar"
+                                        style={{
+                                          width: "100%",
+                                          maxHeight: "150px",
+                                          objectFit: "contain",
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={handleSelectAadhaar}
+                                        >
+                                          Change Aadhaar
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="single-aadhaar"
+                                      onClick={handleSelectAadhaar}
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to upload aadhaar</p>
+                                    </div>
+                                  )}
+
+                                  <label className="smart-text">
+                                    Maximum file size: 2 MB.
+                                  </label>
+                                  <input
+                                    id="aadhaarInput"
+                                    type="file"
+                                    className="d-none"
+                                    accept="image/*"
+                                    onChange={handleCropAadhaarChange}
+                                  />
                                 </div>
                               </div>
                             </div>
@@ -1076,7 +849,7 @@ const TPRegistrationListing = () => {
       <ToastContainer />
       <Modal show={show} onHide={handleClose} size="lg" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Crop Logo Image</Modal.Title>
+          <Modal.Title>Crop Aadhaar Image</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div style={{ position: "relative", width: "100%", height: 400 }}>
@@ -1084,10 +857,10 @@ const TPRegistrationListing = () => {
               image={imageSrc}
               crop={crop}
               zoom={zoom}
-              aspect={8 / 8}
+              aspect={12 / 8}
               onCropChange={setCrop}
               onCropComplete={(croppedArea, profilePhoto) =>
-                onCropComplete(croppedArea, profilePhoto, "logo")
+                onCropComplete(croppedArea, profilePhoto, "aadhaar")
               }
               onZoomChange={setZoom}
             />
@@ -1099,43 +872,7 @@ const TPRegistrationListing = () => {
           </Button>
           <Button
             variant="primary"
-            onClick={() => handleCropComplete("logo")}
-            style={{
-              backgroundColor: "#007bff",
-              borderColor: "#007bff",
-              color: "white",
-            }}
-          >
-            Crop Image
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal show={inptaShow} onHide={handleInptaClose} size="lg" centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Crop Image</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div style={{ position: "relative", width: "100%", height: 400 }}>
-            <Cropper
-              image={inptaImageSrc}
-              crop={inptaCrop}
-              zoom={inptaZoom}
-              aspect={12 / 8}
-              onCropChange={setInptaCrop}
-              onCropComplete={(croppedArea, profilePhoto) =>
-                onCropComplete(croppedArea, profilePhoto, "feature")
-              }
-              onZoomChange={setInptaZoom}
-            />
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleInptaClose}>
-            Close
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => handleInptaCropComplete("feature")}
+            onClick={() => handleCropComplete("aadhaar")}
             style={{
               backgroundColor: "#007bff",
               borderColor: "#007bff",

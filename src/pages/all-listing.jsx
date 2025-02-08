@@ -52,7 +52,7 @@ const AllListing = () => {
     setLoadingOne(true);
 
     try {
-      const response = await inptaListingAxiosInstance.get("/get-listing");
+      const response = await inptaListingAxiosInstance.get("/get-tp-listing");
       const fetchedBusinessData = response.data.data;
       setEducationData(fetchedBusinessData);
     } catch (error) {
@@ -79,7 +79,7 @@ const AllListing = () => {
 
       if (result.isConfirmed) {
         const response = await inptaListingAxiosInstance.delete(
-          `/delete-listing?listing_id=${listingId}`
+          `/delete-tp-listing?listing_id=${listingId}`
         );
 
         if (response.status === 200) {

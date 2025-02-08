@@ -693,181 +693,6 @@ const TPRegistrationListing = () => {
                             <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                               <div className="dashboard-list-wraps-flx">
                                 <h4 className="mb-0 ft-medium fs-md">
-                                  <i className="fas fa-map-marker-alt me-2 theme-cl fs-sm" />
-                                  Personal Info
-                                </h4>
-                              </div>
-                            </div>
-                            <div className="dashboard-list-wraps-body bg-white py-3 px-3">
-                              <div className="row">
-                                <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">
-                                      Full Name
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="form-control rounded"
-                                      placeholder="Enter Full Name"
-                                      value={formData.address_line_1}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          "address_line_1",
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">
-                                      Email
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="form-control rounded"
-                                      placeholder="Enter Email"
-                                      value={formData.address_line_1}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          "address_line_1",
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">
-                                      Home No/Building Name/Home Name
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="form-control rounded"
-                                      placeholder="Enter Home No/Building Name/Home Name"
-                                      value={formData.address_line_1}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          "address_line_1",
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">
-                                      Road Name/Area/Colony
-                                    </label>
-                                    <input
-                                      type="text"
-                                      className="form-control rounded"
-                                      placeholder="Enter Road Name/Area/Colony"
-                                      value={formData.address_line_2}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          "address_line_2",
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">City</label>
-                                    <input
-                                      type="text"
-                                      className="form-control rounded"
-                                      placeholder="Enter city"
-                                      value={formData.city}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          "city",
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">State</label>
-                                    <input
-                                      type="text"
-                                      className="form-control rounded"
-                                      placeholder="Enter state"
-                                      value={formData.state}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          "state",
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">Country</label>
-                                    <input
-                                      type="text"
-                                      className="form-control rounded"
-                                      placeholder="Enter Country"
-                                      value={formData.country}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          "country",
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">Pin Code</label>
-                                    <input
-                                      type="text"
-                                      className="form-control rounded"
-                                      placeholder="Enter Pin Code"
-                                      value={formData.pin_code}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          "pin_code",
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">Address Link</label>
-                                    <input
-                                      type="text"
-                                      className="form-control rounded"
-                                      placeholder="Enter Address Link"
-                                      value={formData.direction_link}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          "direction_link",
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="dashboard-list-wraps bg-white rounded mb-4">
-                            <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
-                              <div className="dashboard-list-wraps-flx">
-                                <h4 className="mb-0 ft-medium fs-md">
                                   <i className="fa fa-camera me-2 theme-cl fs-sm" />
                                   Image &amp; Gallery Option
                                 </h4>
@@ -1048,7 +873,7 @@ const TPRegistrationListing = () => {
                                     </div>
                                   )}
                                   <label className="smart-text">
-                                    Maximum file size per Image: 2 MB.
+                                    Maximum file size: 2 MB.
                                   </label>
                                   <input
                                     id="featureInput"
@@ -1168,7 +993,7 @@ const TPRegistrationListing = () => {
                                     </div>
                                   )}
                                   <label className="smart-text">
-                                    Maximum file size per Image: 2 MB.
+                                    Maximum file size: 2 MB.
                                   </label>
                                   <input
                                     id="featureInput"
@@ -1288,7 +1113,7 @@ const TPRegistrationListing = () => {
                                     </div>
                                   )}
                                   <label className="smart-text">
-                                    Maximum file size per Image: 2 MB.
+                                    Maximum file size: 2 MB.
                                   </label>
                                   <input
                                     id="featureInput"
@@ -1408,7 +1233,7 @@ const TPRegistrationListing = () => {
                                     </div>
                                   )}
                                   <label className="smart-text">
-                                    Maximum file size per Image: 2 MB.
+                                    Maximum file size: 2 MB.
                                   </label>
                                   <input
                                     id="featureInput"
@@ -1528,7 +1353,7 @@ const TPRegistrationListing = () => {
                                     </div>
                                   )}
                                   <label className="smart-text">
-                                    Maximum file size per Image: 2 MB.
+                                    Maximum file size: 2 MB.
                                   </label>
                                   <input
                                     id="featureInput"
@@ -1648,7 +1473,7 @@ const TPRegistrationListing = () => {
                                     </div>
                                   )}
                                   <label className="smart-text">
-                                    Maximum file size per Image: 2 MB.
+                                    Maximum file size: 2 MB.
                                   </label>
                                   <input
                                     id="featureInput"

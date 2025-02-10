@@ -13,6 +13,8 @@ import ViewAllListing from "./pages/view-all-listing";
 import TPRegistrationListing from "./pages/training-and-placement";
 import TCRegistrationListing from "./pages/training-center";
 import TPRegistrationSubmitCertificate from "./pages/submit-certificate";
+import TPRegistrationPayment from "./pages/training-and-placement-payment";
+import RegistrationPage from "./pages/registration-page";
 
 function App() {
   return (
@@ -26,10 +28,12 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/add-listing" element={<AddListing />} />
         <Route path="/training-and-placement" element={<TPRegistrationListing />} />
+        <Route path="/training-and-placement/payment" element={<TPRegistrationPayment />} />
         <Route path="/training-center-submit-certificate" element={<TPRegistrationSubmitCertificate />} />
         <Route path="/training-center" element={<TCRegistrationListing />} />
         <Route path="/update-listing" element={<UpdateListing />} />
         <Route path="/view-all-listing" element={<ViewAllListing />} />
+        <Route path="/registration" element={<RegistrationPage />} />
       </Routes>
       <ScrollRestoration />
     </div>

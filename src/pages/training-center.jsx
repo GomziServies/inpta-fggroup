@@ -48,67 +48,38 @@ const TPRegistrationListing = () => {
     email: "",
     branch: "",
   });
+
   const [personalDetailsData, setPersonalDetailsData] = useState({
-    description: "",
-    question1: "",
-    question2: "",
-    question3: "",
-    question4: "",
-    question5: "",
+    pan_card: null,
+    gst_certificate: null,
   });
+
+  const handlePersonalInputChange = (event, type) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPersonalDetailsData((prev) => ({
+          ...prev,
+          [type]: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemovePersonalDetails = (type) => {
+    setPersonalDetailsData((prev) => ({
+      ...prev,
+      [type]: null,
+    }));
+  };
+
   const [userUpdateData, setUserUpdateData] = useState({});
-  const [inptaHours, setInptaHours] = useState([
-    { day: "Mon", open: "10:00 AM", close: "07:00 PM" },
-  ]);
-  const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
-  const [socialMediaLinks, setSocialMediaLinks] = useState([
-    { platform: "Instagram", link: "Instagram.com" },
-    { platform: "Facebook", link: "Facebook.com" },
-    { platform: "YouTube", link: "YouTube.com" },
-  ]);
-  const [selectedType, setSelectedType] = useState("");
   const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingOne, setLoadingOne] = useState(false);
   const [loadingTwo, setLoadingTwo] = useState(false);
-  const [selectedCourseOffered, setSelectedCourseOffered] = useState("");
-
-  const handleSelectChange = (selectedOptions) => {
-    setSelectedCourseOffered(selectedOptions);
-    const selectedValues = selectedOptions.map((option) => option.value);
-    setFormData((prevState) => ({
-      ...prevState,
-      course_offered: selectedValues,
-    }));
-  };
-
-  const courseOfferedOption = [
-    { value: "Nutri Trainer Course", label: "Nutri Trainer Course" },
-    {
-      value: "Diploma In Personal Training Course",
-      label: "Diploma In Personal Training Course",
-    },
-    {
-      value: "Diploma In Nutrition Course",
-      label: "Diploma In Nutrition Course",
-    },
-    {
-      value: "Anabolic Androgenic Steroids",
-      label: "Anabolic Androgenic Steroids",
-    },
-    {
-      value: "Group Instructor Master Class",
-      label: "Group Instructor Master Class",
-    },
-    {
-      value: "Powerlifting Coach Workshop",
-      label: "Powerlifting Coach Workshop",
-    },
-    {
-      value: "Injury Rehabilitation Workshop",
-      label: "Injury Rehabilitation Workshop",
-    },
-  ];
 
   const [userData, setUserData] = useState({});
 
@@ -132,7 +103,14 @@ const TPRegistrationListing = () => {
 
   // ----------------------------------------------------------------------------------
 
-  const [inptaPhotos, setInptaPhotos] = useState([]);
+  const [inptaPhotos, setInptaPhotos] = useState({
+    washroom: null,
+    dustbin: null,
+    medical_kit: null,
+    gym_area: null,
+    reception: null,
+    staff: null,
+  });
   const [featurePreview, setFeaturePreview] = useState(null);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(null);
   const [currentInptaPhotoIndex, setCurrentInptaPhotoIndex] = useState(null);
@@ -228,45 +206,60 @@ const TPRegistrationListing = () => {
     fileInput.click();
   };
 
-  const handleRemoveInptaPhoto = (index) => {
-    const newPhotos = [...inptaPhotos];
-    newPhotos.splice(index, 1);
+  const handleRemoveInptaPhoto = (category) => {
+    const newPhotos = { ...inptaPhotos };
+    newPhotos[category] = null;
     setInptaPhotos([...newPhotos]);
   };
 
-  const handleSelectFeature = () => {
-    const fileInput = document.getElementById("featureInput");
+  const handleSelectFeature = (category) => {
+    const fileInput = document.getElementById(category);
     fileInput.click();
   };
 
-  const handleCropInptaPhoto = (event, index) => {
+  const handleCropInptaPhoto = (event, category) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
         setInptaImageSrc(reader.result);
-        setCurrentInptaPhotoIndex(index);
+        setCurrentInptaPhotoIndex(category);
         setInptaShow(true);
       };
       reader.readAsDataURL(file);
     }
   };
 
+  // const handleCropInptaPhoto = (event, category) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       setInptaPhotos((prevPhotos) => ({
+  //         ...prevPhotos,
+  //         [category]: reader.result,
+  //       }));
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+
   const handleInptaCropComplete = async () => {
     setLoadingTwo(true);
     if (inptaImageSrc && inptaPhoto) {
       try {
         const croppedImg = await getCroppedImg(inptaImageSrc, inptaPhoto);
-        const updatedPhotos = [...inptaPhotos];
-        if (currentPhotoIndex !== null) {
-          updatedPhotos[currentPhotoIndex] = {
-            file: null,
-            preview: croppedImg,
-          };
+        const updatedPhotos = { ...inptaPhotos };
+        if (currentInptaPhotoIndex !== null) {
+          updatedPhotos[currentInptaPhotoIndex] = croppedImg;
+          setInptaPhotos((prevPhotos) => ({
+            ...prevPhotos,
+            [currentInptaPhotoIndex]: croppedImg,
+          }));
         } else {
           updatedPhotos.push({ file: null, preview: croppedImg });
+          setInptaPhotos(updatedPhotos);
         }
-        setInptaPhotos(updatedPhotos);
         setFeaturePreview(croppedImg);
         setInptaShow(false);
       } catch (error) {
@@ -277,22 +270,6 @@ const TPRegistrationListing = () => {
   };
 
   // ----------------------------------------------------------------------------------
-
-  const handleAddFaq = () => {
-    setFaqs([...faqs, { question: "", answer: "" }]);
-  };
-
-  const handleRemoveFaq = (index) => {
-    const updatedFaqs = [...faqs];
-    updatedFaqs.splice(index, 1);
-    setFaqs(updatedFaqs);
-  };
-
-  const handleFaqChange = (index, field, value) => {
-    const updatedFaqs = [...faqs];
-    updatedFaqs[index][field] = value;
-    setFaqs(updatedFaqs);
-  };
 
   const handleInputChange = (field, value) => {
     if (field === "services" || field === "tags") {
@@ -306,20 +283,6 @@ const TPRegistrationListing = () => {
         [field]: value,
       }));
     }
-  };
-
-  const handlePersonalInputChange = (field, value) => {
-    setPersonalDetailsData((prevState) => ({
-      ...prevState,
-      [field]: value,
-    }));
-  };
-
-  const handleUserInputChange = (field, value) => {
-    setUserUpdateData((prevState) => ({
-      ...prevState,
-      [field]: value,
-    }));
   };
 
   const uploadLogo = async () => {
@@ -362,16 +325,78 @@ const TPRegistrationListing = () => {
     }
   };
 
+  // const uploadFeatureImage = async () => {
+  //   let uploadedUrls = [];
+  //   try {
+  //     const inptaPhotosArray = [
+  //       { label: inptaPhotos.washroom, value: "washroom" },
+  //       { label: inptaPhotos.dustbin, value: "dustbin" },
+  //       { label: inptaPhotos.medical_kit, value: "medical_kit" },
+  //       { label: inptaPhotos.gym_area, value: "gym_area" },
+  //       { label: inptaPhotos.reception, value: "reception" },
+  //       { label: inptaPhotos.staff, value: "staff" },
+  //     ];
+  //     const photoUrls = await Promise.all(
+  //       inptaPhotosArray.map(async (photo) => {
+  //         let croppedBlobInpta = photo.label;
+
+  //         if (typeof photo.label === "string") {
+  //           const byteString = atob(photo.label.split(",")[1]);
+  //           const mimeString = photo.label
+  //             .split(",")[0]
+  //             .split(":")[1]
+  //             .split(";")[0];
+  //           const ab = new ArrayBuffer(byteString.length);
+  //           const ia = new Uint8Array(ab);
+  //           for (let i = 0; i < byteString.length; i++) {
+  //             ia[i] = byteString.charCodeAt(i);
+  //           }
+  //           croppedBlobInpta = new Blob([ab], { type: mimeString });
+  //         } else if (!(photo.label instanceof Blob)) {
+  //           throw new Error(
+  //             "Invalid file type: Photo must be a Blob, File, or Base64 string."
+  //           );
+  //         }
+  //         const photoFormData = new FormData();
+  //         photoFormData.append("files", croppedBlobInpta);
+
+  //         const photoResponse = await axiosInstance.post(
+  //           "/file-upload",
+  //           photoFormData
+  //         );
+  //         return photoResponse.data.data.fileURLs;
+  //       })
+  //     );
+
+  //     uploadedUrls = photoUrls.flat();
+  //   } catch (error) {
+  //     console.error("Error uploading Feature files:", error);
+  //     toast.error("Error uploading Feature files. Please try again.", {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //     });
+  //   }
+  //   return uploadedUrls;
+  // };
+
   const uploadFeatureImage = async () => {
     let uploadedUrls = [];
     try {
-      const photoUrls = await Promise.all(
-        inptaPhotos.map(async (photo) => {
-          let croppedBlobInpta = photo.preview;
+      const inptaPhotosArray = [
+        { label: inptaPhotos.washroom, value: "washroom" },
+        { label: inptaPhotos.dustbin, value: "dustbin" },
+        { label: inptaPhotos.medical_kit, value: "medical_kit" },
+        { label: inptaPhotos.gym_area, value: "gym_area" },
+        { label: inptaPhotos.reception, value: "reception" },
+        { label: inptaPhotos.staff, value: "staff" },
+      ];
 
-          if (typeof photo.preview === "string") {
-            const byteString = atob(photo.preview.split(",")[1]);
-            const mimeString = photo.preview
+      const photoUrls = await Promise.all(
+        inptaPhotosArray.map(async (photo) => {
+          let croppedBlobInpta = photo.label;
+
+          if (typeof photo.label === "string") {
+            const byteString = atob(photo.label.split(",")[1]);
+            const mimeString = photo.label
               .split(",")[0]
               .split(":")[1]
               .split(";")[0];
@@ -381,11 +406,12 @@ const TPRegistrationListing = () => {
               ia[i] = byteString.charCodeAt(i);
             }
             croppedBlobInpta = new Blob([ab], { type: mimeString });
-          } else if (!(photo.preview instanceof Blob)) {
+          } else if (!(photo.label instanceof Blob)) {
             throw new Error(
               "Invalid file type: Photo must be a Blob, File, or Base64 string."
             );
           }
+
           const photoFormData = new FormData();
           photoFormData.append("files", croppedBlobInpta);
 
@@ -393,11 +419,11 @@ const TPRegistrationListing = () => {
             "/file-upload",
             photoFormData
           );
-          return photoResponse.data.data.fileURLs;
+          return { [photo.value]: photoResponse.data.data.fileURLs[0] };
         })
       );
 
-      uploadedUrls = photoUrls.flat();
+      uploadedUrls = photoUrls;
     } catch (error) {
       console.error("Error uploading Feature files:", error);
       toast.error("Error uploading Feature files. Please try again.", {
@@ -405,6 +431,40 @@ const TPRegistrationListing = () => {
       });
     }
     return uploadedUrls;
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+    try {
+      const uploadedUrls = await uploadFeatureImage();
+      const logoUrl = await uploadLogo();
+      
+      const postData = {
+        logo: logoUrl,
+        images: uploadedUrls.flat(),
+        document: [
+          {
+            pan_card: personalDetailsData.pan_card,
+            gst_certificate: personalDetailsData.gst_certificate,
+          },
+        ],
+      };
+
+      await inptaListingAxiosInstance.post("/create-tc-listing", postData);
+      updateData();
+
+      setIsLoading(false);
+      toast.success("Listing created successfully!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } catch (error) {
+      console.error("Error uploading files:", error);
+      setIsLoading(false);
+      toast.error(error?.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
 
   const updateData = async () => {
@@ -426,169 +486,6 @@ const TPRegistrationListing = () => {
       toast.error("Error updating user data");
     }
     setIsLoading(false);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-    try {
-      const uploadedUrls = await uploadFeatureImage();
-      const logoUrl = await uploadLogo();
-
-      const postData = {
-        type: selectedType,
-        title: formData.title,
-        description: formData.description,
-        course_offered: formData.course_offered,
-        logo: logoUrl,
-        images: uploadedUrls.flat(),
-        tags: formData.tags,
-        listing_category: ["listing"],
-        personal_details: {
-          description: personalDetailsData.description,
-          question1: personalDetailsData.question1,
-          question2: personalDetailsData.question2,
-          question3: personalDetailsData.question3,
-          question4: personalDetailsData.question4,
-          question5: personalDetailsData.question5,
-        },
-        social_media: socialMediaLinks.map((link) => ({
-          social_media_type: link.platform.toLowerCase(),
-          link: link.link,
-        })),
-        locations: [
-          {
-            location_name: formData.branch,
-            address_line_1: formData.address_line_1,
-            address_line_2: formData.address_line_2,
-            city: formData.city,
-            state: formData.state,
-            country: "india",
-            pin_code: formData.pin_code,
-            landmark: formData.landmark,
-            direction_link: formData.direction_link,
-            contact: {
-              contact_type: "mobile",
-              value: formData.contactNumber,
-            },
-          },
-        ],
-        contacts: [
-          {
-            contact_type: "email",
-            value: formData.email,
-          },
-          {
-            contact_type: "website",
-            value: formData.website,
-          },
-          {
-            contact_type: "whatsapp",
-            value: formData.whatsappNumber,
-          },
-        ],
-        faqs: faqs.map((faq) => ({
-          question: faq.question,
-          answer: faq.answer,
-        })),
-        timings: inptaHours.map((timeSlot) => ({
-          title: timeSlot.day,
-          timings: [
-            {
-              from_time: timeSlot.open,
-              to_time: timeSlot.close,
-            },
-          ],
-        })),
-      };
-
-      await inptaListingAxiosInstance.post("/create-listing", postData);
-      updateData();
-
-      setIsLoading(false);
-      toast.success("Listing created successfully!", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    } catch (error) {
-      console.error("Error uploading files:", error);
-      setIsLoading(false);
-      toast.error(error?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    }
-  };
-
-  const [times, setTimes] = useState({
-    Monday: { opening: "Opening Time", closing: "Closing Time" },
-    Tuesday: { opening: "Opening Time", closing: "Closing Time" },
-    Wednesday: { opening: "Opening Time", closing: "Closing Time" },
-    Thursday: { opening: "Opening Time", closing: "Closing Time" },
-    Friday: { opening: "Opening Time", closing: "Closing Time" },
-    Saturday: { opening: "Opening Time", closing: "Closing Time" },
-    Sunday: { opening: "Opening Time", closing: "Closing Time" },
-  });
-
-  const [sameForAll, setSameForAll] = useState(false);
-
-  const timeOptions = [
-    "01:00 AM",
-    "02:00 AM",
-    "03:00 AM",
-    "04:00 AM",
-    "05:00 AM",
-    "06:00 AM",
-    "07:00 AM",
-    "08:00 AM",
-    "09:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "12:00 AM",
-    "01:00 PM",
-    "02:00 PM",
-    "03:00 PM",
-    "04:00 PM",
-    "05:00 PM",
-    "06:00 PM",
-    "07:00 PM",
-    "08:00 PM",
-    "09:00 PM",
-    "10:00 PM",
-    "11:00 PM",
-    "12:00 PM",
-    "Closed",
-  ];
-
-  const handleTimeChange = (day, field, value) => {
-    const updatedTimes = { ...times };
-    updatedTimes[day][field] = value;
-
-    if (sameForAll) {
-      Object.keys(updatedTimes).forEach((key) => {
-        updatedTimes[key] = { ...updatedTimes[day] };
-      });
-    }
-    setTimes(updatedTimes);
-  };
-
-  const handleCheckboxChange = (checked) => {
-    setSameForAll(checked);
-    if (checked) {
-      const mondayTimes = times.Monday;
-      const updatedTimes = { ...times };
-      Object.keys(updatedTimes).forEach((day) => {
-        updatedTimes[day] = { ...mondayTimes };
-      });
-      setTimes(updatedTimes);
-    }
-  };
-
-  const getInptaHours = () => {
-    const allDaysTime = Object.keys(times).map((day) => ({
-      day,
-      open: times[day].opening,
-      close: times[day].closing,
-    }));
-    setInptaHours(allDaysTime);
   };
 
   return (
@@ -768,7 +665,7 @@ const TPRegistrationListing = () => {
                                   <label className="mb-1">
                                     Washroom Image{" "}
                                   </label>
-                                  {inptaPhotos && inptaPhotos.length > 0 ? (
+                                  {inptaPhotos.washroom ? (
                                     <div>
                                       <div
                                         className="row position-relative"
@@ -786,9 +683,8 @@ const TPRegistrationListing = () => {
                                             </div>
                                           </div>
                                         )}
-                                        {inptaPhotos.map((photo, index) => (
+                                        {inptaPhotos.washroom && (
                                           <div
-                                            key={index}
                                             style={{
                                               width: "200px",
                                               position: "relative",
@@ -802,12 +698,8 @@ const TPRegistrationListing = () => {
                                               }}
                                             >
                                               <img
-                                                src={
-                                                  photo.preview
-                                                    ? photo.preview
-                                                    : photo
-                                                }
-                                                alt={`INPTA Photo ${index + 1}`}
+                                                src={inptaPhotos.washroom}
+                                                alt={`INPTA Photo washroom`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -816,7 +708,9 @@ const TPRegistrationListing = () => {
                                               />
                                               <IconButton
                                                 onClick={() =>
-                                                  handleRemoveInptaPhoto(index)
+                                                  handleRemoveInptaPhoto(
+                                                    "washroom"
+                                                  )
                                                 }
                                                 className="px-1 py-1"
                                                 style={{
@@ -837,20 +731,22 @@ const TPRegistrationListing = () => {
                                                 onChange={(event) =>
                                                   handleCropInptaPhoto(
                                                     event,
-                                                    index
+                                                    "washroom"
                                                   )
                                                 }
                                                 style={{ display: "none" }}
-                                                id={`photoInput-${index}`}
+                                                id={`photoInput-washroom`}
                                               />
                                             </div>
                                           </div>
-                                        ))}
+                                        )}
                                       </div>
                                       <div className="mt-2 text-center">
                                         <button
                                           className="btn btn-primary rounded-pill px-3 py-1"
-                                          onClick={handleSelectFeature}
+                                          onClick={() =>
+                                            handleSelectFeature("washroom")
+                                          }
                                         >
                                           Add Feature Image
                                         </button>
@@ -860,7 +756,9 @@ const TPRegistrationListing = () => {
                                     <div
                                       className="dropzone"
                                       id="featured-image"
-                                      onClick={handleSelectFeature}
+                                      onClick={() =>
+                                        handleSelectFeature("washroom")
+                                      }
                                       style={{
                                         border: "2px dashed #ccc",
                                         padding: "20px",
@@ -876,19 +774,19 @@ const TPRegistrationListing = () => {
                                     Maximum file size: 2 MB.
                                   </label>
                                   <input
-                                    id="featureInput"
+                                    id="washroom"
                                     type="file"
                                     accept="image/*"
                                     className="d-none"
-                                    onChange={handleCropInptaPhoto}
+                                    onChange={(e) =>
+                                      handleCropInptaPhoto(e, "washroom")
+                                    }
                                     sx={{ mt: 2, mb: 2 }}
                                   />
                                 </div>
                                 <div className="col-md-6 mt-4">
-                                  <label className="mb-1">
-                                    Dustbin Image{" "}
-                                  </label>
-                                  {inptaPhotos && inptaPhotos.length > 0 ? (
+                                  <label className="mb-1">Dustbin Image </label>
+                                  {inptaPhotos.dustbin ? (
                                     <div>
                                       <div
                                         className="row position-relative"
@@ -906,9 +804,8 @@ const TPRegistrationListing = () => {
                                             </div>
                                           </div>
                                         )}
-                                        {inptaPhotos.map((photo, index) => (
+                                        {inptaPhotos.dustbin && (
                                           <div
-                                            key={index}
                                             style={{
                                               width: "200px",
                                               position: "relative",
@@ -922,12 +819,8 @@ const TPRegistrationListing = () => {
                                               }}
                                             >
                                               <img
-                                                src={
-                                                  photo.preview
-                                                    ? photo.preview
-                                                    : photo
-                                                }
-                                                alt={`INPTA Photo ${index + 1}`}
+                                                src={inptaPhotos.dustbin}
+                                                alt={`INPTA Photo dustbin`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -936,7 +829,9 @@ const TPRegistrationListing = () => {
                                               />
                                               <IconButton
                                                 onClick={() =>
-                                                  handleRemoveInptaPhoto(index)
+                                                  handleRemoveInptaPhoto(
+                                                    "dustbin"
+                                                  )
                                                 }
                                                 className="px-1 py-1"
                                                 style={{
@@ -957,20 +852,22 @@ const TPRegistrationListing = () => {
                                                 onChange={(event) =>
                                                   handleCropInptaPhoto(
                                                     event,
-                                                    index
+                                                    "dustbin"
                                                   )
                                                 }
                                                 style={{ display: "none" }}
-                                                id={`photoInput-${index}`}
+                                                id={`photoInput-dustbin`}
                                               />
                                             </div>
                                           </div>
-                                        ))}
+                                        )}
                                       </div>
                                       <div className="mt-2 text-center">
                                         <button
                                           className="btn btn-primary rounded-pill px-3 py-1"
-                                          onClick={handleSelectFeature}
+                                          onClick={() =>
+                                            handleSelectFeature("dustbin")
+                                          }
                                         >
                                           Add Feature Image
                                         </button>
@@ -980,7 +877,9 @@ const TPRegistrationListing = () => {
                                     <div
                                       className="dropzone"
                                       id="featured-image"
-                                      onClick={handleSelectFeature}
+                                      onClick={() =>
+                                        handleSelectFeature("dustbin")
+                                      }
                                       style={{
                                         border: "2px dashed #ccc",
                                         padding: "20px",
@@ -996,11 +895,13 @@ const TPRegistrationListing = () => {
                                     Maximum file size: 2 MB.
                                   </label>
                                   <input
-                                    id="featureInput"
+                                    id="dustbin"
                                     type="file"
                                     accept="image/*"
                                     className="d-none"
-                                    onChange={handleCropInptaPhoto}
+                                    onChange={(e) =>
+                                      handleCropInptaPhoto(e, "dustbin")
+                                    }
                                     sx={{ mt: 2, mb: 2 }}
                                   />
                                 </div>
@@ -1008,7 +909,7 @@ const TPRegistrationListing = () => {
                                   <label className="mb-1">
                                     Medical Kit Image{" "}
                                   </label>
-                                  {inptaPhotos && inptaPhotos.length > 0 ? (
+                                  {inptaPhotos.medical_kit ? (
                                     <div>
                                       <div
                                         className="row position-relative"
@@ -1026,9 +927,8 @@ const TPRegistrationListing = () => {
                                             </div>
                                           </div>
                                         )}
-                                        {inptaPhotos.map((photo, index) => (
+                                        {inptaPhotos.medical_kit && (
                                           <div
-                                            key={index}
                                             style={{
                                               width: "200px",
                                               position: "relative",
@@ -1042,12 +942,8 @@ const TPRegistrationListing = () => {
                                               }}
                                             >
                                               <img
-                                                src={
-                                                  photo.preview
-                                                    ? photo.preview
-                                                    : photo
-                                                }
-                                                alt={`INPTA Photo ${index + 1}`}
+                                                src={inptaPhotos.medical_kit}
+                                                alt={`INPTA Photo medical_kit`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -1056,7 +952,9 @@ const TPRegistrationListing = () => {
                                               />
                                               <IconButton
                                                 onClick={() =>
-                                                  handleRemoveInptaPhoto(index)
+                                                  handleRemoveInptaPhoto(
+                                                    "medical_kit"
+                                                  )
                                                 }
                                                 className="px-1 py-1"
                                                 style={{
@@ -1077,20 +975,22 @@ const TPRegistrationListing = () => {
                                                 onChange={(event) =>
                                                   handleCropInptaPhoto(
                                                     event,
-                                                    index
+                                                    "medical_kit"
                                                   )
                                                 }
                                                 style={{ display: "none" }}
-                                                id={`photoInput-${index}`}
+                                                id={`photoInput-medical_kit`}
                                               />
                                             </div>
                                           </div>
-                                        ))}
+                                        )}
                                       </div>
                                       <div className="mt-2 text-center">
                                         <button
                                           className="btn btn-primary rounded-pill px-3 py-1"
-                                          onClick={handleSelectFeature}
+                                          onClick={() =>
+                                            handleSelectFeature("medical_kit")
+                                          }
                                         >
                                           Add Feature Image
                                         </button>
@@ -1100,7 +1000,9 @@ const TPRegistrationListing = () => {
                                     <div
                                       className="dropzone"
                                       id="featured-image"
-                                      onClick={handleSelectFeature}
+                                      onClick={() =>
+                                        handleSelectFeature("medical_kit")
+                                      }
                                       style={{
                                         border: "2px dashed #ccc",
                                         padding: "20px",
@@ -1116,11 +1018,13 @@ const TPRegistrationListing = () => {
                                     Maximum file size: 2 MB.
                                   </label>
                                   <input
-                                    id="featureInput"
+                                    id="medical_kit"
                                     type="file"
                                     accept="image/*"
                                     className="d-none"
-                                    onChange={handleCropInptaPhoto}
+                                    onChange={(e) =>
+                                      handleCropInptaPhoto(e, "medical_kit")
+                                    }
                                     sx={{ mt: 2, mb: 2 }}
                                   />
                                 </div>
@@ -1128,7 +1032,7 @@ const TPRegistrationListing = () => {
                                   <label className="mb-1">
                                     Gym Area Image (More then 500 square feet){" "}
                                   </label>
-                                  {inptaPhotos && inptaPhotos.length > 0 ? (
+                                  {inptaPhotos.gym_area ? (
                                     <div>
                                       <div
                                         className="row position-relative"
@@ -1146,9 +1050,8 @@ const TPRegistrationListing = () => {
                                             </div>
                                           </div>
                                         )}
-                                        {inptaPhotos.map((photo, index) => (
+                                        {inptaPhotos.gym_area && (
                                           <div
-                                            key={index}
                                             style={{
                                               width: "200px",
                                               position: "relative",
@@ -1162,12 +1065,8 @@ const TPRegistrationListing = () => {
                                               }}
                                             >
                                               <img
-                                                src={
-                                                  photo.preview
-                                                    ? photo.preview
-                                                    : photo
-                                                }
-                                                alt={`INPTA Photo ${index + 1}`}
+                                                src={inptaPhotos.gym_area}
+                                                alt={`INPTA Photo gym_area`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -1176,7 +1075,9 @@ const TPRegistrationListing = () => {
                                               />
                                               <IconButton
                                                 onClick={() =>
-                                                  handleRemoveInptaPhoto(index)
+                                                  handleRemoveInptaPhoto(
+                                                    "gym_area"
+                                                  )
                                                 }
                                                 className="px-1 py-1"
                                                 style={{
@@ -1197,20 +1098,22 @@ const TPRegistrationListing = () => {
                                                 onChange={(event) =>
                                                   handleCropInptaPhoto(
                                                     event,
-                                                    index
+                                                    "gym_area"
                                                   )
                                                 }
                                                 style={{ display: "none" }}
-                                                id={`photoInput-${index}`}
+                                                id={`photoInput-gym_area`}
                                               />
                                             </div>
                                           </div>
-                                        ))}
+                                        )}
                                       </div>
                                       <div className="mt-2 text-center">
                                         <button
                                           className="btn btn-primary rounded-pill px-3 py-1"
-                                          onClick={handleSelectFeature}
+                                          onClick={() =>
+                                            handleSelectFeature("gym_area")
+                                          }
                                         >
                                           Add Feature Image
                                         </button>
@@ -1220,7 +1123,9 @@ const TPRegistrationListing = () => {
                                     <div
                                       className="dropzone"
                                       id="featured-image"
-                                      onClick={handleSelectFeature}
+                                      onClick={() =>
+                                        handleSelectFeature("gym_area")
+                                      }
                                       style={{
                                         border: "2px dashed #ccc",
                                         padding: "20px",
@@ -1236,11 +1141,13 @@ const TPRegistrationListing = () => {
                                     Maximum file size: 2 MB.
                                   </label>
                                   <input
-                                    id="featureInput"
+                                    id="gym_area"
                                     type="file"
                                     accept="image/*"
                                     className="d-none"
-                                    onChange={handleCropInptaPhoto}
+                                    onChange={(e) =>
+                                      handleCropInptaPhoto(e, "gym_area")
+                                    }
                                     sx={{ mt: 2, mb: 2 }}
                                   />
                                 </div>
@@ -1248,7 +1155,7 @@ const TPRegistrationListing = () => {
                                   <label className="mb-1">
                                     Reception Image{" "}
                                   </label>
-                                  {inptaPhotos && inptaPhotos.length > 0 ? (
+                                  {inptaPhotos.reception ? (
                                     <div>
                                       <div
                                         className="row position-relative"
@@ -1266,9 +1173,8 @@ const TPRegistrationListing = () => {
                                             </div>
                                           </div>
                                         )}
-                                        {inptaPhotos.map((photo, index) => (
+                                        {inptaPhotos.reception && (
                                           <div
-                                            key={index}
                                             style={{
                                               width: "200px",
                                               position: "relative",
@@ -1282,12 +1188,8 @@ const TPRegistrationListing = () => {
                                               }}
                                             >
                                               <img
-                                                src={
-                                                  photo.preview
-                                                    ? photo.preview
-                                                    : photo
-                                                }
-                                                alt={`INPTA Photo ${index + 1}`}
+                                                src={inptaPhotos.reception}
+                                                alt={`INPTA Photo reception`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -1296,7 +1198,9 @@ const TPRegistrationListing = () => {
                                               />
                                               <IconButton
                                                 onClick={() =>
-                                                  handleRemoveInptaPhoto(index)
+                                                  handleRemoveInptaPhoto(
+                                                    "reception"
+                                                  )
                                                 }
                                                 className="px-1 py-1"
                                                 style={{
@@ -1317,20 +1221,22 @@ const TPRegistrationListing = () => {
                                                 onChange={(event) =>
                                                   handleCropInptaPhoto(
                                                     event,
-                                                    index
+                                                    "reception"
                                                   )
                                                 }
                                                 style={{ display: "none" }}
-                                                id={`photoInput-${index}`}
+                                                id={`photoInput-reception`}
                                               />
                                             </div>
                                           </div>
-                                        ))}
+                                        )}
                                       </div>
                                       <div className="mt-2 text-center">
                                         <button
                                           className="btn btn-primary rounded-pill px-3 py-1"
-                                          onClick={handleSelectFeature}
+                                          onClick={() =>
+                                            handleSelectFeature("reception")
+                                          }
                                         >
                                           Add Feature Image
                                         </button>
@@ -1340,7 +1246,9 @@ const TPRegistrationListing = () => {
                                     <div
                                       className="dropzone"
                                       id="featured-image"
-                                      onClick={handleSelectFeature}
+                                      onClick={() =>
+                                        handleSelectFeature("reception")
+                                      }
                                       style={{
                                         border: "2px dashed #ccc",
                                         padding: "20px",
@@ -1356,19 +1264,19 @@ const TPRegistrationListing = () => {
                                     Maximum file size: 2 MB.
                                   </label>
                                   <input
-                                    id="featureInput"
+                                    id="reception"
                                     type="file"
                                     accept="image/*"
                                     className="d-none"
-                                    onChange={handleCropInptaPhoto}
+                                    onChange={(e) =>
+                                      handleCropInptaPhoto(e, "reception")
+                                    }
                                     sx={{ mt: 2, mb: 2 }}
                                   />
                                 </div>
                                 <div className="col-md-6 mt-4">
-                                  <label className="mb-1">
-                                    Staff Image{" "}
-                                  </label>
-                                  {inptaPhotos && inptaPhotos.length > 0 ? (
+                                  <label className="mb-1">Staff Image </label>
+                                  {inptaPhotos.staff ? (
                                     <div>
                                       <div
                                         className="row position-relative"
@@ -1386,9 +1294,8 @@ const TPRegistrationListing = () => {
                                             </div>
                                           </div>
                                         )}
-                                        {inptaPhotos.map((photo, index) => (
+                                        {inptaPhotos.staff && (
                                           <div
-                                            key={index}
                                             style={{
                                               width: "200px",
                                               position: "relative",
@@ -1402,12 +1309,8 @@ const TPRegistrationListing = () => {
                                               }}
                                             >
                                               <img
-                                                src={
-                                                  photo.preview
-                                                    ? photo.preview
-                                                    : photo
-                                                }
-                                                alt={`INPTA Photo ${index + 1}`}
+                                                src={inptaPhotos.staff}
+                                                alt={`INPTA Photo staff`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -1416,7 +1319,9 @@ const TPRegistrationListing = () => {
                                               />
                                               <IconButton
                                                 onClick={() =>
-                                                  handleRemoveInptaPhoto(index)
+                                                  handleRemoveInptaPhoto(
+                                                    "staff"
+                                                  )
                                                 }
                                                 className="px-1 py-1"
                                                 style={{
@@ -1437,20 +1342,22 @@ const TPRegistrationListing = () => {
                                                 onChange={(event) =>
                                                   handleCropInptaPhoto(
                                                     event,
-                                                    index
+                                                    "staff"
                                                   )
                                                 }
                                                 style={{ display: "none" }}
-                                                id={`photoInput-${index}`}
+                                                id={`photoInput-staff`}
                                               />
                                             </div>
                                           </div>
-                                        ))}
+                                        )}
                                       </div>
                                       <div className="mt-2 text-center">
                                         <button
                                           className="btn btn-primary rounded-pill px-3 py-1"
-                                          onClick={handleSelectFeature}
+                                          onClick={() =>
+                                            handleSelectFeature("staff")
+                                          }
                                         >
                                           Add Feature Image
                                         </button>
@@ -1460,7 +1367,9 @@ const TPRegistrationListing = () => {
                                     <div
                                       className="dropzone"
                                       id="featured-image"
-                                      onClick={handleSelectFeature}
+                                      onClick={() =>
+                                        handleSelectFeature("staff")
+                                      }
                                       style={{
                                         border: "2px dashed #ccc",
                                         padding: "20px",
@@ -1476,11 +1385,13 @@ const TPRegistrationListing = () => {
                                     Maximum file size: 2 MB.
                                   </label>
                                   <input
-                                    id="featureInput"
+                                    id="staff"
                                     type="file"
                                     accept="image/*"
                                     className="d-none"
-                                    onChange={handleCropInptaPhoto}
+                                    onChange={(e) =>
+                                      handleCropInptaPhoto(e, "staff")
+                                    }
                                     sx={{ mt: 2, mb: 2 }}
                                   />
                                 </div>
@@ -1498,43 +1409,200 @@ const TPRegistrationListing = () => {
                             </div>
                             <div className="dashboard-list-wraps-body bg-white py-3 px-3">
                               <div className="row">
-                                <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">
-                                      Upload Pan Card
-                                    </label>
-                                    <input
-                                      type="file"
-                                      className="form-control rounded"
-                                      placeholder="Upload Pan Card"
-                                      value={personalDetailsData.question2}
-                                      onChange={(e) =>
-                                        handlePersonalInputChange(
-                                          "question2",
-                                          e.target.value
-                                        )
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Upload Pan Card
+                                  </label>
+                                  {personalDetailsData.pan_card ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          margin: "0px 0px 0px 0px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            width: "200px",
+                                            position: "relative",
+                                            marginBottom: "10px",
+                                          }}
+                                        >
+                                          <img
+                                            src={personalDetailsData.pan_card}
+                                            alt="Pan Card"
+                                            style={{
+                                              maxWidth: "100%",
+                                              height: "auto",
+                                              marginBottom: "5px",
+                                            }}
+                                          />
+                                          <IconButton
+                                            onClick={() =>
+                                              handleRemovePersonalDetails(
+                                                "pan_card"
+                                              )
+                                            }
+                                            className="px-1 py-1"
+                                            style={{
+                                              position: "absolute",
+                                              top: 4,
+                                              right: 15,
+                                              backgroundColor:
+                                                "rgba(255, 255, 255, 0.8)",
+                                            }}
+                                          >
+                                            <DeleteIcon
+                                              style={{ color: "#ff3838" }}
+                                            />
+                                          </IconButton>
+                                        </div>
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            document
+                                              .getElementById("pan_card")
+                                              .click()
+                                          }
+                                        >
+                                          Change Pan Card
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      onClick={() =>
+                                        document
+                                          .getElementById("pan_card")
+                                          .click()
                                       }
-                                    />
-                                  </div>
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Upload Pan Card</p>
+                                    </div>
+                                  )}
+                                  <input
+                                    id="pan_card"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handlePersonalInputChange(e, "pan_card")
+                                    }
+                                  />
                                 </div>
-                                <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">
-                                      Upload GST Certificate
-                                    </label>
-                                    <input
-                                      type="file"
-                                      className="form-control rounded"
-                                      placeholder="Upload GST Certificate"
-                                      value={personalDetailsData.question2}
-                                      onChange={(e) =>
-                                        handlePersonalInputChange(
-                                          "question2",
-                                          e.target.value
-                                        )
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Upload GST Certificate
+                                  </label>
+                                  {personalDetailsData.gst_certificate ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          margin: "0px 0px 0pc 0px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            width: "200px",
+                                            position: "relative",
+                                            marginBottom: "10px",
+                                          }}
+                                        >
+                                          <img
+                                            src={
+                                              personalDetailsData.gst_certificate
+                                            }
+                                            alt="GST Certificate"
+                                            style={{
+                                              maxWidth: "100%",
+                                              height: "auto",
+                                              marginBottom: "5px",
+                                            }}
+                                          />
+                                          <IconButton
+                                            onClick={() =>
+                                              handleRemovePersonalDetails(
+                                                "gst_certificate"
+                                              )
+                                            }
+                                            className="px-1 py-1"
+                                            style={{
+                                              position: "absolute",
+                                              top: 4,
+                                              right: 15,
+                                              backgroundColor:
+                                                "rgba(255, 255, 255, 0.8)",
+                                            }}
+                                          >
+                                            <DeleteIcon
+                                              style={{ color: "#ff3838" }}
+                                            />
+                                          </IconButton>
+                                        </div>
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            document
+                                              .getElementById("gst_certificate")
+                                              .click()
+                                          }
+                                        >
+                                          Change GST Certificate
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      onClick={() =>
+                                        document
+                                          .getElementById("gst_certificate")
+                                          .click()
                                       }
-                                    />
-                                  </div>
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Upload GST Certificate</p>
+                                    </div>
+                                  )}
+                                  <input
+                                    id="gst_certificate"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handlePersonalInputChange(
+                                        e,
+                                        "gst_certificate"
+                                      )
+                                    }
+                                  />
                                 </div>
                               </div>
                             </div>

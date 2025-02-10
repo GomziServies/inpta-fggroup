@@ -231,7 +231,7 @@ const Home = () => {
                       />
                       <div className="video-btn">
                         <a
-                          onClick={() => openVideoModal("L8OFnO8llJw")}
+                          onClick={() => openVideoModal("iXfDpfwURBQ")}
                           data-flashy-type="video"
                           className="custom"
                         >
@@ -260,7 +260,7 @@ const Home = () => {
                       />
                       <div className="video-btn">
                         <a
-                          onClick={() => openVideoModal("L8OFnO8llJw")}
+                          onClick={() => openVideoModal("iXfDpfwURBQ")}
                           data-flashy-type="video"
                           className="custom"
                         >

@@ -281,8 +281,6 @@ const TPRegistrationListing = () => {
         ],
       };
 
-      console.log('postData :- ', postData)
-
       await inptaListingAxiosInstance.post("/create-tp-listing", postData);
       updateData();
 

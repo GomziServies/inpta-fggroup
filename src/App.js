@@ -5,16 +5,17 @@ import Profile from "./pages/profile";
 import Login from "./pages/login";
 import ScrollRestoration from "./components/ScrollRestoration";
 import Contact from "./pages/contact";
-import AddListing from "./pages/add-listing";
-import AllListing from "./pages/all-listing";
-import ListingView from "./pages/view-listing";
-import UpdateListing from "./pages/update-listing";
-import ViewAllListing from "./pages/view-all-listing";
-import TPRegistrationListing from "./pages/training-and-placement";
-import TCRegistrationListing from "./pages/training-center";
-import TPRegistrationSubmitCertificate from "./pages/submit-certificate";
-import TPRegistrationPayment from "./pages/training-and-placement-payment";
+import AddListing from "./pages/listing/add-listing";
+import AllListing from "./pages/listing/all-listing";
+import ListingView from "./pages/listing/view-listing";
+import UpdateListing from "./pages/listing/update-listing";
+import ViewAllListing from "./pages/listing/view-all-listing";
+import TPRegistrationListing from "./pages/training-and-placement/training-and-placement";
+import TCRegistrationListing from "./pages/training-center/training-center";
+import TPRegistrationSubmitCertificate from "./pages/training-center/submit-certificate";
+import TPRegistrationPayment from "./pages/training-and-placement/training-and-placement-payment";
 import RegistrationPage from "./pages/registration-page";
+import AuditorVerification from "./pages/training-center/auditor-verification";
 
 function App() {
   return (
@@ -27,13 +28,15 @@ function App() {
         <Route path="/view-listing" element={<ListingView />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/add-listing" element={<AddListing />} />
-        <Route path="/training-and-placement" element={<TPRegistrationListing />} />
-        <Route path="/training-and-placement/payment" element={<TPRegistrationPayment />} />
-        <Route path="/training-center-submit-certificate" element={<TPRegistrationSubmitCertificate />} />
-        <Route path="/training-center" element={<TCRegistrationListing />} />
         <Route path="/update-listing" element={<UpdateListing />} />
         <Route path="/view-all-listing" element={<ViewAllListing />} />
+        {/* Tp & Tc Form */}
         <Route path="/registration" element={<RegistrationPage />} />
+        <Route path="/training-and-placement" element={<TPRegistrationListing />} />
+        <Route path="/training-and-placement/payment" element={<TPRegistrationPayment />} />
+        <Route path="/training-center" element={<TCRegistrationListing />} />
+        <Route path="/training-center/submit-certificate" element={<TPRegistrationSubmitCertificate />} />
+        <Route path="/training-center/auditor-verification" element={<AuditorVerification />} />
       </Routes>
       <ScrollRestoration />
     </div>

@@ -49,6 +49,7 @@ function Header() {
     try {
       const response = await axiosInstance.post("/account/authorization", {
         mobile: mobileNumber,
+        service: 'INPTA-LISTING'
       });
 
       if (response.data && response.data.data && response.data.data.OTP) {
@@ -87,13 +88,13 @@ function Header() {
         toast.success("OTP Verified!");
         setIsLogin(true)
 
-        const IsInptaUser = response.data.data.active_services.find(
-          (service) => service === "INPTA-LISTING"
-        );
+        // const IsInptaUser = response.data.data.active_services.find(
+        //   (service) => service === "INPTA-LISTING"
+        // );
 
-        if (!IsInptaUser) {
-          await axiosInstance.post("/account/enable-inpta-listing");
-        }
+        // if (!IsInptaUser) {
+        //   await axiosInstance.post("/account/enable-inpta-listing");
+        // }
       } else {
         toast.error("Failed to verify OTP. Please try again.");
       }
@@ -179,14 +180,14 @@ function Header() {
           <div className="d-flex justify-content-center mt-3">
             {isLogin ? (
               <Link
-                to="/add-listing"
+                to="/registration"
                 class="add-list-btn w-75 d-md-none d-block"
               >
-                <i class="fas fa-plus me-2"></i>Add Listing
+                <i class="fas fa-plus me-2"></i>Registration
               </Link>
             ) : (
               <Link to="/login" class="add-list-btn w-75 d-md-none d-block">
-                <i class="fas fa-plus me-2"></i>Add Listing
+                <i class="fas fa-plus me-2"></i>Registration
               </Link>
             )}
           </div>
@@ -212,12 +213,12 @@ function Header() {
             )}
             <li className="mx-0" style={{ cursor: "pointer" }}>
               {isLogin ? (
-                <Link to="/add-listing" class="add-list-btn">
-                  <i class="fas fa-plus me-2"></i>Add Listing
+                <Link to="/registration" class="add-list-btn">
+                  <i class="fas fa-plus me-2"></i>Registration
                 </Link>
               ) : (
                 <Link to="/login" class="add-list-btn">
-                  <i class="fas fa-plus me-2"></i>Add Listing
+                  <i class="fas fa-plus me-2"></i>Registration
                 </Link>
               )}
             </li>

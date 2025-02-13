@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Helmet } from "react-helmet";
-import "../assets/css/style.css";
-import Header from "../components/Header";
-import axiosInstance, { inptaListingAxiosInstance } from "../js/api";
+import "../../assets/css/style.css";
+import Header from "../../components/Header";
+import axiosInstance, { inptaListingAxiosInstance } from "../../js/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
@@ -12,9 +12,10 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import "rsuite/dist/rsuite.min.css";
 import { Modal } from "react-bootstrap";
 import Cropper from "react-easy-crop";
-import Footer from "../components/Footer";
+import Footer from "../../components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import ProgressBar from "../../components/progress-bar/registration-progress-bar";
 
 const TPRegistrationListing = () => {
   const [loading, setLoading] = useState(true);
@@ -24,6 +25,51 @@ const TPRegistrationListing = () => {
       setLoading(false);
     }, 1000);
   }, []);
+
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [otpCode, setOtpCode] = useState("");
+  const [showOtp, setShowOtp] = React.useState(false);
+
+  const handleLoginSubmit = async () => {
+    try {
+      const response = await axiosInstance.post("/account/authorization", {
+        mobile: mobileNumber,
+        service: 'INPTA-LISTING'
+      });
+
+      if (response.data && response.data.data && response.data.data.OTP) {
+        setShowOtp(true);
+        setOtpCode(response.data.data.OTP);
+        toast.success("OTP Sent! You will receive an OTP shortly.");
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      console.error("Error in handleLoginSubmit:", error);
+    }
+  };
+
+  const handleOtpSubmit = async () => {
+    try {
+      const response = await axiosInstance.post(
+        "/account/authorization/verify",
+        {
+          mobile: mobileNumber,
+          otp: otpCode,
+        }
+      );
+
+      const auth = response.data.data.authorization;
+      
+      if (response.status === 200) {
+        localStorage.setItem("authorization", auth);
+        getUserData();
+        toast.success("OTP Verified!");
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      console.error("Error in handleOtpSubmit:", error);
+    }
+  };
 
   const [formData, setFormData] = useState({
     description: "Testing Description",
@@ -288,6 +334,8 @@ const TPRegistrationListing = () => {
       toast.success("Listing created successfully!", {
         position: toast.POSITION.TOP_RIGHT,
       });
+
+      window.location.href = "/training-and-placement/payment";
     } catch (error) {
       console.error("Error uploading files:", error);
       setIsLoading(false);
@@ -328,10 +376,11 @@ const TPRegistrationListing = () => {
           <div className="clearfix" />
           <div className="container-fluid bg-registration">
             <div className="container">
-              <div className="goodup-dashboard-wrap gray px-4 py-5 add-listing-page margintop">
+              <div className="goodup-dashboard-wrap gray px-md-4 px-0 py-5 add-listing-page margintop">
                 <div className="goodup-dashboard-content text-start">
                   <div className="dashboard-widg-bar d-block">
                     <div className="row">
+                      <ProgressBar pendingData="first" />
                       <div className="col-12 mb-4 text-center">
                         <h2 className="mb-0 ft-medium fs-md">
                           TP Registration
@@ -357,41 +406,48 @@ const TPRegistrationListing = () => {
                                       type="text"
                                       className="form-control rounded"
                                       placeholder="Enter Mobile No."
-                                      value={formData.contactNumber}
                                       onChange={(e) =>
-                                        handleInputChange(
-                                          "contactNumber",
-                                          e.target.value
-                                        )
+                                        setMobileNumber(e.target.value)
                                       }
                                     />
                                   </div>
                                 </div>
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">OTP</label>
-                                    <input
-                                      type="text"
-                                      className="form-control rounded"
-                                      placeholder="Enter OTP"
-                                      value={formData.website}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          "website",
-                                          e.target.value
-                                        )
-                                      }
-                                    />
+
+                                {showOtp ? (
+                                  <>
+                                    <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                      <div className="form-group">
+                                        <label className="mb-1">OTP</label>
+                                        <input
+                                          type="text"
+                                          className="form-control rounded"
+                                          placeholder="Enter OTP"
+                                          value={otpCode}
+                                          onChange={(e) =>
+                                            setOtpCode(e.target.value)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                      <button
+                                        className="btn theme-bg rounded text-light add-listing-btn"
+                                        onClick={handleOtpSubmit}
+                                      >
+                                        Submit OTP
+                                      </button>
+                                    </div>
+                                  </>
+                                ) : (
+                                  <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                    <button
+                                      className="btn theme-bg rounded text-light add-listing-btn"
+                                      onClick={handleLoginSubmit}
+                                    >
+                                      Send OTP
+                                    </button>
                                   </div>
-                                </div>
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                                  <button
-                                    className="btn theme-bg rounded text-light add-listing-btn"
-                                    onClick={handleSubmit}
-                                  >
-                                    Submit OTP
-                                  </button>
-                                </div>
+                                )}
                               </div>
                             </div>
                           </div>
@@ -523,7 +579,9 @@ const TPRegistrationListing = () => {
                                       type="text"
                                       className="form-control rounded"
                                       placeholder="Enter Job Specification"
-                                      value={personalDetailsData.work_experience}
+                                      value={
+                                        personalDetailsData.work_experience
+                                      }
                                       onChange={(e) =>
                                         handlePersonalInputChange(
                                           "work_experience",
@@ -591,7 +649,9 @@ const TPRegistrationListing = () => {
                                 </div>
 
                                 <div className="col-12">
-                                  <label className="mb-1">Upload Aadhaar Card</label>
+                                  <label className="mb-1">
+                                    Upload Aadhaar Card
+                                  </label>
 
                                   {aadhaarPreview ? (
                                     <div className="position-relative">
@@ -818,7 +878,7 @@ const TPRegistrationListing = () => {
                                       onClick={handleSubmit}
                                       disabled={!isDetailsCorrect}
                                     >
-                                      Submit &amp; Preview
+                                      Submit &amp; Continue
                                     </button>
                                   </div>
                                 </div>

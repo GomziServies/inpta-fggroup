@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Helmet } from "react-helmet";
-import "../assets/css/style.css";
-import Header from "../components/Header";
-import axiosInstance, { inptaListingAxiosInstance } from "../js/api";
+import "../../assets/css/style.css";
+import Header from "../../components/Header";
+import axiosInstance, { inptaListingAxiosInstance } from "../../js/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
@@ -15,10 +15,11 @@ import { TagInput } from "rsuite";
 import "rsuite/dist/rsuite.min.css";
 import { Modal } from "react-bootstrap";
 import Cropper from "react-easy-crop";
-import Footer from "../components/Footer";
+import Footer from "../../components/Footer";
 import Select from "react-select";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import ProgressBar from "../../components/progress-bar/registration-progress-bar";
 
 const TPRegistrationListing = () => {
   const [loading, setLoading] = useState(true);
@@ -439,7 +440,7 @@ const TPRegistrationListing = () => {
     try {
       const uploadedUrls = await uploadFeatureImage();
       const logoUrl = await uploadLogo();
-      
+
       const postData = {
         logo: logoUrl,
         images: uploadedUrls.flat(),
@@ -458,6 +459,8 @@ const TPRegistrationListing = () => {
       toast.success("Listing created successfully!", {
         position: toast.POSITION.TOP_RIGHT,
       });
+
+      window.location.href = '/training-center/submit-certificate'
     } catch (error) {
       console.error("Error uploading files:", error);
       setIsLoading(false);
@@ -523,6 +526,7 @@ const TPRegistrationListing = () => {
                 <div className="goodup-dashboard-content text-start">
                   <div className="dashboard-widg-bar d-block">
                     <div className="row">
+                      <ProgressBar activeData='first' pendingData='second' />
                       <div className="col-12 mb-4 text-center">
                         <h2 className="mb-0 ft-medium fs-md">
                           TC Registration

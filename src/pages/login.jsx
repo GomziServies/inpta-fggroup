@@ -35,6 +35,7 @@ const Login = () => {
     try {
       const response = await axiosInstance.post("/account/authorization", {
         mobile: mobileNumber,
+        service: 'INPTA-LISTING'
       });
 
       if (response.data && response.data.data && response.data.data.OTP) {
@@ -72,13 +73,13 @@ const Login = () => {
         setOtpDialogOpen(false);
         toast.success("OTP Verified!");
 
-        const IsInptaUser = response.data.data.active_services.find(
-          (service) => service === "INPTA-LISTING"
-        );
+        // const IsInptaUser = response.data.data.active_services.find(
+        //   (service) => service === "INPTA-LISTING"
+        // );
 
-        if (!IsInptaUser) {
-          await axiosInstance.post("/account/enable-inpta-listing");
-        }
+        // if (!IsInptaUser) {
+        //   await axiosInstance.post("/account/enable-inpta-listing");
+        // }
 
         window.location.href = "/";
       } else {

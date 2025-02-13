@@ -1,20 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Helmet } from "react-helmet";
-import "../assets/css/style.css";
-import Header from "../components/Header";
-import axiosInstance, { inptaListingAxiosInstance } from "../js/api";
+import "../../assets/css/style.css";
+import Header from "../../components/Header";
+import { inptaListingAxiosInstance } from "../../js/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import "rsuite/dist/rsuite.min.css";
-import { Modal } from "react-bootstrap";
-import Cropper from "react-easy-crop";
-import Footer from "../components/Footer";
+import Footer from "../../components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import ProgressBar from "../../components/progress-bar/registration-progress-bar";
+import Swal from "sweetalert2";
 
 const TPRegistrationPayment = () => {
   const [loading, setLoading] = useState(true);
@@ -25,7 +22,6 @@ const TPRegistrationPayment = () => {
     }, 1000);
   }, []);
 
-  const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event) => {
@@ -40,6 +36,19 @@ const TPRegistrationPayment = () => {
       setIsLoading(false);
       toast.success("Listing created successfully!", {
         position: toast.POSITION.TOP_RIGHT,
+      });
+
+      Swal.fire({
+        title: "Success",
+        text: "We will contact you further. Our team will get back you soon.",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Okay",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/training-center";
+        }
       });
     } catch (error) {
       console.error("Error uploading files:", error);
@@ -85,6 +94,7 @@ const TPRegistrationPayment = () => {
                 <div className="goodup-dashboard-content text-start">
                   <div className="dashboard-widg-bar d-block">
                     <div className="row">
+                      <ProgressBar pendingData="first" />
                       <div className="col-xl-12 col-md-12 col-sm-12">
                         <div className="submit-form">
                           <div className="dashboard-list-wraps bg-white rounded mb-4">

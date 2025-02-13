@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Helmet } from "react-helmet";
-import "../assets/css/style.css";
-import Header from "../components/Header";
+import "../../assets/css/style.css";
+import Header from "../../components/Header";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Footer from "../components/Footer";
-import { inptaListingAxiosInstance } from "../js/api";
+import Footer from "../../components/Footer";
+import { inptaListingAxiosInstance } from "../../js/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";

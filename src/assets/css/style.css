@@ -433,6 +433,10 @@
   z-index: -1;
 }
 
+.section-title.show-title::before {
+  z-index: 0;
+}
+
 .section-title::after {
   position: absolute;
   content: "";
@@ -442,6 +446,11 @@
   left: -60px;
   background: var(--primary);
   z-index: -1;
+}
+
+.section-title.show-title::after {
+  width: calc(100% + 120px);
+  z-index: 0;
 }
 
 .section-title.text-start::before {
@@ -953,12 +962,12 @@
   .add-listing-page .col-lg-12,
   .add-listing-page .col-md-12,
   .add-listing-page .col-sm-12 {
-    margin-bottom: 16px;
+    margin-bottom: 0px;
   }
 
-  .add-listing-page .row {
+  /* .add-listing-page .row {
     display: block;
-  }
+  } */
 }
 
 @media (max-width: 480px) {
@@ -2001,10 +2010,10 @@ button.bg-dark:hover {
 
 .newthing::after,
 .newthing::before {
-  -webkit-animation: 1.8s infinite effct;
-  -moz-animation: 1.8s infinite effct;
-  -o-animation: 1.8s infinite effct;
-  animation: 1.8s infinite effct;
+  -webkit-animation: effct 1.8s infinite;
+  -moz-animation: effct 1.8s infinite;
+  -o-animation: effct 1.8s infinite;
+  animation: effct 1.8s infinite;
   background-color: #fff;
   border-radius: 100%;
   margin: -20px;
@@ -2013,6 +2022,42 @@ button.bg-dark:hover {
   left: 0;
   opacity: 0;
   right: 0;
+}
+
+@-webkit-keyframes effct {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes effct {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }
 
 .newthing i {
@@ -2171,6 +2216,8 @@ button.bg-dark:hover {
   width: 25%;
   position: relative;
   display: block;
+  padding-right: 5px;
+  padding-left: 5px;
 }
 
 .order-tracking-1 {
@@ -2180,6 +2227,7 @@ button.bg-dark:hover {
   display: block;
 }
 
+.order-tracking .is-complete,
 .order-tracking .is-complete,
 .order-tracking-1 .is-complete {
   display: block;
@@ -2228,6 +2276,22 @@ button.bg-dark:hover {
   opacity: 1;
 }
 
+.order-tracking.pending .is-complete,
+.order-tracking-1.pending .is-complete {
+  border-color: #ffc700;
+  border-width: 0;
+  background-color: #ffc700;
+}
+
+.order-tracking.pending .is-complete:after,
+.order-tracking-1.pending .is-complete:after {
+  border-color: #fff;
+  border-width: 0 3px 3px 0;
+  width: 7px;
+  left: 11px;
+  opacity: 1;
+}
+
 .order-tracking p,
 .order-tracking-1 p {
   color: #a4a4a4;
@@ -2244,6 +2308,11 @@ button.bg-dark:hover {
 
 .order-tracking.completed p,
 .order-tracking-1.completed p {
+  color: #000;
+}
+
+.order-tracking.pending p,
+.order-tracking-1.pending p {
   color: #000;
 }
 
@@ -2268,6 +2337,11 @@ button.bg-dark:hover {
 .order-tracking.completed:before,
 .order-tracking-1.completed:before {
   background-color: green;
+}
+
+.order-tracking.pending:before,
+.order-tracking-1.pending:before {
+  background-color: #ffc700;
 }
 
 .collapse.show {
@@ -2312,6 +2386,11 @@ button.checkout-add-edit-address:hover {
   .enjoy-message,
   .team-signature {
     font-size: 14px;
+  }
+
+  .order-tracking p,
+  .order-tracking-1 p {
+    font-size: 15px;
   }
 }
 

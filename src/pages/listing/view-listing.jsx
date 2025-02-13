@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Helmet } from "react-helmet";
-import "../assets/css/style.css";
-import Header from "../components/Header";
+import "../../assets/css/style.css";
+import Header from "../../components/Header";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { inptaListingAxiosInstance } from "../js/api";
-import Dummy_img from "../assets/dummy-image-square.jpg";
-import User_img from "../assets/user-profile.png";
-import Footer from "../components/Footer";
+import { inptaListingAxiosInstance } from "../../js/api";
+import User_img from "../../assets/user-profile.png";
+import Footer from "../../components/Footer";
 import { useLocation } from "react-router-dom";
 import "yet-another-react-lightbox/styles.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "react-toastify/dist/ReactToastify.css";
-import "../assets/css/animation.css";
+import "../../assets/css/animation.css";
 import validator from "validator";
 import Slider from "react-slick";
 import StarIcon from "@mui/icons-material/Star";
-import WhatsappBtn from "../components/WhatsappBtn";
 
 const ListingView = () => {
   const location = useLocation();

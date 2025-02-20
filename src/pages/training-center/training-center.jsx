@@ -20,6 +20,7 @@ import Select from "react-select";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ProgressBar from "../../components/progress-bar/registration-progress-bar";
+import { createTCPayment } from "../../assets/utils/tc_payment";
 
 const TPRegistrationListing = () => {
   const [loading, setLoading] = useState(true);
@@ -53,6 +54,8 @@ const TPRegistrationListing = () => {
   const [personalDetailsData, setPersonalDetailsData] = useState({
     pan_card: null,
     gst_certificate: null,
+    dpt_certificate: null,
+    dnc_certificate: null,
   });
 
   const handlePersonalInputChange = (event, type) => {
@@ -112,10 +115,7 @@ const TPRegistrationListing = () => {
     reception: null,
     staff: null,
   });
-  const [featurePreview, setFeaturePreview] = useState(null);
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(null);
   const [currentInptaPhotoIndex, setCurrentInptaPhotoIndex] = useState(null);
-  const [logoImage, setLogoImage] = useState(null);
   const [logoPreview, setLogoPreview] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
   const [inptaImageSrc, setInptaImageSrc] = useState(null);
@@ -152,7 +152,6 @@ const TPRegistrationListing = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setLogoImage(file);
         setFormData((prevData) => ({
           ...prevData,
           logo: reader.result,
@@ -171,7 +170,6 @@ const TPRegistrationListing = () => {
           setProfilePhoto(croppedImg);
           setShow(false);
         } else if (context === "feature") {
-          setFeaturePreview(croppedImg);
           setInptaShow(false);
         }
       } catch (error) {
@@ -231,20 +229,6 @@ const TPRegistrationListing = () => {
     }
   };
 
-  // const handleCropInptaPhoto = (event, category) => {
-  //   const file = event.target.files?.[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       setInptaPhotos((prevPhotos) => ({
-  //         ...prevPhotos,
-  //         [category]: reader.result,
-  //       }));
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // };
-
   const handleInptaCropComplete = async () => {
     setLoadingTwo(true);
     if (inptaImageSrc && inptaPhoto) {
@@ -261,7 +245,6 @@ const TPRegistrationListing = () => {
           updatedPhotos.push({ file: null, preview: croppedImg });
           setInptaPhotos(updatedPhotos);
         }
-        setFeaturePreview(croppedImg);
         setInptaShow(false);
       } catch (error) {
         console.error("Error cropping the photos:", error);
@@ -325,59 +308,6 @@ const TPRegistrationListing = () => {
       throw error;
     }
   };
-
-  // const uploadFeatureImage = async () => {
-  //   let uploadedUrls = [];
-  //   try {
-  //     const inptaPhotosArray = [
-  //       { label: inptaPhotos.washroom, value: "washroom" },
-  //       { label: inptaPhotos.dustbin, value: "dustbin" },
-  //       { label: inptaPhotos.medical_kit, value: "medical_kit" },
-  //       { label: inptaPhotos.gym_area, value: "gym_area" },
-  //       { label: inptaPhotos.reception, value: "reception" },
-  //       { label: inptaPhotos.staff, value: "staff" },
-  //     ];
-  //     const photoUrls = await Promise.all(
-  //       inptaPhotosArray.map(async (photo) => {
-  //         let croppedBlobInpta = photo.label;
-
-  //         if (typeof photo.label === "string") {
-  //           const byteString = atob(photo.label.split(",")[1]);
-  //           const mimeString = photo.label
-  //             .split(",")[0]
-  //             .split(":")[1]
-  //             .split(";")[0];
-  //           const ab = new ArrayBuffer(byteString.length);
-  //           const ia = new Uint8Array(ab);
-  //           for (let i = 0; i < byteString.length; i++) {
-  //             ia[i] = byteString.charCodeAt(i);
-  //           }
-  //           croppedBlobInpta = new Blob([ab], { type: mimeString });
-  //         } else if (!(photo.label instanceof Blob)) {
-  //           throw new Error(
-  //             "Invalid file type: Photo must be a Blob, File, or Base64 string."
-  //           );
-  //         }
-  //         const photoFormData = new FormData();
-  //         photoFormData.append("files", croppedBlobInpta);
-
-  //         const photoResponse = await axiosInstance.post(
-  //           "/file-upload",
-  //           photoFormData
-  //         );
-  //         return photoResponse.data.data.fileURLs;
-  //       })
-  //     );
-
-  //     uploadedUrls = photoUrls.flat();
-  //   } catch (error) {
-  //     console.error("Error uploading Feature files:", error);
-  //     toast.error("Error uploading Feature files. Please try again.", {
-  //       position: toast.POSITION.TOP_RIGHT,
-  //     });
-  //   }
-  //   return uploadedUrls;
-  // };
 
   const uploadFeatureImage = async () => {
     let uploadedUrls = [];
@@ -448,19 +378,30 @@ const TPRegistrationListing = () => {
           {
             pan_card: personalDetailsData.pan_card,
             gst_certificate: personalDetailsData.gst_certificate,
+            dpt_certificate: personalDetailsData.dpt_certificate,
+            dnc_certificate: personalDetailsData.dnc_certificate,
           },
         ],
       };
 
-      await inptaListingAxiosInstance.post("/create-tc-listing", postData);
+      const result = await inptaListingAxiosInstance.post(
+        "/create-tc-listing",
+        postData
+      );
       updateData();
 
-      setIsLoading(false);
-      toast.success("Listing created successfully!", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      if (result) {
+        toast.success("Listing created successfully!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
 
-      window.location.href = '/training-center/submit-certificate'
+        setTimeout(() => {
+          handlePaymentSubmit(result?.data?.data?._id);
+        }, 500);
+      }
+
+      setIsLoading(false);
+      // window.location.href = '/training-center/submit-certificate'
     } catch (error) {
       console.error("Error uploading files:", error);
       setIsLoading(false);
@@ -489,6 +430,20 @@ const TPRegistrationListing = () => {
       toast.error("Error updating user data");
     }
     setIsLoading(false);
+  };
+
+  const handlePaymentSubmit = async (listing_id) => {
+    try {
+      try {
+        await createTCPayment(listing_id);
+      } catch (error) {
+        console.error("Error during order:", error);
+      }
+      window.Razorpay && window.Razorpay.close && window.Razorpay.close();
+      window.scrollTo(0, 0);
+    } catch (error) {
+      console.error("Error in handlePaymentSubmit:", error);
+    }
   };
 
   return (
@@ -526,7 +481,7 @@ const TPRegistrationListing = () => {
                 <div className="goodup-dashboard-content text-start">
                   <div className="dashboard-widg-bar d-block">
                     <div className="row">
-                      <ProgressBar activeData='first' pendingData='second' />
+                      <ProgressBar activeData="first" pendingData="second" />
                       <div className="col-12 mb-4 text-center">
                         <h2 className="mb-0 ft-medium fs-md">
                           TC Registration
@@ -1604,6 +1559,222 @@ const TPRegistrationListing = () => {
                                       handlePersonalInputChange(
                                         e,
                                         "gst_certificate"
+                                      )
+                                    }
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="dashboard-list-wraps bg-white rounded mb-4">
+                            <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
+                              <div className="dashboard-list-wraps-flx">
+                                <h4 className="mb-0 ft-medium fs-md">
+                                  <i className="fa fa-file me-2 theme-cl fs-sm" />
+                                  Certificates
+                                </h4>
+                              </div>
+                            </div>
+                            <div className="dashboard-list-wraps-body bg-white py-3 px-3">
+                              <div className="row">
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Upload Diploma In Personal Training
+                                    Certificate
+                                  </label>
+                                  {personalDetailsData.dpt_certificate ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          margin: "0px 0px 0px 0px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            width: "200px",
+                                            position: "relative",
+                                            marginBottom: "10px",
+                                          }}
+                                        >
+                                          <img
+                                            src={
+                                              personalDetailsData.dpt_certificate
+                                            }
+                                            alt="Pan Card"
+                                            style={{
+                                              maxWidth: "100%",
+                                              height: "auto",
+                                              marginBottom: "5px",
+                                            }}
+                                          />
+                                          <IconButton
+                                            onClick={() =>
+                                              handleRemovePersonalDetails(
+                                                "dpt_certificate"
+                                              )
+                                            }
+                                            className="px-1 py-1"
+                                            style={{
+                                              position: "absolute",
+                                              top: 4,
+                                              right: 15,
+                                              backgroundColor:
+                                                "rgba(255, 255, 255, 0.8)",
+                                            }}
+                                          >
+                                            <DeleteIcon
+                                              style={{ color: "#ff3838" }}
+                                            />
+                                          </IconButton>
+                                        </div>
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            document
+                                              .getElementById("dpt_certificate")
+                                              .click()
+                                          }
+                                        >
+                                          Change DPT Certificate
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      onClick={() =>
+                                        document
+                                          .getElementById("dpt_certificate")
+                                          .click()
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to DPT Certificate</p>
+                                    </div>
+                                  )}
+                                  <input
+                                    id="dpt_certificate"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handlePersonalInputChange(
+                                        e,
+                                        "dpt_certificate"
+                                      )
+                                    }
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Upload Diploma In Nutrition Course
+                                    Certificate
+                                  </label>
+                                  {personalDetailsData.dnc_certificate ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          margin: "0px 0px 0pc 0px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            width: "200px",
+                                            position: "relative",
+                                            marginBottom: "10px",
+                                          }}
+                                        >
+                                          <img
+                                            src={
+                                              personalDetailsData.dnc_certificate
+                                            }
+                                            alt="GST Certificate"
+                                            style={{
+                                              maxWidth: "100%",
+                                              height: "auto",
+                                              marginBottom: "5px",
+                                            }}
+                                          />
+                                          <IconButton
+                                            onClick={() =>
+                                              handleRemovePersonalDetails(
+                                                "dnc_certificate"
+                                              )
+                                            }
+                                            className="px-1 py-1"
+                                            style={{
+                                              position: "absolute",
+                                              top: 4,
+                                              right: 15,
+                                              backgroundColor:
+                                                "rgba(255, 255, 255, 0.8)",
+                                            }}
+                                          >
+                                            <DeleteIcon
+                                              style={{ color: "#ff3838" }}
+                                            />
+                                          </IconButton>
+                                        </div>
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            document
+                                              .getElementById("dnc_certificate")
+                                              .click()
+                                          }
+                                        >
+                                          Change DNC Certificate
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      onClick={() =>
+                                        document
+                                          .getElementById("dnc_certificate")
+                                          .click()
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Upload DNC Certificate</p>
+                                    </div>
+                                  )}
+                                  <input
+                                    id="dnc_certificate"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handlePersonalInputChange(
+                                        e,
+                                        "dnc_certificate"
                                       )
                                     }
                                   />

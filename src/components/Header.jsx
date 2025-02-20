@@ -49,7 +49,7 @@ function Header() {
     try {
       const response = await axiosInstance.post("/account/authorization", {
         mobile: mobileNumber,
-        service: 'INPTA-LISTING'
+        service: "INPTA-LISTING",
       });
 
       if (response.data && response.data.data && response.data.data.OTP) {
@@ -86,7 +86,7 @@ function Header() {
         getUserData();
         setOtpDialogOpen(false);
         toast.success("OTP Verified!");
-        setIsLogin(true)
+        setIsLogin(true);
 
         // const IsInptaUser = response.data.data.active_services.find(
         //   (service) => service === "INPTA-LISTING"
@@ -123,6 +123,30 @@ function Header() {
   function sideclose() {
     document.getElementById("demo").style.width = "0px";
   }
+
+  const handleNextOpen = () => {
+    if (!localStorage.getItem("tp_listing_submitted")) {
+      window.location.href = "/registration";
+      return;
+    }
+
+    if (!localStorage.getItem("tc_listing_submitted")) {
+      window.location.href = "/training-center";
+      return;
+    }
+
+    if (!localStorage.getItem("tc_listing_certificate_submitted")) {
+      window.location.href = "/training-center/submit-certificate";
+      return;
+    }
+
+    if (!localStorage.getItem("tc_listing_auditor_submitted")) {
+      window.location.href = "/training-center/auditor-verification";
+      return;
+    }
+
+    window.location.href = "/";
+  };
 
   return (
     <>
@@ -213,9 +237,9 @@ function Header() {
             )}
             <li className="mx-0" style={{ cursor: "pointer" }}>
               {isLogin ? (
-                <Link to="/registration" class="add-list-btn">
+                <button onClick={handleNextOpen} class="add-list-btn">
                   <i class="fas fa-plus me-2"></i>Registration
-                </Link>
+                </button>
               ) : (
                 <Link to="/login" class="add-list-btn">
                   <i class="fas fa-plus me-2"></i>Registration
@@ -241,7 +265,12 @@ function Header() {
             className="nav-brand d-flex justify-content-center align-items-center mb-2"
             href="#"
           >
-            <img src="images/inpta-logo.webp" className="logo" alt="logo" width="40%" />
+            <img
+              src="images/inpta-logo.webp"
+              className="logo"
+              alt="logo"
+              width="40%"
+            />
           </a>
           <h3 className="text-center">Welcome</h3>
           <div class="text-center mb-5">
@@ -290,7 +319,12 @@ function Header() {
             className="nav-brand d-flex justify-content-center align-items-center"
             href="#"
           >
-            <img src="images/inpta-logo.webp" className="logo" alt="logo" width="40%" />
+            <img
+              src="images/inpta-logo.webp"
+              className="logo"
+              alt="logo"
+              width="40%"
+            />
           </a>
           <div class="text-center mb-4">
             <h4 class="m-0 ft-medium">OTP Verification</h4>

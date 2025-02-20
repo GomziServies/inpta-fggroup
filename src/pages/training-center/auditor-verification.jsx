@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Helmet } from "react-helmet";
 import "../../assets/css/style.css";
 import Header from "../../components/Header";
-import axiosInstance, { inptaListingAxiosInstance } from "../../js/api";
+import { inptaListingAxiosInstance } from "../../js/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
@@ -14,9 +14,15 @@ import Footer from "../../components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ProgressBar from "../../components/progress-bar/registration-progress-bar";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { IconButton } from "@mui/material";
+import { createTCAuditorVerificationPayment } from "../../assets/utils/tc_payment";
 
 const AuditorVerification = () => {
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingOne, setLoadingOne] = useState(false);
+  const [loadingTwo, setLoadingTwo] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -24,114 +30,49 @@ const AuditorVerification = () => {
     }, 1000);
   }, []);
 
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    address_line_1: "",
-    address_line_2: "",
-    area: "",
-    landmark: "",
-    city: "",
-    country: "",
-    state: "",
-    pin_code: "",
-    contactNumber: "",
-    whatsappNumber: "",
-    services: [],
-    tags: [],
-    website: "",
-    email: "",
-    branch: "",
-  });
-  const [personalDetailsData, setPersonalDetailsData] = useState({
-    description: "",
-    question1: "",
-    question2: "",
-    question3: "",
-    question4: "",
-    question5: "",
-  });
-  const [userUpdateData, setUserUpdateData] = useState({});
-  const [inptaHours, setInptaHours] = useState([
-    { day: "Mon", open: "10:00 AM", close: "07:00 PM" },
-  ]);
-  const [faqs, setFaqs] = useState([{ question: "", answer: "" }]);
-  const [socialMediaLinks, setSocialMediaLinks] = useState([
-    { platform: "Instagram", link: "Instagram.com" },
-    { platform: "Facebook", link: "Facebook.com" },
-    { platform: "YouTube", link: "YouTube.com" },
-  ]);
-  const [selectedType, setSelectedType] = useState("");
-  const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [loadingOne, setLoadingOne] = useState(false);
-  const [loadingTwo, setLoadingTwo] = useState(false);
-  const [selectedCourseOffered, setSelectedCourseOffered] = useState("");
+  const [formData, setFormData] = useState({});
 
-  const handleSelectChange = (selectedOptions) => {
-    setSelectedCourseOffered(selectedOptions);
-    const selectedValues = selectedOptions.map((option) => option.value);
-    setFormData((prevState) => ({
-      ...prevState,
-      course_offered: selectedValues,
+  const [personalDetailsData, setPersonalDetailsData] = useState({
+    profile_photo: null,
+    aadhaar_card: null,
+    pan_card: null,
+    gst_certificate: null,
+    dpt_certificate: null,
+    dnc_certificate: null,
+  });
+
+  const handlePersonalInputChange = (event, type) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPersonalDetailsData((prev) => ({
+          ...prev,
+          [type]: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemovePersonalDetails = (type) => {
+    setPersonalDetailsData((prev) => ({
+      ...prev,
+      [type]: null,
     }));
   };
 
-  const courseOfferedOption = [
-    { value: "Nutri Trainer Course", label: "Nutri Trainer Course" },
-    {
-      value: "Diploma In Personal Training Course",
-      label: "Diploma In Personal Training Course",
-    },
-    {
-      value: "Diploma In Nutrition Course",
-      label: "Diploma In Nutrition Course",
-    },
-    {
-      value: "Anabolic Androgenic Steroids",
-      label: "Anabolic Androgenic Steroids",
-    },
-    {
-      value: "Group Instructor Master Class",
-      label: "Group Instructor Master Class",
-    },
-    {
-      value: "Powerlifting Coach Workshop",
-      label: "Powerlifting Coach Workshop",
-    },
-    {
-      value: "Injury Rehabilitation Workshop",
-      label: "Injury Rehabilitation Workshop",
-    },
-  ];
-
-  const [userData, setUserData] = useState({});
-
-  const getUserData = async () => {
-    setLoading(true);
-    try {
-      const response = await axiosInstance.get("/account/profile");
-      const userData = response.data.data;
-      if (userData) {
-        setUserData(userData.user);
-      }
-    } catch (error) {
-      console.error("Error in getUserData:", error);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
-
   // ----------------------------------------------------------------------------------
 
-  const [inptaPhotos, setInptaPhotos] = useState([]);
-  const [featurePreview, setFeaturePreview] = useState(null);
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(null);
+  const [inptaPhotos, setInptaPhotos] = useState({
+    washroom: null,
+    dustbin: null,
+    medical_kit: null,
+    gym_area: null,
+    reception: null,
+    staff: null,
+  });
   const [currentInptaPhotoIndex, setCurrentInptaPhotoIndex] = useState(null);
-  const [logoImage, setLogoImage] = useState(null);
   const [logoPreview, setLogoPreview] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
   const [inptaImageSrc, setInptaImageSrc] = useState(null);
@@ -168,7 +109,6 @@ const AuditorVerification = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setLogoImage(file);
         setFormData((prevData) => ({
           ...prevData,
           logo: reader.result,
@@ -187,7 +127,6 @@ const AuditorVerification = () => {
           setProfilePhoto(croppedImg);
           setShow(false);
         } else if (context === "feature") {
-          setFeaturePreview(croppedImg);
           setInptaShow(false);
         }
       } catch (error) {
@@ -223,24 +162,24 @@ const AuditorVerification = () => {
     fileInput.click();
   };
 
-  const handleRemoveInptaPhoto = (index) => {
-    const newPhotos = [...inptaPhotos];
-    newPhotos.splice(index, 1);
+  const handleRemoveInptaPhoto = (category) => {
+    const newPhotos = { ...inptaPhotos };
+    newPhotos[category] = null;
     setInptaPhotos([...newPhotos]);
   };
 
-  const handleSelectFeature = () => {
-    const fileInput = document.getElementById("featureInput");
+  const handleSelectFeature = (category) => {
+    const fileInput = document.getElementById(category);
     fileInput.click();
   };
 
-  const handleCropInptaPhoto = (event, index) => {
+  const handleCropInptaPhoto = (event, category) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
         setInptaImageSrc(reader.result);
-        setCurrentInptaPhotoIndex(index);
+        setCurrentInptaPhotoIndex(category);
         setInptaShow(true);
       };
       reader.readAsDataURL(file);
@@ -252,17 +191,17 @@ const AuditorVerification = () => {
     if (inptaImageSrc && inptaPhoto) {
       try {
         const croppedImg = await getCroppedImg(inptaImageSrc, inptaPhoto);
-        const updatedPhotos = [...inptaPhotos];
-        if (currentPhotoIndex !== null) {
-          updatedPhotos[currentPhotoIndex] = {
-            file: null,
-            preview: croppedImg,
-          };
+        const updatedPhotos = { ...inptaPhotos };
+        if (currentInptaPhotoIndex !== null) {
+          updatedPhotos[currentInptaPhotoIndex] = croppedImg;
+          setInptaPhotos((prevPhotos) => ({
+            ...prevPhotos,
+            [currentInptaPhotoIndex]: croppedImg,
+          }));
         } else {
           updatedPhotos.push({ file: null, preview: croppedImg });
+          setInptaPhotos(updatedPhotos);
         }
-        setInptaPhotos(updatedPhotos);
-        setFeaturePreview(croppedImg);
         setInptaShow(false);
       } catch (error) {
         console.error("Error cropping the photos:", error);
@@ -273,237 +212,28 @@ const AuditorVerification = () => {
 
   // ----------------------------------------------------------------------------------
 
-  const handleAddFaq = () => {
-    setFaqs([...faqs, { question: "", answer: "" }]);
-  };
-
-  const handleRemoveFaq = (index) => {
-    const updatedFaqs = [...faqs];
-    updatedFaqs.splice(index, 1);
-    setFaqs(updatedFaqs);
-  };
-
-  const handleFaqChange = (index, field, value) => {
-    const updatedFaqs = [...faqs];
-    updatedFaqs[index][field] = value;
-    setFaqs(updatedFaqs);
-  };
-
-  const handleInputChange = (field, value) => {
-    if (field === "services" || field === "tags") {
-      setFormData((prevState) => ({
-        ...prevState,
-        [field]: value,
-      }));
-    } else {
-      setFormData((prevState) => ({
-        ...prevState,
-        [field]: value,
-      }));
-    }
-  };
-
-  const handlePersonalInputChange = (field, value) => {
-    setPersonalDetailsData((prevState) => ({
-      ...prevState,
-      [field]: value,
-    }));
-  };
-
-  const handleUserInputChange = (field, value) => {
-    setUserUpdateData((prevState) => ({
-      ...prevState,
-      [field]: value,
-    }));
-  };
-
-  const uploadLogo = async () => {
-    let logoUrl = "";
-
-    try {
-      let croppedBlob = profilePhoto;
-      if (typeof profilePhoto === "string") {
-        const byteString = atob(profilePhoto.split(",")[1]);
-        const mimeString = profilePhoto
-          .split(",")[0]
-          .split(":")[1]
-          .split(";")[0];
-        const ab = new ArrayBuffer(byteString.length);
-        const ia = new Uint8Array(ab);
-        for (let i = 0; i < byteString.length; i++) {
-          ia[i] = byteString.charCodeAt(i);
-        }
-        croppedBlob = new Blob([ab], { type: mimeString });
-      }
-
-      if (croppedBlob) {
-        const logoFormData = new FormData();
-        logoFormData.append("files", croppedBlob);
-
-        const logoResponse = await axiosInstance.post(
-          "/file-upload",
-          logoFormData
-        );
-
-        const logoUrl = logoResponse.data.data.fileURLs[0];
-        return logoUrl;
-      }
-    } catch (error) {
-      console.error("Error uploading Logo file:", error);
-      toast.error("Error uploading Logo file. Please try again.", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      throw error;
-    }
-  };
-
-  const uploadFeatureImage = async () => {
-    let uploadedUrls = [];
-    try {
-      const photoUrls = await Promise.all(
-        inptaPhotos.map(async (photo) => {
-          let croppedBlobInpta = photo.preview;
-
-          if (typeof photo.preview === "string") {
-            const byteString = atob(photo.preview.split(",")[1]);
-            const mimeString = photo.preview
-              .split(",")[0]
-              .split(":")[1]
-              .split(";")[0];
-            const ab = new ArrayBuffer(byteString.length);
-            const ia = new Uint8Array(ab);
-            for (let i = 0; i < byteString.length; i++) {
-              ia[i] = byteString.charCodeAt(i);
-            }
-            croppedBlobInpta = new Blob([ab], { type: mimeString });
-          } else if (!(photo.preview instanceof Blob)) {
-            throw new Error(
-              "Invalid file type: Photo must be a Blob, File, or Base64 string."
-            );
-          }
-          const photoFormData = new FormData();
-          photoFormData.append("files", croppedBlobInpta);
-
-          const photoResponse = await axiosInstance.post(
-            "/file-upload",
-            photoFormData
-          );
-          return photoResponse.data.data.fileURLs;
-        })
-      );
-
-      uploadedUrls = photoUrls.flat();
-    } catch (error) {
-      console.error("Error uploading Feature files:", error);
-      toast.error("Error uploading Feature files. Please try again.", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-    }
-    return uploadedUrls;
-  };
-
-  const updateData = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axiosInstance.post(
-        "/account/update-profile",
-        userUpdateData
-      );
-      if (response.data.data) {
-        getUserData();
-        toast.success("User data updated successfully");
-      } else {
-        console.error("Failed to update user data");
-        toast.error("Error updating user data");
-      }
-    } catch (error) {
-      console.error("Error updating user data:", error);
-      toast.error("Error updating user data");
-    }
-    setIsLoading(false);
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const uploadedUrls = await uploadFeatureImage();
-      const logoUrl = await uploadLogo();
+      const postData = {};
 
-      const postData = {
-        type: selectedType,
-        title: formData.title,
-        description: formData.description,
-        course_offered: formData.course_offered,
-        logo: logoUrl,
-        images: uploadedUrls.flat(),
-        tags: formData.tags,
-        listing_category: ["listing"],
-        personal_details: {
-          description: personalDetailsData.description,
-          question1: personalDetailsData.question1,
-          question2: personalDetailsData.question2,
-          question3: personalDetailsData.question3,
-          question4: personalDetailsData.question4,
-          question5: personalDetailsData.question5,
-        },
-        social_media: socialMediaLinks.map((link) => ({
-          social_media_type: link.platform.toLowerCase(),
-          link: link.link,
-        })),
-        locations: [
-          {
-            location_name: formData.branch,
-            address_line_1: formData.address_line_1,
-            address_line_2: formData.address_line_2,
-            city: formData.city,
-            state: formData.state,
-            country: "india",
-            pin_code: formData.pin_code,
-            landmark: formData.landmark,
-            direction_link: formData.direction_link,
-            contact: {
-              contact_type: "mobile",
-              value: formData.contactNumber,
-            },
-          },
-        ],
-        contacts: [
-          {
-            contact_type: "email",
-            value: formData.email,
-          },
-          {
-            contact_type: "website",
-            value: formData.website,
-          },
-          {
-            contact_type: "whatsapp",
-            value: formData.whatsappNumber,
-          },
-        ],
-        faqs: faqs.map((faq) => ({
-          question: faq.question,
-          answer: faq.answer,
-        })),
-        timings: inptaHours.map((timeSlot) => ({
-          title: timeSlot.day,
-          timings: [
-            {
-              from_time: timeSlot.open,
-              to_time: timeSlot.close,
-            },
-          ],
-        })),
-      };
+      const result = await inptaListingAxiosInstance.post(
+        "/create-tc-listing",
+        postData
+      );
 
-      await inptaListingAxiosInstance.post("/create-listing", postData);
-      updateData();
+      if (result) {
+        toast.success("Listing created successfully!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+
+        setTimeout(() => {
+          handlePaymentSubmit(result?.data?.data?._id);
+        }, 500);
+      }
 
       setIsLoading(false);
-      toast.success("Listing created successfully!", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
     } catch (error) {
       console.error("Error uploading files:", error);
       setIsLoading(false);
@@ -513,77 +243,18 @@ const AuditorVerification = () => {
     }
   };
 
-  const [times, setTimes] = useState({
-    Monday: { opening: "Opening Time", closing: "Closing Time" },
-    Tuesday: { opening: "Opening Time", closing: "Closing Time" },
-    Wednesday: { opening: "Opening Time", closing: "Closing Time" },
-    Thursday: { opening: "Opening Time", closing: "Closing Time" },
-    Friday: { opening: "Opening Time", closing: "Closing Time" },
-    Saturday: { opening: "Opening Time", closing: "Closing Time" },
-    Sunday: { opening: "Opening Time", closing: "Closing Time" },
-  });
-
-  const [sameForAll, setSameForAll] = useState(false);
-
-  const timeOptions = [
-    "01:00 AM",
-    "02:00 AM",
-    "03:00 AM",
-    "04:00 AM",
-    "05:00 AM",
-    "06:00 AM",
-    "07:00 AM",
-    "08:00 AM",
-    "09:00 AM",
-    "10:00 AM",
-    "11:00 AM",
-    "12:00 AM",
-    "01:00 PM",
-    "02:00 PM",
-    "03:00 PM",
-    "04:00 PM",
-    "05:00 PM",
-    "06:00 PM",
-    "07:00 PM",
-    "08:00 PM",
-    "09:00 PM",
-    "10:00 PM",
-    "11:00 PM",
-    "12:00 PM",
-    "Closed",
-  ];
-
-  const handleTimeChange = (day, field, value) => {
-    const updatedTimes = { ...times };
-    updatedTimes[day][field] = value;
-
-    if (sameForAll) {
-      Object.keys(updatedTimes).forEach((key) => {
-        updatedTimes[key] = { ...updatedTimes[day] };
-      });
+  const handlePaymentSubmit = async (listing_id) => {
+    try {
+      try {
+        await createTCAuditorVerificationPayment(listing_id);
+      } catch (error) {
+        console.error("Error during order:", error);
+      }
+      window.Razorpay && window.Razorpay.close && window.Razorpay.close();
+      window.scrollTo(0, 0);
+    } catch (error) {
+      console.error("Error in handlePaymentSubmit:", error);
     }
-    setTimes(updatedTimes);
-  };
-
-  const handleCheckboxChange = (checked) => {
-    setSameForAll(checked);
-    if (checked) {
-      const mondayTimes = times.Monday;
-      const updatedTimes = { ...times };
-      Object.keys(updatedTimes).forEach((day) => {
-        updatedTimes[day] = { ...mondayTimes };
-      });
-      setTimes(updatedTimes);
-    }
-  };
-
-  const getInptaHours = () => {
-    const allDaysTime = Object.keys(times).map((day) => ({
-      day,
-      open: times[day].opening,
-      close: times[day].closing,
-    }));
-    setInptaHours(allDaysTime);
   };
 
   return (
@@ -621,7 +292,7 @@ const AuditorVerification = () => {
                 <div className="goodup-dashboard-content text-start">
                   <div className="dashboard-widg-bar d-block">
                     <div className="row">
-                      <ProgressBar activeData='third' pendingData='fourth' />
+                      <ProgressBar activeData="third" pendingData="fourth" />
                       <div className="col-12 mb-4 text-center">
                         <h2 className="mb-0 ft-medium fs-md">
                           TC Auditor Verification
@@ -629,39 +300,1543 @@ const AuditorVerification = () => {
                       </div>
                       <div className="col-xl-12 col-md-12 col-sm-12">
                         <div className="submit-form">
-                          {/* <div className="dashboard-list-wraps bg-white rounded mb-4">
+                          <div className="dashboard-list-wraps bg-white rounded mb-4">
                             <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                               <div className="dashboard-list-wraps-flx">
                                 <h4 className="mb-0 ft-medium fs-md">
                                   <i className="fa fa-file me-2 theme-cl fs-sm" />
-                                  Submit Certificate
+                                  Personal Document
                                 </h4>
                               </div>
                             </div>
                             <div className="dashboard-list-wraps-body bg-white py-3 px-3">
                               <div className="row">
-                                <div className="col-12">
-                                  <div className="form-group">
-                                    <label className="mb-1">
-                                      Upload Certificate
-                                    </label>
-                                    <input
-                                      type="file"
-                                      className="form-control rounded"
-                                      placeholder="Upload Certificate"
-                                      value={personalDetailsData.question2}
-                                      onChange={(e) =>
-                                        handlePersonalInputChange(
-                                          "question2",
-                                          e.target.value
-                                        )
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Upload Profile Photo
+                                  </label>
+                                  {personalDetailsData.profile_photo ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          margin: "0px 0px 0px 0px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            width: "200px",
+                                            position: "relative",
+                                            marginBottom: "10px",
+                                          }}
+                                        >
+                                          <img
+                                            src={
+                                              personalDetailsData.profile_photo
+                                            }
+                                            alt="Profile_Photo"
+                                            style={{
+                                              maxWidth: "100%",
+                                              height: "auto",
+                                              marginBottom: "5px",
+                                            }}
+                                          />
+                                          <IconButton
+                                            onClick={() =>
+                                              handleRemovePersonalDetails(
+                                                "profile_photo"
+                                              )
+                                            }
+                                            className="px-1 py-1"
+                                            style={{
+                                              position: "absolute",
+                                              top: 4,
+                                              right: 15,
+                                              backgroundColor:
+                                                "rgba(255, 255, 255, 0.8)",
+                                            }}
+                                          >
+                                            <DeleteIcon
+                                              style={{ color: "#ff3838" }}
+                                            />
+                                          </IconButton>
+                                        </div>
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            document
+                                              .getElementById("profile_photo")
+                                              .click()
+                                          }
+                                        >
+                                          Change Profile Photo
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      onClick={() =>
+                                        document
+                                          .getElementById("profile_photo")
+                                          .click()
                                       }
-                                    />
-                                  </div>
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Upload Profile Photo</p>
+                                    </div>
+                                  )}
+                                  <input
+                                    id="profile_photo"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handlePersonalInputChange(
+                                        e,
+                                        "profile_photo"
+                                      )
+                                    }
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Upload Aadhaar Card
+                                  </label>
+                                  {personalDetailsData.aadhaar_card ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          margin: "0px 0px 0px 0px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            width: "200px",
+                                            position: "relative",
+                                            marginBottom: "10px",
+                                          }}
+                                        >
+                                          <img
+                                            src={
+                                              personalDetailsData.aadhaar_card
+                                            }
+                                            alt="Aadhaar Card"
+                                            style={{
+                                              maxWidth: "100%",
+                                              height: "auto",
+                                              marginBottom: "5px",
+                                            }}
+                                          />
+                                          <IconButton
+                                            onClick={() =>
+                                              handleRemovePersonalDetails(
+                                                "aadhaar_card"
+                                              )
+                                            }
+                                            className="px-1 py-1"
+                                            style={{
+                                              position: "absolute",
+                                              top: 4,
+                                              right: 15,
+                                              backgroundColor:
+                                                "rgba(255, 255, 255, 0.8)",
+                                            }}
+                                          >
+                                            <DeleteIcon
+                                              style={{ color: "#ff3838" }}
+                                            />
+                                          </IconButton>
+                                        </div>
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            document
+                                              .getElementById("aadhaar_card")
+                                              .click()
+                                          }
+                                        >
+                                          Change Aadhaar Card
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      onClick={() =>
+                                        document
+                                          .getElementById("aadhaar_card")
+                                          .click()
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Upload Aadhaar Card</p>
+                                    </div>
+                                  )}
+                                  <input
+                                    id="aadhaar_card"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handlePersonalInputChange(
+                                        e,
+                                        "aadhaar_card"
+                                      )
+                                    }
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Upload Pan Card
+                                  </label>
+                                  {personalDetailsData.pan_card ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          margin: "0px 0px 0px 0px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            width: "200px",
+                                            position: "relative",
+                                            marginBottom: "10px",
+                                          }}
+                                        >
+                                          <img
+                                            src={personalDetailsData.pan_card}
+                                            alt="Pan Card"
+                                            style={{
+                                              maxWidth: "100%",
+                                              height: "auto",
+                                              marginBottom: "5px",
+                                            }}
+                                          />
+                                          <IconButton
+                                            onClick={() =>
+                                              handleRemovePersonalDetails(
+                                                "pan_card"
+                                              )
+                                            }
+                                            className="px-1 py-1"
+                                            style={{
+                                              position: "absolute",
+                                              top: 4,
+                                              right: 15,
+                                              backgroundColor:
+                                                "rgba(255, 255, 255, 0.8)",
+                                            }}
+                                          >
+                                            <DeleteIcon
+                                              style={{ color: "#ff3838" }}
+                                            />
+                                          </IconButton>
+                                        </div>
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            document
+                                              .getElementById("pan_card")
+                                              .click()
+                                          }
+                                        >
+                                          Change Pan Card
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      onClick={() =>
+                                        document
+                                          .getElementById("pan_card")
+                                          .click()
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Upload Pan Card</p>
+                                    </div>
+                                  )}
+                                  <input
+                                    id="pan_card"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handlePersonalInputChange(e, "pan_card")
+                                    }
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Upload GST Certificate
+                                  </label>
+                                  {personalDetailsData.gst_certificate ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          margin: "0px 0px 0pc 0px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            width: "200px",
+                                            position: "relative",
+                                            marginBottom: "10px",
+                                          }}
+                                        >
+                                          <img
+                                            src={
+                                              personalDetailsData.gst_certificate
+                                            }
+                                            alt="GST Certificate"
+                                            style={{
+                                              maxWidth: "100%",
+                                              height: "auto",
+                                              marginBottom: "5px",
+                                            }}
+                                          />
+                                          <IconButton
+                                            onClick={() =>
+                                              handleRemovePersonalDetails(
+                                                "gst_certificate"
+                                              )
+                                            }
+                                            className="px-1 py-1"
+                                            style={{
+                                              position: "absolute",
+                                              top: 4,
+                                              right: 15,
+                                              backgroundColor:
+                                                "rgba(255, 255, 255, 0.8)",
+                                            }}
+                                          >
+                                            <DeleteIcon
+                                              style={{ color: "#ff3838" }}
+                                            />
+                                          </IconButton>
+                                        </div>
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            document
+                                              .getElementById("gst_certificate")
+                                              .click()
+                                          }
+                                        >
+                                          Change GST Certificate
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      onClick={() =>
+                                        document
+                                          .getElementById("gst_certificate")
+                                          .click()
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Upload GST Certificate</p>
+                                    </div>
+                                  )}
+                                  <input
+                                    id="gst_certificate"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handlePersonalInputChange(
+                                        e,
+                                        "gst_certificate"
+                                      )
+                                    }
+                                  />
                                 </div>
                               </div>
                             </div>
-                          </div> */}
+                          </div>
+                          <div className="dashboard-list-wraps bg-white rounded mb-4">
+                            <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
+                              <div className="dashboard-list-wraps-flx">
+                                <h4 className="mb-0 ft-medium fs-md">
+                                  <i className="fa fa-camera me-2 theme-cl fs-sm" />
+                                  Image &amp; Gallery Option
+                                </h4>
+                              </div>
+                            </div>
+                            <div className="dashboard-list-wraps-body py-3 px-3">
+                              <div className="row">
+                                <div className="col-12">
+                                  <label className="mb-1">Upload Logo</label>
+
+                                  {logoPreview ? (
+                                    <div className="position-relative">
+                                      {loadingOne && (
+                                        <div className="w-100 d-flex justify-content-center position-absolute">
+                                          <div class="spinner-box spinner-width">
+                                            <div class="three-quarter-spinner three-quarter-spinner-width"></div>
+                                          </div>
+                                        </div>
+                                      )}
+                                      <img
+                                        src={logoPreview}
+                                        alt="Logo Preview"
+                                        id="single-logo"
+                                        style={{
+                                          width: "100%",
+                                          maxHeight: "150px",
+                                          objectFit: "contain",
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={handleSelectLogo}
+                                        >
+                                          Change Logo
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="single-logo"
+                                      onClick={handleSelectLogo}
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to upload logo</p>
+                                    </div>
+                                  )}
+
+                                  <label className="smart-text">
+                                    Maximum file size: 2 MB.
+                                  </label>
+                                  <input
+                                    id="logoInput"
+                                    type="file"
+                                    className="d-none"
+                                    accept="image/*"
+                                    onChange={handleCropLogoChange}
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Washroom Image{" "}
+                                  </label>
+                                  {inptaPhotos.washroom ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        {loadingTwo && (
+                                          <div className="loader-background-image position-absolute">
+                                            <div className="spinner-box-image">
+                                              <div className="three-quarter-spinner-image"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                        {inptaPhotos.washroom && (
+                                          <div
+                                            style={{
+                                              width: "200px",
+                                              position: "relative",
+                                              marginBottom: "10px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                              }}
+                                            >
+                                              <img
+                                                src={inptaPhotos.washroom}
+                                                alt={`INPTA Photo washroom`}
+                                                style={{
+                                                  maxWidth: "100%",
+                                                  height: "auto",
+                                                  marginBottom: "5px",
+                                                }}
+                                              />
+                                              <IconButton
+                                                onClick={() =>
+                                                  handleRemoveInptaPhoto(
+                                                    "washroom"
+                                                  )
+                                                }
+                                                className="px-1 py-1"
+                                                style={{
+                                                  position: "absolute",
+                                                  top: 4,
+                                                  right: 15,
+                                                  backgroundColor:
+                                                    "rgba(255, 255, 255, 0.8)",
+                                                }}
+                                              >
+                                                <DeleteIcon
+                                                  style={{ color: "#ff3838" }}
+                                                />
+                                              </IconButton>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(event) =>
+                                                  handleCropInptaPhoto(
+                                                    event,
+                                                    "washroom"
+                                                  )
+                                                }
+                                                style={{ display: "none" }}
+                                                id={`photoInput-washroom`}
+                                              />
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            handleSelectFeature("washroom")
+                                          }
+                                        >
+                                          Add Feature Image
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="featured-image"
+                                      onClick={() =>
+                                        handleSelectFeature("washroom")
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Featured Image</p>
+                                    </div>
+                                  )}
+                                  <label className="smart-text">
+                                    Maximum file size: 2 MB.
+                                  </label>
+                                  <input
+                                    id="washroom"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handleCropInptaPhoto(e, "washroom")
+                                    }
+                                    sx={{ mt: 2, mb: 2 }}
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">Dustbin Image </label>
+                                  {inptaPhotos.dustbin ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        {loadingTwo && (
+                                          <div className="loader-background-image position-absolute">
+                                            <div className="spinner-box-image">
+                                              <div className="three-quarter-spinner-image"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                        {inptaPhotos.dustbin && (
+                                          <div
+                                            style={{
+                                              width: "200px",
+                                              position: "relative",
+                                              marginBottom: "10px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                              }}
+                                            >
+                                              <img
+                                                src={inptaPhotos.dustbin}
+                                                alt={`INPTA Photo dustbin`}
+                                                style={{
+                                                  maxWidth: "100%",
+                                                  height: "auto",
+                                                  marginBottom: "5px",
+                                                }}
+                                              />
+                                              <IconButton
+                                                onClick={() =>
+                                                  handleRemoveInptaPhoto(
+                                                    "dustbin"
+                                                  )
+                                                }
+                                                className="px-1 py-1"
+                                                style={{
+                                                  position: "absolute",
+                                                  top: 4,
+                                                  right: 15,
+                                                  backgroundColor:
+                                                    "rgba(255, 255, 255, 0.8)",
+                                                }}
+                                              >
+                                                <DeleteIcon
+                                                  style={{ color: "#ff3838" }}
+                                                />
+                                              </IconButton>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(event) =>
+                                                  handleCropInptaPhoto(
+                                                    event,
+                                                    "dustbin"
+                                                  )
+                                                }
+                                                style={{ display: "none" }}
+                                                id={`photoInput-dustbin`}
+                                              />
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            handleSelectFeature("dustbin")
+                                          }
+                                        >
+                                          Add Feature Image
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="featured-image"
+                                      onClick={() =>
+                                        handleSelectFeature("dustbin")
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Featured Image</p>
+                                    </div>
+                                  )}
+                                  <label className="smart-text">
+                                    Maximum file size: 2 MB.
+                                  </label>
+                                  <input
+                                    id="dustbin"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handleCropInptaPhoto(e, "dustbin")
+                                    }
+                                    sx={{ mt: 2, mb: 2 }}
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Medical Kit Image{" "}
+                                  </label>
+                                  {inptaPhotos.medical_kit ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        {loadingTwo && (
+                                          <div className="loader-background-image position-absolute">
+                                            <div className="spinner-box-image">
+                                              <div className="three-quarter-spinner-image"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                        {inptaPhotos.medical_kit && (
+                                          <div
+                                            style={{
+                                              width: "200px",
+                                              position: "relative",
+                                              marginBottom: "10px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                              }}
+                                            >
+                                              <img
+                                                src={inptaPhotos.medical_kit}
+                                                alt={`INPTA Photo medical_kit`}
+                                                style={{
+                                                  maxWidth: "100%",
+                                                  height: "auto",
+                                                  marginBottom: "5px",
+                                                }}
+                                              />
+                                              <IconButton
+                                                onClick={() =>
+                                                  handleRemoveInptaPhoto(
+                                                    "medical_kit"
+                                                  )
+                                                }
+                                                className="px-1 py-1"
+                                                style={{
+                                                  position: "absolute",
+                                                  top: 4,
+                                                  right: 15,
+                                                  backgroundColor:
+                                                    "rgba(255, 255, 255, 0.8)",
+                                                }}
+                                              >
+                                                <DeleteIcon
+                                                  style={{ color: "#ff3838" }}
+                                                />
+                                              </IconButton>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(event) =>
+                                                  handleCropInptaPhoto(
+                                                    event,
+                                                    "medical_kit"
+                                                  )
+                                                }
+                                                style={{ display: "none" }}
+                                                id={`photoInput-medical_kit`}
+                                              />
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            handleSelectFeature("medical_kit")
+                                          }
+                                        >
+                                          Add Feature Image
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="featured-image"
+                                      onClick={() =>
+                                        handleSelectFeature("medical_kit")
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Featured Image</p>
+                                    </div>
+                                  )}
+                                  <label className="smart-text">
+                                    Maximum file size: 2 MB.
+                                  </label>
+                                  <input
+                                    id="medical_kit"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handleCropInptaPhoto(e, "medical_kit")
+                                    }
+                                    sx={{ mt: 2, mb: 2 }}
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Gym Area Image (More then 500 square feet){" "}
+                                  </label>
+                                  {inptaPhotos.gym_area ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        {loadingTwo && (
+                                          <div className="loader-background-image position-absolute">
+                                            <div className="spinner-box-image">
+                                              <div className="three-quarter-spinner-image"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                        {inptaPhotos.gym_area && (
+                                          <div
+                                            style={{
+                                              width: "200px",
+                                              position: "relative",
+                                              marginBottom: "10px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                              }}
+                                            >
+                                              <img
+                                                src={inptaPhotos.gym_area}
+                                                alt={`INPTA Photo gym_area`}
+                                                style={{
+                                                  maxWidth: "100%",
+                                                  height: "auto",
+                                                  marginBottom: "5px",
+                                                }}
+                                              />
+                                              <IconButton
+                                                onClick={() =>
+                                                  handleRemoveInptaPhoto(
+                                                    "gym_area"
+                                                  )
+                                                }
+                                                className="px-1 py-1"
+                                                style={{
+                                                  position: "absolute",
+                                                  top: 4,
+                                                  right: 15,
+                                                  backgroundColor:
+                                                    "rgba(255, 255, 255, 0.8)",
+                                                }}
+                                              >
+                                                <DeleteIcon
+                                                  style={{ color: "#ff3838" }}
+                                                />
+                                              </IconButton>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(event) =>
+                                                  handleCropInptaPhoto(
+                                                    event,
+                                                    "gym_area"
+                                                  )
+                                                }
+                                                style={{ display: "none" }}
+                                                id={`photoInput-gym_area`}
+                                              />
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            handleSelectFeature("gym_area")
+                                          }
+                                        >
+                                          Add Feature Image
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="featured-image"
+                                      onClick={() =>
+                                        handleSelectFeature("gym_area")
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Featured Image</p>
+                                    </div>
+                                  )}
+                                  <label className="smart-text">
+                                    Maximum file size: 2 MB.
+                                  </label>
+                                  <input
+                                    id="gym_area"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handleCropInptaPhoto(e, "gym_area")
+                                    }
+                                    sx={{ mt: 2, mb: 2 }}
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Reception Image{" "}
+                                  </label>
+                                  {inptaPhotos.reception ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        {loadingTwo && (
+                                          <div className="loader-background-image position-absolute">
+                                            <div className="spinner-box-image">
+                                              <div className="three-quarter-spinner-image"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                        {inptaPhotos.reception && (
+                                          <div
+                                            style={{
+                                              width: "200px",
+                                              position: "relative",
+                                              marginBottom: "10px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                              }}
+                                            >
+                                              <img
+                                                src={inptaPhotos.reception}
+                                                alt={`INPTA Photo reception`}
+                                                style={{
+                                                  maxWidth: "100%",
+                                                  height: "auto",
+                                                  marginBottom: "5px",
+                                                }}
+                                              />
+                                              <IconButton
+                                                onClick={() =>
+                                                  handleRemoveInptaPhoto(
+                                                    "reception"
+                                                  )
+                                                }
+                                                className="px-1 py-1"
+                                                style={{
+                                                  position: "absolute",
+                                                  top: 4,
+                                                  right: 15,
+                                                  backgroundColor:
+                                                    "rgba(255, 255, 255, 0.8)",
+                                                }}
+                                              >
+                                                <DeleteIcon
+                                                  style={{ color: "#ff3838" }}
+                                                />
+                                              </IconButton>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(event) =>
+                                                  handleCropInptaPhoto(
+                                                    event,
+                                                    "reception"
+                                                  )
+                                                }
+                                                style={{ display: "none" }}
+                                                id={`photoInput-reception`}
+                                              />
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            handleSelectFeature("reception")
+                                          }
+                                        >
+                                          Add Feature Image
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="featured-image"
+                                      onClick={() =>
+                                        handleSelectFeature("reception")
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Featured Image</p>
+                                    </div>
+                                  )}
+                                  <label className="smart-text">
+                                    Maximum file size: 2 MB.
+                                  </label>
+                                  <input
+                                    id="reception"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handleCropInptaPhoto(e, "reception")
+                                    }
+                                    sx={{ mt: 2, mb: 2 }}
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">Staff Image </label>
+                                  {inptaPhotos.staff ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        {loadingTwo && (
+                                          <div className="loader-background-image position-absolute">
+                                            <div className="spinner-box-image">
+                                              <div className="three-quarter-spinner-image"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                        {inptaPhotos.staff && (
+                                          <div
+                                            style={{
+                                              width: "200px",
+                                              position: "relative",
+                                              marginBottom: "10px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                              }}
+                                            >
+                                              <img
+                                                src={inptaPhotos.staff}
+                                                alt={`INPTA Photo staff`}
+                                                style={{
+                                                  maxWidth: "100%",
+                                                  height: "auto",
+                                                  marginBottom: "5px",
+                                                }}
+                                              />
+                                              <IconButton
+                                                onClick={() =>
+                                                  handleRemoveInptaPhoto(
+                                                    "staff"
+                                                  )
+                                                }
+                                                className="px-1 py-1"
+                                                style={{
+                                                  position: "absolute",
+                                                  top: 4,
+                                                  right: 15,
+                                                  backgroundColor:
+                                                    "rgba(255, 255, 255, 0.8)",
+                                                }}
+                                              >
+                                                <DeleteIcon
+                                                  style={{ color: "#ff3838" }}
+                                                />
+                                              </IconButton>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(event) =>
+                                                  handleCropInptaPhoto(
+                                                    event,
+                                                    "staff"
+                                                  )
+                                                }
+                                                style={{ display: "none" }}
+                                                id={`photoInput-staff`}
+                                              />
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            handleSelectFeature("staff")
+                                          }
+                                        >
+                                          Add Feature Image
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="featured-image"
+                                      onClick={() =>
+                                        handleSelectFeature("staff")
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Featured Image</p>
+                                    </div>
+                                  )}
+                                  <label className="smart-text">
+                                    Maximum file size: 2 MB.
+                                  </label>
+                                  <input
+                                    id="staff"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handleCropInptaPhoto(e, "staff")
+                                    }
+                                    sx={{ mt: 2, mb: 2 }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="dashboard-list-wraps bg-white rounded mb-4">
+                            <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
+                              <div className="dashboard-list-wraps-flx">
+                                <h4 className="mb-0 ft-medium fs-md">
+                                  <i className="fa fa-file me-2 theme-cl fs-sm" />
+                                  Course Certificates
+                                </h4>
+                              </div>
+                            </div>
+                            <div className="dashboard-list-wraps-body bg-white py-3 px-3">
+                              <div className="row">
+                                <div className="col-md-12 mt-4">
+                                  <label className="mb-1">
+                                    Upload Train the Trainer Certificate
+                                  </label>
+                                  {personalDetailsData.dpt_certificate ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          margin: "0px 0px 0px 0px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            width: "200px",
+                                            position: "relative",
+                                            marginBottom: "10px",
+                                          }}
+                                        >
+                                          <img
+                                            src={
+                                              personalDetailsData.dpt_certificate
+                                            }
+                                            alt="Pan Card"
+                                            style={{
+                                              maxWidth: "100%",
+                                              height: "auto",
+                                              marginBottom: "5px",
+                                            }}
+                                          />
+                                          <IconButton
+                                            onClick={() =>
+                                              handleRemovePersonalDetails(
+                                                "dpt_certificate"
+                                              )
+                                            }
+                                            className="px-1 py-1"
+                                            style={{
+                                              position: "absolute",
+                                              top: 4,
+                                              right: 15,
+                                              backgroundColor:
+                                                "rgba(255, 255, 255, 0.8)",
+                                            }}
+                                          >
+                                            <DeleteIcon
+                                              style={{ color: "#ff3838" }}
+                                            />
+                                          </IconButton>
+                                        </div>
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            document
+                                              .getElementById("dpt_certificate")
+                                              .click()
+                                          }
+                                        >
+                                          Change Train the Trainer Certificate
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      onClick={() =>
+                                        document
+                                          .getElementById("dpt_certificate")
+                                          .click()
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Train the Trainer</p>
+                                    </div>
+                                  )}
+                                  <input
+                                    id="dpt_certificate"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handlePersonalInputChange(
+                                        e,
+                                        "dpt_certificate"
+                                      )
+                                    }
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Upload Diploma In Personal Training
+                                    Certificate
+                                  </label>
+                                  {personalDetailsData.dpt_certificate ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          margin: "0px 0px 0px 0px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            width: "200px",
+                                            position: "relative",
+                                            marginBottom: "10px",
+                                          }}
+                                        >
+                                          <img
+                                            src={
+                                              personalDetailsData.dpt_certificate
+                                            }
+                                            alt="Pan Card"
+                                            style={{
+                                              maxWidth: "100%",
+                                              height: "auto",
+                                              marginBottom: "5px",
+                                            }}
+                                          />
+                                          <IconButton
+                                            onClick={() =>
+                                              handleRemovePersonalDetails(
+                                                "dpt_certificate"
+                                              )
+                                            }
+                                            className="px-1 py-1"
+                                            style={{
+                                              position: "absolute",
+                                              top: 4,
+                                              right: 15,
+                                              backgroundColor:
+                                                "rgba(255, 255, 255, 0.8)",
+                                            }}
+                                          >
+                                            <DeleteIcon
+                                              style={{ color: "#ff3838" }}
+                                            />
+                                          </IconButton>
+                                        </div>
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            document
+                                              .getElementById("dpt_certificate")
+                                              .click()
+                                          }
+                                        >
+                                          Change DPT Certificate
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      onClick={() =>
+                                        document
+                                          .getElementById("dpt_certificate")
+                                          .click()
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to DPT Certificate</p>
+                                    </div>
+                                  )}
+                                  <input
+                                    id="dpt_certificate"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handlePersonalInputChange(
+                                        e,
+                                        "dpt_certificate"
+                                      )
+                                    }
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Upload Diploma In Nutrition Course
+                                    Certificate
+                                  </label>
+                                  {personalDetailsData.dnc_certificate ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          margin: "0px 0px 0pc 0px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            width: "200px",
+                                            position: "relative",
+                                            marginBottom: "10px",
+                                          }}
+                                        >
+                                          <img
+                                            src={
+                                              personalDetailsData.dnc_certificate
+                                            }
+                                            alt="GST Certificate"
+                                            style={{
+                                              maxWidth: "100%",
+                                              height: "auto",
+                                              marginBottom: "5px",
+                                            }}
+                                          />
+                                          <IconButton
+                                            onClick={() =>
+                                              handleRemovePersonalDetails(
+                                                "dnc_certificate"
+                                              )
+                                            }
+                                            className="px-1 py-1"
+                                            style={{
+                                              position: "absolute",
+                                              top: 4,
+                                              right: 15,
+                                              backgroundColor:
+                                                "rgba(255, 255, 255, 0.8)",
+                                            }}
+                                          >
+                                            <DeleteIcon
+                                              style={{ color: "#ff3838" }}
+                                            />
+                                          </IconButton>
+                                        </div>
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            document
+                                              .getElementById("dnc_certificate")
+                                              .click()
+                                          }
+                                        >
+                                          Change DNC Certificate
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      onClick={() =>
+                                        document
+                                          .getElementById("dnc_certificate")
+                                          .click()
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Upload DNC Certificate</p>
+                                    </div>
+                                  )}
+                                  <input
+                                    id="dnc_certificate"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handlePersonalInputChange(
+                                        e,
+                                        "dnc_certificate"
+                                      )
+                                    }
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                           <div className="dashboard-list-wraps bg-white rounded mb-4">
                             <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                               <div className="dashboard-list-wraps-flx">
@@ -849,6 +2024,7 @@ const AuditorVerification = () => {
   );
 };
 export default AuditorVerification;
+
 const createImage = (url) =>
   new Promise((resolve, reject) => {
     const image = new Image();

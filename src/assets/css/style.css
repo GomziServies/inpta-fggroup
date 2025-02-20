@@ -2472,3 +2472,107 @@ button.checkout-add-edit-address:hover {
 .bg-registration {
   background-color: #f3f3f3;
 }
+
+.wrapper-1 {
+  width: 100%;
+  /* height: 100vh; */
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper-2 {
+  padding: 30px;
+  text-align: center;
+}
+
+.wrapper-1 .h1-fs,
+.wrapper-1 h1 {
+  font-weight: 700;
+  /* font-family: nunito; */
+  font-size: 4em;
+  letter-spacing: 3px;
+  color: #1b4681;
+  margin: 0;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.wrapper-2 p {
+  margin: 0;
+  font-size: 1.3em;
+  color: #616161;
+  /* font-family: "Source Sans Pro", sans-serif; */
+  letter-spacing: 1px;
+}
+
+.go-home {
+  color: #fff;
+  background: #1b4681;
+  border: none;
+  padding: 10px 50px;
+  margin: 30px 0;
+  border-radius: 30px;
+  text-transform: capitalize;
+  box-shadow: 0 10px 16px 1px #d3d3d3;
+}
+
+.go-home:hover {
+  color: #fff;
+}
+
+.footer-like {
+  margin-top: auto;
+  background: #dbfed7;
+  padding: 6px;
+  text-align: center;
+}
+
+.footer-like p {
+  margin: 0;
+  padding: 4px;
+  color: #1b4681;
+  /* font-family: "Source Sans Pro", sans-serif; */
+  letter-spacing: 1px;
+}
+
+.footer-like p a {
+  text-decoration: none;
+  color: #1b4681;
+  font-weight: 600;
+}
+
+@media (min-width: 360px) {
+  .wrapper-1 .h1-fs,
+  .wrapper-1 h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+
+  .go-home {
+    margin-bottom: 20px;
+  }
+}
+
+@media (min-width: 600px) {
+  .wrapper-1 {
+    height: initial;
+    max-width: 620px;
+    margin: 0 auto;
+    margin-top: 50px;
+    box-shadow: 0px 0px 10px #ccc;
+  }
+}
+
+.thank-you-margin {
+  margin-bottom: 160px;
+}
+
+@media (max-width: 560px) {
+  .thank-you-margin {
+    margin-bottom: 90px;
+  }
+
+  .wrapper-2 {
+    padding: 0px;
+  }
+}

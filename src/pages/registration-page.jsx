@@ -81,8 +81,8 @@ const RegistrationPage = () => {
           <div className="clearfix" />
           {/* bg-registration */}
           <div className="container-fluid bg-white">
-            <div className="container">
-              <div className="goodup-dashboard-wrap gray px-4 py-5 add-listing-page margintop">
+            <div className="container-md">
+              <div className="goodup-dashboard-wrap gray px-4 pt-5 add-listing-page margintop">
                 <div className="goodup-dashboard-content text-start">
                   <div className="dashboard-widg-bar d-block">
                     <div className="row">
@@ -109,7 +109,7 @@ const RegistrationPage = () => {
                       </div>
                       <div className="col-12 mt-2">
                         <div className="row justify-content-center">
-                          <div className="col-md-7 wow fadeInUp container-min-height">
+                          <div className="col-md-7 wow fadeInUp">
                             <div className="position-relative mb-3">
                               <div className="video-img">
                                 <div className="ply1 black-before">
@@ -148,39 +148,44 @@ const RegistrationPage = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="col-md-12 mt-5">
-                        <div className="row justify-content-center">
-                          <div className="col-7 wow fadeInUp">
-                            <div className="col-12 d-flex justify-content-center">
-                              <div>
-                                <h6 className="section-title show-title text-start text-primary pe-3">
-                                  <span
-                                    className="text-primary pe-2 position-relative"
-                                    style={{
-                                      zIndex: 1,
-                                      // backgroundColor: "#f3f3f3",
-                                      backgroundColor: "white",
-                                    }}
-                                  >
-                                    How to Registration
-                                  </span>
-                                </h6>
-                                <h1 className="mb-0 home-title">
-                                  Registration Flow Chart
-                                </h1>
-                              </div>
-                            </div>
-                            <div className="mb-3">
-                              <img
-                                width="100%"
-                                style={{
-                                  borderRadius: "10px 10px 0px 0px",
-                                }}
-                                alt="client journey"
-                                src="images/registration-chartflow.webp"
-                              />
-                            </div>
-                            {/* <p className="mb-2">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-md-12 my-5">
+                <div className="row justify-content-center">
+                  <div className="col-md-7 wow fadeInUp">
+                    <div className="col-12 d-flex justify-content-center">
+                      <div>
+                        <h6 className="section-title show-title text-start text-primary pe-3">
+                          <span
+                            className="text-primary pe-2 position-relative"
+                            style={{
+                              zIndex: 1,
+                              // backgroundColor: "#f3f3f3",
+                              backgroundColor: "white",
+                            }}
+                          >
+                            How to Registration
+                          </span>
+                        </h6>
+                        <h1 className="mb-0 home-title">
+                          Registration Flow Chart
+                        </h1>
+                      </div>
+                    </div>
+                    <div className="mb-3">
+                      <img
+                        width="100%"
+                        style={{
+                          borderRadius: "10px 10px 0px 0px",
+                        }}
+                        alt="client journey"
+                        src="images/registration-chartflow.webp"
+                      />
+                    </div>
+                    {/* <p className="mb-2">
                               INPTA is India's government-approved accreditation
                               body transforming the fitness industry. We empower
                               gyms with new revenue streams through professional
@@ -247,7 +252,7 @@ const RegistrationPage = () => {
                                 </p>
                               </div>
                             </div> */}
-                            {/* <div className="row gy-2 gx-4 mb-4">
+                    {/* <div className="row gy-2 gx-4 mb-4">
                               <div className="col-sm-6">
                                 <p className="mb-0">
                                   <i className="fa fa-arrow-right text-primary me-2"></i>
@@ -261,17 +266,13 @@ const RegistrationPage = () => {
                                 </p>
                               </div>
                             </div> */}
-                            <div className="col-12 d-flex justify-content-center">
-                              <Link
-                                className="btn btn-primary py-3 px-5 mt-2"
-                                to="/training-and-placement"
-                              >
-                                Start Listing
-                              </Link>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    <div className="col-12 d-flex justify-content-center">
+                      <Link
+                        className="btn btn-primary py-3 px-5 mt-2"
+                        to="/training-partner"
+                      >
+                        Start Listing
+                      </Link>
                     </div>
                   </div>
                 </div>

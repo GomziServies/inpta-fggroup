@@ -3,18 +3,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Helmet } from "react-helmet";
 import "../../assets/css/style.css";
 import Header from "../../components/Header";
-import { inptaListingAxiosInstance } from "../../js/api";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "rsuite/dist/rsuite.min.css";
 import Footer from "../../components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ProgressBar from "../../components/progress-bar/registration-progress-bar";
-import Swal from "sweetalert2";
+import { createTPPayment } from "../../assets/utils/tp_payment";
 
 const TPRegistrationPayment = () => {
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const listing_id = localStorage.getItem("tp_listing_id");
 
   useEffect(() => {
     setTimeout(() => {
@@ -22,40 +23,54 @@ const TPRegistrationPayment = () => {
     }, 1000);
   }, []);
 
-  const [isLoading, setIsLoading] = useState(false);
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   setIsLoading(true);
+  //   try {
+  //     const postData = {
+  //       // logo: logoUrl,
+  //     };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
+  //     await inptaListingAxiosInstance.post("/create-tc-listing", postData);
+  //     setIsLoading(false);
+  //     toast.success("Listing created successfully!", {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //     });
+
+  //     Swal.fire({
+  //       title: "Success",
+  //       text: "We will contact you further. Our team will get back you soon.",
+  //       showCancelButton: false,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       confirmButtonText: "Okay",
+  //     }).then(async (result) => {
+  //       if (result.isConfirmed) {
+  //         window.location.href = "/training-center";
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.error("Error uploading files:", error);
+  //     setIsLoading(false);
+  //     toast.error(error?.message, {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //     });
+  //   }
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      const postData = {
-        // logo: logoUrl,
-      };
-
-      await inptaListingAxiosInstance.post("/create-tc-listing", postData);
-      setIsLoading(false);
-      toast.success("Listing created successfully!", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-
-      Swal.fire({
-        title: "Success",
-        text: "We will contact you further. Our team will get back you soon.",
-        showCancelButton: false,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Okay",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          window.location.href = "/training-center";
-        }
-      });
+      try {
+        await createTPPayment(listing_id);
+      } catch (error) {
+        console.error("Error during order:", error);
+      }
+      window.Razorpay && window.Razorpay.close && window.Razorpay.close();
+      window.scrollTo(0, 0);
     } catch (error) {
-      console.error("Error uploading files:", error);
-      setIsLoading(false);
-      toast.error(error?.message, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      console.error("Error in handleFormSubmit:", error);
     }
   };
 

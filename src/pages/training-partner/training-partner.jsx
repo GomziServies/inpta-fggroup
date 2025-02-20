@@ -34,7 +34,7 @@ const TPRegistrationListing = () => {
     try {
       const response = await axiosInstance.post("/account/authorization", {
         mobile: mobileNumber,
-        service: 'INPTA-LISTING'
+        service: "INPTA-LISTING",
       });
 
       if (response.data && response.data.data && response.data.data.OTP) {
@@ -59,7 +59,7 @@ const TPRegistrationListing = () => {
       );
 
       const auth = response.data.data.authorization;
-      
+
       if (response.status === 200) {
         localStorage.setItem("authorization", auth);
         getUserData();
@@ -222,8 +222,6 @@ const TPRegistrationListing = () => {
   };
 
   const uploadAadhaar = async () => {
-    let aadhaarUrl = "";
-
     try {
       let croppedBlob = profilePhoto;
       if (typeof profilePhoto === "string") {
@@ -327,15 +325,24 @@ const TPRegistrationListing = () => {
         ],
       };
 
-      await inptaListingAxiosInstance.post("/create-tp-listing", postData);
+      const result = await inptaListingAxiosInstance.post(
+        "/create-tp-listing",
+        postData
+      );
       updateData();
 
-      setIsLoading(false);
-      toast.success("Listing created successfully!", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      if (result?.data?.data) {
+        toast.success("Listing created successfully!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
 
-      window.location.href = "/training-and-placement/payment";
+        localStorage.setItem('tp_listing_id', result?.data?.data?._id)
+
+        // setTimeout(() => {
+        //   window.location.href = "/training-partner/payment";
+        // }, 1500);
+      }
+      setIsLoading(false);
     } catch (error) {
       console.error("Error uploading files:", error);
       setIsLoading(false);

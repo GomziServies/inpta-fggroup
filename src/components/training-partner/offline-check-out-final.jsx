@@ -357,7 +357,7 @@ function OfflineCheckOutFinal({ setCheckData }) {
                         <div className="col-12 p-0">
                           <p className="f-pop-sembol f-16 mb-0 text-center pb-3 mb-2 border-bottom">
                             <b className="text-center">
-                              {selectedOption?.month} Training & Placement
+                              {selectedOption?.month} Training Partner
                             </b>
                           </p>
                           <p className="f-pop-sembol f-16 mb-2">
@@ -444,7 +444,7 @@ function OfflineCheckOutFinal({ setCheckData }) {
                   <div className="col-12 p-0">
                     <p className="f-pop-sembol f-16 mb-0 text-center pb-3 mb-2 border-bottom">
                       <b className="text-center">
-                        {selectedOption?.month} Training & Placement
+                        {selectedOption?.month} Training Partner
                       </b>
                     </p>
                     <p className="f-pop-sembol f-16 mb-0">Price Details:</p>

@@ -26,7 +26,7 @@ const ProgressBar = ({ activeData, pendingData }) => {
               }`}
             >
               <span className="is-complete"></span>
-              <p>Training & Placement</p>
+              <p>Training Partner</p>
             </div>
             <div
               className={`order-tracking ${

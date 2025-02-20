@@ -20,14 +20,14 @@ import Select from "react-select";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ProgressBar from "../../components/progress-bar/registration-progress-bar";
+import { createTCSubmitCertificatePayment } from "../../assets/utils/tc_payment";
 
 const TPRegistrationSubmitCertificate = () => {
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
   const [personalDetailsData, setPersonalDetailsData] = useState({
-    certificate: null,
-    gst_certificate: null,
+    train_the_trainer: null,
   });
 
   useEffect(() => {
@@ -63,25 +63,47 @@ const TPRegistrationSubmitCertificate = () => {
     try {
       const postData = {
         certificates: [
-          personalDetailsData.certificate,
-          personalDetailsData.gst_certificate,
+          { train_the_trainer: personalDetailsData.train_the_trainer },
         ],
       };
 
-      await inptaListingAxiosInstance.post("/create-tc-listing", postData);
+      const result = await inptaListingAxiosInstance.post(
+        "/create-tc-listing",
+        postData
+      );
+
+      if (result) {
+        toast.success("Listing created successfully!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+
+        // setTimeout(() => {
+        //   handlePaymentSubmit(result?.data?.data?._id);
+        // }, 500);
+      }
 
       setIsLoading(false);
-      toast.success("Listing created successfully!", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-
-      window.location.href = "/training-center/auditor-verification";
+      // window.location.href = "/training-center/auditor-verification";
     } catch (error) {
       console.error("Error uploading files:", error);
       setIsLoading(false);
       toast.error(error?.message, {
         position: toast.POSITION.TOP_RIGHT,
       });
+    }
+  };
+
+  const handlePaymentSubmit = async (listing_id) => {
+    try {
+      try {
+        await createTCSubmitCertificatePayment(listing_id);
+      } catch (error) {
+        console.error("Error during order:", error);
+      }
+      window.Razorpay && window.Razorpay.close && window.Razorpay.close();
+      window.scrollTo(0, 0);
+    } catch (error) {
+      console.error("Error in handlePaymentSubmit:", error);
     }
   };
 
@@ -139,11 +161,11 @@ const TPRegistrationSubmitCertificate = () => {
                             </div>
                             <div className="dashboard-list-wraps-body bg-white py-3 px-3">
                               <div className="row">
-                                <div className="col-md-6 mt-4">
+                                <div className="col-md-12 mt-4">
                                   <label className="mb-1">
-                                    Upload Certificate
+                                    Upload Train the Trainer Certificate
                                   </label>
-                                  {personalDetailsData.certificate ? (
+                                  {personalDetailsData.train_the_trainer ? (
                                     <div>
                                       <div
                                         className="row position-relative"
@@ -164,7 +186,7 @@ const TPRegistrationSubmitCertificate = () => {
                                         >
                                           <img
                                             src={
-                                              personalDetailsData.certificate
+                                              personalDetailsData.train_the_trainer
                                             }
                                             alt="Certificate"
                                             style={{
@@ -176,7 +198,7 @@ const TPRegistrationSubmitCertificate = () => {
                                           <IconButton
                                             onClick={() =>
                                               handleRemovePersonalDetails(
-                                                "certificate"
+                                                "train_the_trainer"
                                               )
                                             }
                                             className="px-1 py-1"
@@ -234,7 +256,7 @@ const TPRegistrationSubmitCertificate = () => {
                                     onChange={(e) =>
                                       handlePersonalInputChange(
                                         e,
-                                        "certificate"
+                                        "train_the_trainer"
                                       )
                                     }
                                   />

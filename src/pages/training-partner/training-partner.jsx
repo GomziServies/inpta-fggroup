@@ -449,9 +449,9 @@ const TPRegistrationListing = () => {
 
         localStorage.setItem("tp_listing_id", result?.data?.data?._id);
 
-        // setTimeout(() => {
-        //   window.location.href = "/training-partner/payment";
-        // }, 1500);
+        setTimeout(() => {
+          window.location.href = "/training-partner/payment";
+        }, 1500);
       }
       setIsLoading(false);
     } catch (error) {

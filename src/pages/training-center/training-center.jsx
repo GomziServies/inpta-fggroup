@@ -108,6 +108,7 @@ const TPRegistrationListing = () => {
   // ----------------------------------------------------------------------------------
 
   const [inptaPhotos, setInptaPhotos] = useState({
+    gym: null,
     washroom: null,
     dustbin: null,
     medical_kit: null,
@@ -313,6 +314,7 @@ const TPRegistrationListing = () => {
     let uploadedUrls = [];
     try {
       const inptaPhotosArray = [
+        { label: inptaPhotos.gym, value: "gym" },
         { label: inptaPhotos.washroom, value: "washroom" },
         { label: inptaPhotos.dustbin, value: "dustbin" },
         { label: inptaPhotos.medical_kit, value: "medical_kit" },
@@ -557,7 +559,7 @@ const TPRegistrationListing = () => {
                             <div className="dashboard-list-wraps-body py-3 px-3">
                               <div className="row">
                                 <div className="col-12">
-                                  <label className="mb-1">Upload Logo</label>
+                                  <label className="mb-1">Upload Logo (Upload a high-resolution logo of your training center or academy.)</label>
 
                                   {logoPreview ? (
                                     <div className="position-relative">
@@ -622,7 +624,130 @@ const TPRegistrationListing = () => {
                                 </div>
                                 <div className="col-md-6 mt-4">
                                   <label className="mb-1">
-                                    Washroom Image{" "}
+                                  Gym/Training Center Image (Upload a clear image of your facility's interior & exterior.)
+                                  </label>
+                                  {inptaPhotos.gym ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        {loadingTwo && (
+                                          <div className="loader-background-image position-absolute">
+                                            <div className="spinner-box-image">
+                                              <div className="three-quarter-spinner-image"></div>
+                                            </div>
+                                          </div>
+                                        )}
+                                        {inptaPhotos.gym && (
+                                          <div
+                                            style={{
+                                              width: "200px",
+                                              position: "relative",
+                                              marginBottom: "10px",
+                                            }}
+                                          >
+                                            <div
+                                              style={{
+                                                width: "100%",
+                                                height: "auto",
+                                              }}
+                                            >
+                                              <img
+                                                src={inptaPhotos.gym}
+                                                alt={`INPTA Photo gym`}
+                                                style={{
+                                                  maxWidth: "100%",
+                                                  height: "auto",
+                                                  marginBottom: "5px",
+                                                }}
+                                              />
+                                              <IconButton
+                                                onClick={() =>
+                                                  handleRemoveInptaPhoto(
+                                                    "gym"
+                                                  )
+                                                }
+                                                className="px-1 py-1"
+                                                style={{
+                                                  position: "absolute",
+                                                  top: 4,
+                                                  right: 15,
+                                                  backgroundColor:
+                                                    "rgba(255, 255, 255, 0.8)",
+                                                }}
+                                              >
+                                                <DeleteIcon
+                                                  style={{ color: "#ff3838" }}
+                                                />
+                                              </IconButton>
+                                              <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(event) =>
+                                                  handleCropInptaPhoto(
+                                                    event,
+                                                    "gym"
+                                                  )
+                                                }
+                                                style={{ display: "none" }}
+                                                id={`photoInput-gym`}
+                                              />
+                                            </div>
+                                          </div>
+                                        )}
+                                      </div>
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={() =>
+                                            handleSelectFeature("gym")
+                                          }
+                                        >
+                                          Add Feature Image
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="featured-image"
+                                      onClick={() =>
+                                        handleSelectFeature("gym")
+                                      }
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to Featured Image</p>
+                                    </div>
+                                  )}
+                                  <label className="smart-text">
+                                    Maximum file size: 2 MB.
+                                  </label>
+                                  <input
+                                    id="gym"
+                                    type="file"
+                                    accept="image/*"
+                                    className="d-none"
+                                    onChange={(e) =>
+                                      handleCropInptaPhoto(e, "gym")
+                                    }
+                                    sx={{ mt: 2, mb: 2 }}
+                                  />
+                                </div>
+                                <div className="col-md-6 mt-4">
+                                  <label className="mb-1">
+                                    Washroom Image
                                   </label>
                                   {inptaPhotos.washroom ? (
                                     <div>
@@ -744,7 +869,7 @@ const TPRegistrationListing = () => {
                                   />
                                 </div>
                                 <div className="col-md-6 mt-4">
-                                  <label className="mb-1">Dustbin Image </label>
+                                  <label className="mb-1">Dustbin Image (Upload an image of the dustbin placement as part of hygiene verification.) </label>
                                   {inptaPhotos.dustbin ? (
                                     <div>
                                       <div
@@ -866,7 +991,7 @@ const TPRegistrationListing = () => {
                                 </div>
                                 <div className="col-md-6 mt-4">
                                   <label className="mb-1">
-                                    Medical Kit Image{" "}
+                                    Medical Kit Image (Upload an image of the first aid or medical kit available at your center.)
                                   </label>
                                   {inptaPhotos.medical_kit ? (
                                     <div>
@@ -1112,7 +1237,7 @@ const TPRegistrationListing = () => {
                                 </div>
                                 <div className="col-md-6 mt-4">
                                   <label className="mb-1">
-                                    Reception Image{" "}
+                                    Reception Image (Show a professional reception setup with staff (if applicable).)
                                   </label>
                                   {inptaPhotos.reception ? (
                                     <div>
@@ -1234,7 +1359,7 @@ const TPRegistrationListing = () => {
                                   />
                                 </div>
                                 <div className="col-md-6 mt-4">
-                                  <label className="mb-1">Staff Image </label>
+                                  <label className="mb-1">Staff Image (Provide group/staff photos to verify the presence of qualified personnel.) </label>
                                   {inptaPhotos.staff ? (
                                     <div>
                                       <div

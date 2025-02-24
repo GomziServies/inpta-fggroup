@@ -116,16 +116,25 @@ const TPRegistrationListing = () => {
   // ----------------------------------------------------------------------------------
 
   const [aadhaarPreview, setAadhaarPreview] = useState(null);
+  const [profilePreview, setProfilePreview] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
+  const [profileImageSrc, setProfileImageSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [profileCrop, setProfileCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
+  const [profileZoom, setProfileZoom] = useState(1);
   const [show, setShow] = useState(false);
+  const [profileShow, setProfileShow] = useState(false);
+  const [aadhaarPhoto, setAadhaarPhoto] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
 
-  const onCropComplete = useCallback((croppedArea, profilePhoto, context) => {
+  const onCropComplete = useCallback((croppedArea, aadhaarPhoto, context) => {
     if (context === "aadhaar") {
-      setProfilePhoto(profilePhoto);
-      handleAadhaarChange(profilePhoto);
+      setAadhaarPhoto(aadhaarPhoto);
+      handleAadhaarChange(aadhaarPhoto);
+    } else if (context === "profile") {
+      setProfilePhoto(aadhaarPhoto);
+      handleProfileChange(aadhaarPhoto);
     }
   }, []);
 
@@ -134,8 +143,13 @@ const TPRegistrationListing = () => {
     fileInput.click();
   };
 
+  const handleSelectProfile = () => {
+    const fileInput = document.getElementById("profileInput");
+    fileInput.click();
+  };
+
   const handleAadhaarChange = (event) => {
-    const file = profilePhoto;
+    const file = aadhaarPhoto;
 
     if (file instanceof File) {
       if (file.size > 2 * 1024 * 1024) {
@@ -158,14 +172,53 @@ const TPRegistrationListing = () => {
     }
   };
 
+  const handleProfileChange = (event) => {
+    const file = profilePhoto;
+
+    if (file instanceof File) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert("File size exceeds 2 MB!");
+        return;
+      }
+      const previewUrl = URL.createObjectURL(file);
+      setProfilePreview(previewUrl);
+    }
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prevData) => ({
+          ...prevData,
+          profile: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleCropComplete = async (context) => {
-    if (imageSrc && profilePhoto) {
+    if (imageSrc && aadhaarPhoto) {
       try {
-        const croppedImg = await getCroppedImg(imageSrc, profilePhoto);
+        const croppedImg = await getCroppedImg(imageSrc, aadhaarPhoto);
         if (context === "aadhaar") {
           setAadhaarPreview(croppedImg);
-          setProfilePhoto(croppedImg);
+          setAadhaarPhoto(croppedImg);
           setShow(false);
+        }
+      } catch (error) {
+        console.error("Error cropping the image:", error);
+      }
+    }
+  };
+
+  const handleProfileCropComplete = async (context) => {
+    if (profileImageSrc && profilePhoto) {
+      try {
+        const croppedImg = await getCroppedImg(profileImageSrc, profilePhoto);
+        if (context === "profile") {
+          setProfilePreview(croppedImg);
+          setProfilePhoto(croppedImg);
+          setProfileShow(false);
         }
       } catch (error) {
         console.error("Error cropping the image:", error);
@@ -177,6 +230,10 @@ const TPRegistrationListing = () => {
     setShow(false);
   };
 
+  const handleProfileClose = () => {
+    setProfileShow(false);
+  };
+
   const handleCropAadhaarChange = (event) => {
     setLoadingOne(true);
     const file = event.target.files?.[0];
@@ -185,6 +242,20 @@ const TPRegistrationListing = () => {
       reader.onload = () => {
         setImageSrc(reader.result);
         setShow(true);
+      };
+      reader.readAsDataURL(file);
+    }
+    setLoadingOne(false);
+  };
+
+  const handleCropProfileChange = (event) => {
+    setLoadingOne(true);
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setProfileImageSrc(reader.result);
+        setProfileShow(true);
       };
       reader.readAsDataURL(file);
     }
@@ -223,10 +294,10 @@ const TPRegistrationListing = () => {
 
   const uploadAadhaar = async () => {
     try {
-      let croppedBlob = profilePhoto;
-      if (typeof profilePhoto === "string") {
-        const byteString = atob(profilePhoto.split(",")[1]);
-        const mimeString = profilePhoto
+      let croppedBlob = aadhaarPhoto;
+      if (typeof aadhaarPhoto === "string") {
+        const byteString = atob(aadhaarPhoto.split(",")[1]);
+        const mimeString = aadhaarPhoto
           .split(",")[0]
           .split(":")[1]
           .split(";")[0];
@@ -245,6 +316,44 @@ const TPRegistrationListing = () => {
         const aadhaarResponse = await axiosInstance.post(
           "/file-upload",
           aadhaarFormData
+        );
+
+        const aadhaarUrl = aadhaarResponse.data.data.fileURLs[0];
+        return aadhaarUrl;
+      }
+    } catch (error) {
+      console.error("Error uploading Aadhaar file:", error);
+      toast.error("Error uploading Aadhaar file. Please try again.", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      throw error;
+    }
+  };
+
+  const uploadProfile = async () => {
+    try {
+      let croppedBlob = profilePhoto;
+      if (typeof profilePhoto === "string") {
+        const byteString = atob(profilePhoto.split(",")[1]);
+        const mimeString = profilePhoto
+          .split(",")[0]
+          .split(":")[1]
+          .split(";")[0];
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+        croppedBlob = new Blob([ab], { type: mimeString });
+      }
+
+      if (croppedBlob) {
+        const profileFormData = new FormData();
+        profileFormData.append("files", croppedBlob);
+
+        const aadhaarResponse = await axiosInstance.post(
+          "/file-upload",
+          profileFormData
         );
 
         const aadhaarUrl = aadhaarResponse.data.data.fileURLs[0];
@@ -285,9 +394,11 @@ const TPRegistrationListing = () => {
     setIsLoading(true);
     try {
       const aadhaarUrl = await uploadAadhaar();
+      const profileUrl = await uploadProfile();
 
       const postData = {
         description: formData.description,
+        profile_photo: profileUrl,
         aadhaar_card: aadhaarUrl,
         personal_details: {
           work_experience: personalDetailsData.work_experience,
@@ -336,7 +447,7 @@ const TPRegistrationListing = () => {
           position: toast.POSITION.TOP_RIGHT,
         });
 
-        localStorage.setItem('tp_listing_id', result?.data?.data?._id)
+        localStorage.setItem("tp_listing_id", result?.data?.data?._id);
 
         // setTimeout(() => {
         //   window.location.href = "/training-partner/payment";
@@ -469,6 +580,71 @@ const TPRegistrationListing = () => {
                             </div>
                             <div className="dashboard-list-wraps-body bg-white py-3 px-3">
                               <div className="row">
+                                <div className="col-12">
+                                  <label className="mb-1">
+                                    Upload Profile photo
+                                  </label>
+
+                                  {profilePreview ? (
+                                    <div className="position-relative">
+                                      {loadingOne && (
+                                        <div className="w-100 d-flex justify-content-center position-absolute">
+                                          <div class="spinner-box spinner-width">
+                                            <div class="three-quarter-spinner three-quarter-spinner-width"></div>
+                                          </div>
+                                        </div>
+                                      )}
+                                      <img
+                                        src={profilePreview}
+                                        alt="Profile Preview"
+                                        id="single-profile"
+                                        style={{
+                                          width: "100%",
+                                          maxHeight: "150px",
+                                          objectFit: "contain",
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      />
+                                      <div className="mt-2 text-center">
+                                        <button
+                                          className="btn btn-primary rounded-pill px-3 py-1"
+                                          onClick={handleSelectProfile}
+                                        >
+                                          Change Profile
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="dropzone"
+                                      id="single-profile"
+                                      onClick={handleSelectProfile}
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                    >
+                                      <i className="fas fa-upload" />
+                                      <p>Click to upload profile</p>
+                                    </div>
+                                  )}
+
+                                  <label className="smart-text">
+                                    Maximum file size: 2 MB.
+                                  </label>
+                                  <input
+                                    id="profileInput"
+                                    type="file"
+                                    className="d-none"
+                                    accept="image/*"
+                                    onChange={handleCropProfileChange}
+                                  />
+                                </div>
                                 <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                   <div className="form-group">
                                     <label className="mb-1">First Name</label>
@@ -580,12 +756,12 @@ const TPRegistrationListing = () => {
                                 <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                   <div className="form-group">
                                     <label className="mb-1">
-                                      Current Job Specification
+                                      Current Work Experience
                                     </label>
                                     <input
                                       type="text"
                                       className="form-control rounded"
-                                      placeholder="Enter Job Specification"
+                                      placeholder="Enter Work Experience"
                                       value={
                                         personalDetailsData.work_experience
                                       }
@@ -654,7 +830,6 @@ const TPRegistrationListing = () => {
                                     />
                                   </div>
                                 </div>
-
                                 <div className="col-12">
                                   <label className="mb-1">
                                     Upload Aadhaar Card
@@ -924,8 +1099,8 @@ const TPRegistrationListing = () => {
               zoom={zoom}
               aspect={12 / 8}
               onCropChange={setCrop}
-              onCropComplete={(croppedArea, profilePhoto) =>
-                onCropComplete(croppedArea, profilePhoto, "aadhaar")
+              onCropComplete={(croppedArea, aadhaarPhoto) =>
+                onCropComplete(croppedArea, aadhaarPhoto, "aadhaar")
               }
               onZoomChange={setZoom}
             />
@@ -938,6 +1113,42 @@ const TPRegistrationListing = () => {
           <Button
             variant="primary"
             onClick={() => handleCropComplete("aadhaar")}
+            style={{
+              backgroundColor: "#007bff",
+              borderColor: "#007bff",
+              color: "white",
+            }}
+          >
+            Crop Image
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={profileShow} onHide={handleProfileClose} size="lg" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Crop Profile Image</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ position: "relative", width: "100%", height: 400 }}>
+            <Cropper
+              image={profileImageSrc}
+              crop={profileCrop}
+              zoom={profileZoom}
+              aspect={8 / 11}
+              onCropChange={setProfileCrop}
+              onCropComplete={(croppedArea, aadhaarPhoto) =>
+                onCropComplete(croppedArea, aadhaarPhoto, "profile")
+              }
+              onZoomChange={setProfileZoom}
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleProfileClose}>
+            Close
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => handleProfileCropComplete("profile")}
             style={{
               backgroundColor: "#007bff",
               borderColor: "#007bff",

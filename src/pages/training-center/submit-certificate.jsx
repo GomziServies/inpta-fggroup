@@ -62,9 +62,7 @@ const TPRegistrationSubmitCertificate = () => {
     setIsLoading(true);
     try {
       const postData = {
-        certificates: [
-          { train_the_trainer: personalDetailsData.train_the_trainer },
-        ],
+        certificates: personalDetailsData.train_the_trainer,
       };
 
       const result = await inptaListingAxiosInstance.post(

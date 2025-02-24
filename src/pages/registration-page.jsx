@@ -155,7 +155,7 @@ const RegistrationPage = () => {
 
               <div className="col-md-12 my-5">
                 <div className="row justify-content-center">
-                  <div className="col-md-7 wow fadeInUp">
+                  <div className="col-md-9 wow fadeInUp">
                     <div className="col-12 d-flex justify-content-center">
                       <div>
                         <h6 className="section-title show-title text-start text-primary pe-3">
@@ -170,12 +170,12 @@ const RegistrationPage = () => {
                             How to Registration
                           </span>
                         </h6>
-                        <h1 className="mb-0 home-title">
+                        <h1 className="mb-4 home-title">
                           Registration Flow Chart
                         </h1>
                       </div>
                     </div>
-                    <div className="mb-3">
+                    <div className="mb-4">
                       <img
                         width="100%"
                         style={{

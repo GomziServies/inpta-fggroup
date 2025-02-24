@@ -176,14 +176,46 @@ const RegistrationPage = () => {
                       </div>
                     </div>
                     <div className="mb-4">
-                      <img
-                        width="100%"
-                        style={{
-                          borderRadius: "10px 10px 0px 0px",
-                        }}
-                        alt="client journey"
-                        src="images/registration-chartflow.webp"
-                      />
+                      <div>
+                        <img
+                          width="100%"
+                          style={{
+                            borderRadius: "10px 10px 0px 0px",
+                          }}
+                          alt="client journey"
+                          src="images/registration-chartflow.webp"
+                          className="d-md-block d-none"
+                        />
+                        <img
+                          width="100%"
+                          style={{
+                            borderRadius: "10px 10px 0px 0px",
+                          }}
+                          alt="client journey"
+                          src="images/registration-chartflow-mobile.webp"
+                          className="d-md-none d-block"
+                        />
+                      </div>
+                      <div className="d-flex justify-content-center">
+                        <img
+                          width="60%"
+                          style={{
+                            borderRadius: "10px 10px 0px 0px",
+                          }}
+                          alt="client journey"
+                          src="images/refund-policy-inpta.webp"
+                          className="d-md-block d-none"
+                        />
+                        <img
+                          width="100%"
+                          style={{
+                            borderRadius: "10px 10px 0px 0px",
+                          }}
+                          alt="client journey"
+                          src="images/refund-policy-mobile.webp"
+                          className="d-md-none d-block"
+                        />
+                      </div>
                     </div>
                     {/* <p className="mb-2">
                               INPTA is India's government-approved accreditation

@@ -72,22 +72,22 @@ const TPRegistrationListing = () => {
   };
 
   const [formData, setFormData] = useState({
-    description: "Testing Description",
-    address_line_1: "Gomzi-2",
-    address_line_2: "Abhushan Bunglows, Near Alkapuri Char Rasta, Katargam",
-    city: "surat",
-    country: "India",
-    state: "Gujarat",
-    pin_code: "395004",
-    contactNumber: "8866761664",
-    whatsappNumber: "8866761664",
-    direction_link: "https://fggroup.in/",
-    website: "https://fggroup.in/",
-    email: "brijesh21p@gmail.com",
+    description: "",
+    address_line_1: "",
+    address_line_2: "",
+    city: "",
+    country: "",
+    state: "",
+    pin_code: "",
+    contactNumber: "",
+    whatsappNumber: "",
+    direction_link: "",
+    website: "",
+    email: "",
   });
   const [personalDetailsData, setPersonalDetailsData] = useState({
-    work_experience: "2 years",
-    qualification: "BCA Complete",
+    work_experience: "",
+    qualification: "",
   });
   const [userUpdateData, setUserUpdateData] = useState({});
   const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);

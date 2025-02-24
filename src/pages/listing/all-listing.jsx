@@ -230,7 +230,7 @@ const AllListing = () => {
                 </div>
               </div>
               <div className="row g-4 justify-content-center">
-                {educationData.map((education) => {
+                {/* {educationData.map((education) => {
                   const description = education?.description;
                   const truncatedDescription =
                     description?.length > 90
@@ -249,12 +249,6 @@ const AllListing = () => {
                             alt={education.title}
                           />
                           <div className="accepted-btn">
-                            {/* <a
-                                href="#"
-                                className="flex-shrink-0 btn btn-sm btn-success px-3 border-end"
-                              >
-                                Accepted
-                              </a> */}
                             {education.approval_status.status === "APPROVED" ? (
                               <div className="Goodup-status open me-2">
                                 APPROVED
@@ -277,24 +271,6 @@ const AllListing = () => {
                         <div className="text-center p-4 pb-0">
                           <h3 className="mb-0">{education.title}</h3>
                           <div className="mb-3">
-                            {/* {[...Array(5)].map((_, index) => (
-                                <i
-                                  className="fas fa-star"
-                                  key={index}
-                                  style={{
-                                    color:
-                                      index <
-                                      education.review_stats.average_rating
-                                        ? "#F09000"
-                                        : "#ccc",
-                                  }}
-                                />
-                              ))} */}
-                            {/* <small className="fa fa-star text-primary"></small>
-                              <small className="fa fa-star text-primary"></small>
-                              <small className="fa fa-star text-primary"></small>
-                              <small className="fa fa-star text-primary"></small>
-                              <small className="fa fa-star text-primary"></small> */}
                           </div>
                           <p className="mb-4">{truncatedDescription}</p>
                         </div>
@@ -319,8 +295,19 @@ const AllListing = () => {
                       </div>
                     </div>
                   );
-                })}
-                {educationData.length === 0 && !loadingOne && (
+                })} */}
+                <div className="col-12 d-flex flex-column align-items-center">
+                  <img
+                    src="/images/listing-not-found.webp"
+                    alt="listing"
+                    className="list-img"
+                  />
+                  <h4>No Listing Data Found</h4>
+                  <Link to="/add-listing" class="add-list-btn mt-2">
+                    <i class="fas fa-plus me-2"></i>Add Listing
+                  </Link>
+                </div>
+                {/* {educationData.length === 0 && !loadingOne && (
                   <div className="col-12 d-flex flex-column align-items-center">
                     <img
                       src="/images/listing-not-found.webp"
@@ -332,7 +319,7 @@ const AllListing = () => {
                       <i class="fas fa-plus me-2"></i>Add Listing
                     </Link>
                   </div>
-                )}
+                )} */}
                 {loadingOne && (
                   <div className="w-100 d-flex justify-content-center">
                     <div class="spinner-box spinner-width">

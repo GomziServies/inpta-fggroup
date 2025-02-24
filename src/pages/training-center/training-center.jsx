@@ -491,7 +491,7 @@ const TPRegistrationListing = () => {
                       </div>
                       <div className="col-xl-12 col-md-12 col-sm-12">
                         <div className="submit-form">
-                          <div className="dashboard-list-wraps bg-white rounded mb-4">
+                          {/* <div className="dashboard-list-wraps bg-white rounded mb-4">
                             <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                               <div className="dashboard-list-wraps-flx">
                                 <h4 className="mb-0 ft-medium fs-md">
@@ -546,7 +546,7 @@ const TPRegistrationListing = () => {
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                           <div className="dashboard-list-wraps bg-white rounded mb-4">
                             <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                               <div className="dashboard-list-wraps-flx">
@@ -624,7 +624,7 @@ const TPRegistrationListing = () => {
                                 </div>
                                 <div className="col-md-6 mt-4">
                                   <label className="mb-1">
-                                  Gym/Training Center Image (Upload a clear image of your facility's interior & exterior.)
+                                    Gym/Training Center Image (Upload a clear image of your facility's interior & exterior.)
                                   </label>
                                   {inptaPhotos.gym ? (
                                     <div>

@@ -75,9 +75,9 @@ const TPRegistrationSubmitCertificate = () => {
           position: toast.POSITION.TOP_RIGHT,
         });
 
-        // setTimeout(() => {
-        //   handlePaymentSubmit(result?.data?.data?._id);
-        // }, 500);
+        setTimeout(() => {
+          handlePaymentSubmit(result?.data?.data?._id);
+        }, 500);
       }
 
       setIsLoading(false);

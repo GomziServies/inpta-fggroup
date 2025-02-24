@@ -397,7 +397,7 @@ const TPRegistrationListing = () => {
       const profileUrl = await uploadProfile();
 
       const postData = {
-        description: formData.description,
+        description: personalDetailsData.description,
         profile_photo: profileUrl,
         aadhaar_card: aadhaarUrl,
         personal_details: {
@@ -506,7 +506,7 @@ const TPRegistrationListing = () => {
                       </div>
                       <div className="col-xl-12 col-md-12 col-sm-12">
                         <div className="submit-form">
-                          <div className="dashboard-list-wraps bg-white rounded mb-4">
+                          {/* <div className="dashboard-list-wraps bg-white rounded mb-4">
                             <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                               <div className="dashboard-list-wraps-flx">
                                 <h4 className="mb-0 ft-medium fs-md">
@@ -568,7 +568,7 @@ const TPRegistrationListing = () => {
                                 )}
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                           <div className="dashboard-list-wraps bg-white rounded mb-4">
                             <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                               <div className="dashboard-list-wraps-flx">

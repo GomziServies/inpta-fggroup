@@ -797,7 +797,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="container-xxl py-4 text-start mt-4">
+        {/* <div className="container-xxl py-4 text-start mt-4">
           <div className="container">
             <div className="text-center wow fadeInUp" data-wow-delay="0.1s">
               <h6 className="section-title bg-white text-center text-primary px-3">
@@ -917,7 +917,7 @@ const Home = () => {
               )}
             </div>
           </div>
-        </div>
+        </div> */}
         <div
           className="container-xxl py-4 wow fadeInUp text-start box-shadow-testing mt-5"
           data-wow-delay="0.1s"

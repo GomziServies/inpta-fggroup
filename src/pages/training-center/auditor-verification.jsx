@@ -216,7 +216,9 @@ const AuditorVerification = () => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const postData = {};
+      const postData = {
+        tc_status: "tc_auditor",
+      };
 
       const result = await inptaListingAxiosInstance.post(
         "/create-tc-listing",

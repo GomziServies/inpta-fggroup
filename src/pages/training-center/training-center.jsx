@@ -374,6 +374,7 @@ const TPRegistrationListing = () => {
       const logoUrl = await uploadLogo();
 
       const postData = {
+        tc_status: 'tc_list',
         logo: logoUrl,
         images: uploadedUrls.flat(),
         document: [

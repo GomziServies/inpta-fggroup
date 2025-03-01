@@ -62,6 +62,7 @@ const TPRegistrationSubmitCertificate = () => {
     setIsLoading(true);
     try {
       const postData = {
+        tc_status: 'tc_certificate',
         certificates: personalDetailsData.train_the_trainer,
       };
 

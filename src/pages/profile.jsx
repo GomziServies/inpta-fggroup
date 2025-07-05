@@ -217,7 +217,7 @@ const Profile = () => {
         <link href="css/styles.css" rel="stylesheet" />
       </Helmet>
       <>
-        {loading && (
+        {(loading || isLoading) && (
           <div className="loader-background">
             <div className="spinner-box">
               <div className="three-quarter-spinner"></div>

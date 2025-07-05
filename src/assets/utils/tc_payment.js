@@ -27,12 +27,12 @@ export const createTCPayment = async (listing_id) => {
         handler: function (response) {
           Swal.fire({
             title: "Success",
-            text: "Please check your email for the invoice.",
+            text: "Your payment has been successfully processed.",
             icon: "success",
           }).then(() => {
             toast.success("Order created");
             localStorage.setItem("tc_listing_submitted", true);
-            window.location.href = '/thank-you'
+            window.location.href = "/thank-you";
           });
         },
       };
@@ -84,12 +84,12 @@ export const createTCSubmitCertificatePayment = async (listing_id) => {
         handler: function (response) {
           Swal.fire({
             title: "Success",
-            text: "Please check your email for the invoice.",
+            text: "Your payment has been successfully processed.",
             icon: "success",
           }).then(() => {
             toast.success("Order created");
             localStorage.setItem("tc_listing_certificate_submitted", true);
-            window.location.href = '/thank-you'
+            window.location.href = "/thank-you";
           });
         },
       };
@@ -141,12 +141,12 @@ export const createTCAuditorVerificationPayment = async (listing_id) => {
         handler: function (response) {
           Swal.fire({
             title: "Success",
-            text: "Please check your email for the invoice.",
+            text: "Your payment has been successfully processed.",
             icon: "success",
           }).then(() => {
             toast.success("Order created");
             localStorage.setItem("tc_listing_auditor_submitted", true);
-            window.location.href = '/thank-you'
+            window.location.href = "/thank-you";
           });
         },
       };

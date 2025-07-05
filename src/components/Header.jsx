@@ -5,6 +5,7 @@ import "../assets/css/style.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import logo from "../assets/inpta-logo.webp";
 
 function Header() {
   const [isFixed, setIsFixed] = useState(false);
@@ -154,14 +155,14 @@ function Header() {
         <div className="d-lg-block d-none log">
           <Link to="/">
             <div>
-              <img src="images/inpta-logo.webp" width="80%" alt="Fg Group" />
+              <img src={logo} width="80%" alt="Fg Group" />
             </div>
           </Link>
         </div>
         <div className="d-lg-none d-sm-block t0 log1">
           <Link to="/">
             <div>
-              <img src="images/inpta-logo.webp" width="100%" alt="Fg Group" />
+              <img src={logo} width="100%" alt="Fg Group" />
             </div>
           </Link>
         </div>
@@ -193,7 +194,7 @@ function Header() {
           <Link to="/" style={{ marginTop: 50 }}>
             <img
               className="lazy mx-auto"
-              src="images/inpta-logo.webp"
+              src={logo}
               width="17%"
               alt="Fg Group"
             />
@@ -265,12 +266,7 @@ function Header() {
             className="nav-brand d-flex justify-content-center align-items-center mb-2"
             href="#"
           >
-            <img
-              src="images/inpta-logo.webp"
-              className="logo"
-              alt="logo"
-              width="40%"
-            />
+            <img src={logo} className="logo" alt="logo" width="40%" />
           </a>
           <h3 className="text-center">Welcome</h3>
           <div class="text-center mb-5">
@@ -319,12 +315,7 @@ function Header() {
             className="nav-brand d-flex justify-content-center align-items-center"
             href="#"
           >
-            <img
-              src="images/inpta-logo.webp"
-              className="logo"
-              alt="logo"
-              width="40%"
-            />
+            <img src={logo} className="logo" alt="logo" width="40%" />
           </a>
           <div class="text-center mb-4">
             <h4 class="m-0 ft-medium">OTP Verification</h4>

@@ -60,7 +60,7 @@ const TPRegistrationPayment = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
       try {
         await createTPPayment(listing_id);
@@ -72,6 +72,7 @@ const TPRegistrationPayment = () => {
     } catch (error) {
       console.error("Error in handleFormSubmit:", error);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -93,7 +94,7 @@ const TPRegistrationPayment = () => {
         <link href="css/styles.css" rel="stylesheet" />
       </Helmet>
       <>
-        {loading && (
+        {(loading || isLoading) && (
           <div className="loader-background">
             <div className="spinner-box">
               <div className="three-quarter-spinner"></div>

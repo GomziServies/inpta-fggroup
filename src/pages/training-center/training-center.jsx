@@ -374,7 +374,7 @@ const TPRegistrationListing = () => {
       const logoUrl = await uploadLogo();
 
       const postData = {
-        tc_status: 'tc_list',
+        tc_status: "tc_list",
         logo: logoUrl,
         images: uploadedUrls.flat(),
         document: [
@@ -404,7 +404,7 @@ const TPRegistrationListing = () => {
       }
 
       setIsLoading(false);
-      // window.location.href = '/training-center/submit-certificate'
+      window.location.href = "/training-center/submit-certificate";
     } catch (error) {
       console.error("Error uploading files:", error);
       setIsLoading(false);
@@ -468,7 +468,7 @@ const TPRegistrationListing = () => {
         <link href="css/styles.css" rel="stylesheet" />
       </Helmet>
       <>
-        {loading && (
+        {(loading || isLoading) && (
           <div className="loader-background">
             <div className="spinner-box">
               <div className="three-quarter-spinner"></div>
@@ -560,7 +560,10 @@ const TPRegistrationListing = () => {
                             <div className="dashboard-list-wraps-body py-3 px-3">
                               <div className="row">
                                 <div className="col-12">
-                                  <label className="mb-1">Upload Logo (Upload a high-resolution logo of your training center or academy.)</label>
+                                  <label className="mb-1">
+                                    Upload Logo (Upload a high-resolution logo
+                                    of your training center or academy.)
+                                  </label>
 
                                   {logoPreview ? (
                                     <div className="position-relative">
@@ -625,7 +628,9 @@ const TPRegistrationListing = () => {
                                 </div>
                                 <div className="col-md-6 mt-4">
                                   <label className="mb-1">
-                                    Gym/Training Center Image (Upload a clear image of your facility's interior & exterior.)
+                                    Gym/Training Center Image (Upload a clear
+                                    image of your facility's interior &
+                                    exterior.)
                                   </label>
                                   {inptaPhotos.gym ? (
                                     <div>
@@ -670,9 +675,7 @@ const TPRegistrationListing = () => {
                                               />
                                               <IconButton
                                                 onClick={() =>
-                                                  handleRemoveInptaPhoto(
-                                                    "gym"
-                                                  )
+                                                  handleRemoveInptaPhoto("gym")
                                                 }
                                                 className="px-1 py-1"
                                                 style={{
@@ -718,9 +721,7 @@ const TPRegistrationListing = () => {
                                     <div
                                       className="dropzone"
                                       id="featured-image"
-                                      onClick={() =>
-                                        handleSelectFeature("gym")
-                                      }
+                                      onClick={() => handleSelectFeature("gym")}
                                       style={{
                                         border: "2px dashed #ccc",
                                         padding: "20px",
@@ -747,9 +748,7 @@ const TPRegistrationListing = () => {
                                   />
                                 </div>
                                 <div className="col-md-6 mt-4">
-                                  <label className="mb-1">
-                                    Washroom Image
-                                  </label>
+                                  <label className="mb-1">Washroom Image</label>
                                   {inptaPhotos.washroom ? (
                                     <div>
                                       <div
@@ -870,7 +869,11 @@ const TPRegistrationListing = () => {
                                   />
                                 </div>
                                 <div className="col-md-6 mt-4">
-                                  <label className="mb-1">Dustbin Image (Upload an image of the dustbin placement as part of hygiene verification.) </label>
+                                  <label className="mb-1">
+                                    Dustbin Image (Upload an image of the
+                                    dustbin placement as part of hygiene
+                                    verification.){" "}
+                                  </label>
                                   {inptaPhotos.dustbin ? (
                                     <div>
                                       <div
@@ -992,7 +995,9 @@ const TPRegistrationListing = () => {
                                 </div>
                                 <div className="col-md-6 mt-4">
                                   <label className="mb-1">
-                                    Medical Kit Image (Upload an image of the first aid or medical kit available at your center.)
+                                    Medical Kit Image (Upload an image of the
+                                    first aid or medical kit available at your
+                                    center.)
                                   </label>
                                   {inptaPhotos.medical_kit ? (
                                     <div>
@@ -1238,7 +1243,8 @@ const TPRegistrationListing = () => {
                                 </div>
                                 <div className="col-md-6 mt-4">
                                   <label className="mb-1">
-                                    Reception Image (Show a professional reception setup with staff (if applicable).)
+                                    Reception Image (Show a professional
+                                    reception setup with staff (if applicable).)
                                   </label>
                                   {inptaPhotos.reception ? (
                                     <div>
@@ -1360,7 +1366,10 @@ const TPRegistrationListing = () => {
                                   />
                                 </div>
                                 <div className="col-md-6 mt-4">
-                                  <label className="mb-1">Staff Image (Provide group/staff photos to verify the presence of qualified personnel.) </label>
+                                  <label className="mb-1">
+                                    Staff Image (Provide group/staff photos to
+                                    verify the presence of qualified personnel.){" "}
+                                  </label>
                                   {inptaPhotos.staff ? (
                                     <div>
                                       <div

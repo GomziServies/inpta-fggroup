@@ -62,7 +62,7 @@ const TPRegistrationSubmitCertificate = () => {
     setIsLoading(true);
     try {
       const postData = {
-        tc_status: 'tc_certificate',
+        tc_status: "tc_certificate",
         certificates: personalDetailsData.train_the_trainer,
       };
 
@@ -125,7 +125,7 @@ const TPRegistrationSubmitCertificate = () => {
         <link href="css/styles.css" rel="stylesheet" />
       </Helmet>
       <>
-        {loading && (
+        {(loading || isLoading) && (
           <div className="loader-background">
             <div className="spinner-box">
               <div className="three-quarter-spinner"></div>

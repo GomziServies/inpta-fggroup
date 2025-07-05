@@ -501,7 +501,6 @@ const TPRegistrationListing = () => {
           ],
         })),
       };
-
       await inptaListingAxiosInstance.post("/create-tc-listing", postData);
       updateData();
 
@@ -610,7 +609,7 @@ const TPRegistrationListing = () => {
         <link href="css/styles.css" rel="stylesheet" />
       </Helmet>
       <>
-        {loading && (
+        {(loading || isLoading) && (
           <div className="loader-background">
             <div className="spinner-box">
               <div className="three-quarter-spinner"></div>

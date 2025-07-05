@@ -27,7 +27,7 @@ export const createTPPayment = async (listing_id) => {
         handler: function (response) {
           Swal.fire({
             title: "Success",
-            text: "Please check your email for the invoice.",
+            text: "Your payment has been successfully processed.",
             icon: "success",
           }).then(() => {
             toast.success("Order created");

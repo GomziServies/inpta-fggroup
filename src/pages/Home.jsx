@@ -156,7 +156,7 @@ const Home = () => {
                       Learn More
                     </a>
                     <a
-                      href="/add-listing"
+                      href="/registration"
                       className="btn btn-light py-md-3 mt-2 px-md-5 animated slideInRight"
                     >
                       Apply for Accreditation

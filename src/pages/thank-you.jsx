@@ -84,7 +84,7 @@ const ThankYouPage = () => {
                     <h1 className="mb-4">Thank you for Listing!</h1>
                     <p className="mb-5">
                       We will contact you further. Our team will get back you
-                      soon. Please check your Email or Whatsapp.
+                      soon.
                     </p>
                     <button onClick={handleNextOpen} className="go-home">
                       Continue

@@ -502,7 +502,7 @@ const TPRegistrationListing = () => {
         })),
       };
 
-      await inptaListingAxiosInstance.post("/create-listing", postData);
+      await inptaListingAxiosInstance.post("/create-tc-listing", postData);
       updateData();
 
       setIsLoading(false);
@@ -896,7 +896,7 @@ const TPRegistrationListing = () => {
                           </div>
                         </div>
                       </div>
-                      {/* <div className="dashboard-list-wraps bg-white rounded mb-4">
+                      <div className="dashboard-list-wraps bg-white rounded mb-4">
                         <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                           <div className="dashboard-list-wraps-flx">
                             <h4 className="mb-0 ft-medium fs-md">
@@ -985,7 +985,7 @@ const TPRegistrationListing = () => {
                             </div>
                           </div>
                         </div>
-                      </div> */}
+                      </div>
 
                       <div className="dashboard-list-wraps bg-white rounded mb-4">
                         <div className="dashboard-list-wraps-head br-bottom py-3 px-3">

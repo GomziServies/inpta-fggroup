@@ -230,7 +230,7 @@ const AllListing = () => {
                 </div>
               </div>
               <div className="row g-4 justify-content-center">
-                {/* {educationData.map((education) => {
+                {educationData.map((education) => {
                   const description = education?.description;
                   const truncatedDescription =
                     description?.length > 90
@@ -270,8 +270,7 @@ const AllListing = () => {
                         </div>
                         <div className="text-center p-4 pb-0">
                           <h3 className="mb-0">{education.title}</h3>
-                          <div className="mb-3">
-                          </div>
+                          <div className="mb-3"></div>
                           <p className="mb-4">{truncatedDescription}</p>
                         </div>
                         <div className="d-flex border-top">
@@ -295,8 +294,8 @@ const AllListing = () => {
                       </div>
                     </div>
                   );
-                })} */}
-                <div className="col-12 d-flex flex-column align-items-center">
+                })}
+                {/* <div className="col-12 d-flex flex-column align-items-center">
                   <img
                     src="/images/listing-not-found.webp"
                     alt="listing"
@@ -306,8 +305,8 @@ const AllListing = () => {
                   <Link to="/add-listing" class="add-list-btn mt-2">
                     <i class="fas fa-plus me-2"></i>Add Listing
                   </Link>
-                </div>
-                {/* {educationData.length === 0 && !loadingOne && (
+                </div> */}
+                {educationData.length === 0 && !loadingOne && (
                   <div className="col-12 d-flex flex-column align-items-center">
                     <img
                       src="/images/listing-not-found.webp"
@@ -319,7 +318,7 @@ const AllListing = () => {
                       <i class="fas fa-plus me-2"></i>Add Listing
                     </Link>
                   </div>
-                )} */}
+                )}
                 {loadingOne && (
                   <div className="w-100 d-flex justify-content-center">
                     <div class="spinner-box spinner-width">

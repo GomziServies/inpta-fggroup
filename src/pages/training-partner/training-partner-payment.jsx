@@ -136,7 +136,7 @@ const TPRegistrationPayment = () => {
                                           </div>
                                           <div className="d-inline-block p-0 text-right">
                                             <p className="m-0 f-rob-med f-16">
-                                              ₹ {10000 || 0} /-
+                                              ₹ {25000 || 0} /-
                                             </p>
                                           </div>
                                         </div>
@@ -168,7 +168,7 @@ const TPRegistrationPayment = () => {
                                           <div className="d-inline-block p-0 text-right">
                                             <p className="m-0 f-rob-med f-16">
                                               <span className="f-rob-med f-16 text-green text-uppercase ml-1">
-                                                ₹ {10000 || 0} /-
+                                                ₹ {25000 || 0} /-
                                               </span>
                                             </p>
                                           </div>
@@ -185,7 +185,7 @@ const TPRegistrationPayment = () => {
                                       </div>
                                       <div className="d-inline-block">
                                         <p className="m-0 f-rob-med f-16">
-                                          ₹ {10000 || 0} /-
+                                          ₹ {25000 || 0} /-
                                         </p>
                                       </div>
                                     </div>

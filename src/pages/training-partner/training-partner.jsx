@@ -82,7 +82,7 @@ const TPRegistrationListing = () => {
     contactNumber: "",
     whatsappNumber: "",
     direction_link: "",
-    website: "",
+    // website: "",
     email: "",
   });
   const [personalDetailsData, setPersonalDetailsData] = useState({
@@ -391,7 +391,41 @@ const TPRegistrationListing = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Required fields check
+    const requiredFields = [
+      { value: profilePreview, label: "Profile Photo" },
+      { value: aadhaarPreview, label: "Aadhaar Card" },
+      { value: personalDetailsData.description, label: "Objective" },
+      { value: personalDetailsData.work_experience, label: "Work Experience" },
+      { value: personalDetailsData.qualification, label: "Qualification" },
+      { value: formData.contactNumber, label: "Contact Number" },
+      { value: formData.whatsappNumber, label: "WhatsApp Number" },
+      { value: formData.email, label: "Email" },
+      {
+        value: formData.address_line_1,
+        label: "Office No/Building Name/Office Name",
+      },
+      { value: formData.address_line_2, label: "Road Name/Area/Colony" },
+      { value: formData.city, label: "City" },
+      { value: formData.state, label: "State" },
+      { value: formData.pin_code, label: "Pin Code" },
+      { value: formData.direction_link, label: "Address Link" },
+    ];
+
+    const emptyField = requiredFields.find(
+      (field) => !field.value || field.value.trim() === ""
+    );
+
+    if (emptyField) {
+      toast.error(`Please fill the ${emptyField.label} field.`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      return;
+    }
+
     setIsLoading(true);
+
     try {
       const aadhaarUrl = await uploadAadhaar();
       const profileUrl = await uploadProfile();
@@ -426,10 +460,6 @@ const TPRegistrationListing = () => {
             value: formData.email,
           },
           {
-            contact_type: "website",
-            value: formData.website,
-          },
-          {
             contact_type: "whatsapp",
             value: formData.whatsappNumber,
           },
@@ -457,7 +487,7 @@ const TPRegistrationListing = () => {
     } catch (error) {
       console.error("Error uploading files:", error);
       setIsLoading(false);
-      toast.error(error?.message, {
+      toast.error(error?.message || "Something went wrong!", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
@@ -736,7 +766,7 @@ const TPRegistrationListing = () => {
                                     />
                                   </div>
                                 </div>
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                {/* <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                   <div className="form-group">
                                     <label className="mb-1">Website</label>
                                     <input
@@ -752,7 +782,7 @@ const TPRegistrationListing = () => {
                                       }
                                     />
                                   </div>
-                                </div>
+                                </div> */}
                                 <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                   <div className="form-group">
                                     <label className="mb-1">

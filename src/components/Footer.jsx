@@ -33,31 +33,48 @@ function Footer() {
             <div className="col-lg-4">
               <h4 className="text-white mb-3">Contact</h4>
               <p className="mb-2">
-                <i className="fa fa-map-marker-alt me-3"></i>2, Gomzi, Near Sumul dairy road, Katargam, Surat-395004
+                <i className="fa fa-map-marker-alt me-3"></i>2, Gomzi, Near
+                Sumul dairy road, Katargam, Surat-395004
               </p>
               <p className="mb-2">
                 <i className="fa fa-phone-alt me-3"></i>+91 63540 51487
               </p>
               <p className="mb-2">
-                <i className="fa fa-envelope me-3"></i>fitnesswithgomzi@gmail.com
+                <i className="fa fa-envelope me-3"></i>
+                fitnesswithgomzi@gmail.com
               </p>
             </div>
             <div className="col-lg-4">
               <h4 className="text-white mb-3">Links</h4>
               <div className="d-flex pt-2">
-                <Link className="btn btn-outline-light btn-social" to="https://api.whatsapp.com/send?phone=6354051487&text=Hello">
+                <Link
+                  className="btn btn-outline-light btn-social"
+                  to="https://api.whatsapp.com/send?phone=6354051487&text=Hello, I want to know more about INPTA accreditation service."
+                >
                   <i className="fab fa-whatsapp"></i>
                 </Link>
-                <Link className="btn btn-outline-light btn-social" to="https://www.instagram.com/fgiit.surat/">
+                <Link
+                  className="btn btn-outline-light btn-social"
+                  to="https://www.instagram.com/fgiit.surat/"
+                >
                   <i className="fab fa-instagram"></i>
                 </Link>
-                <Link className="btn btn-outline-light btn-social" to="https://www.facebook.com/gajani2">
+                <Link
+                  className="btn btn-outline-light btn-social"
+                  to="https://www.facebook.com/gajani2"
+                >
                   <i className="fab fa-facebook-f"></i>
                 </Link>
-                <Link className="btn btn-outline-light btn-social" to="https://www.youtube.com/@fgiitsurat5121">
+                <Link
+                  className="btn btn-outline-light btn-social"
+                  to="https://www.youtube.com/@fgiitsurat5121"
+                >
                   <i className="fab fa-youtube"></i>
                 </Link>
-                <Link className="btn btn-outline-light btn-social" to="https://www.linkedin.com/in/gautam-jani-561a50161">
+                <Link
+                  className="btn btn-outline-light btn-social"
+                  to="https://www.linkedin.com/in/gautam-jani-561a50161"
+                >
                   <i className="fab fa-linkedin-in"></i>
                 </Link>
               </div>

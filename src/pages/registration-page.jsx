@@ -260,7 +260,7 @@ const RegistrationPage = () => {
                                   </div>
                                   <div>
                                     <i className="fa fa-arrow-right text-primary me-1"></i>{" "}
-                                    80000 fees
+                                    50000 fees
                                   </div>
                                 </p>
                                 <p className="mb-2">
@@ -271,7 +271,7 @@ const RegistrationPage = () => {
                                   </div>
                                   <div>
                                     <i className="fa fa-arrow-right text-primary me-1"></i>{" "}
-                                    80000 fees
+                                    50000 fees
                                   </div>
                                 </p>
 
@@ -279,7 +279,7 @@ const RegistrationPage = () => {
                                   3. Auditor Verification
                                   <div>
                                     <i className="fa fa-arrow-right text-primary me-1"></i>{" "}
-                                    80000 fees
+                                    50000 fees
                                   </div>
                                 </p>
                               </div>

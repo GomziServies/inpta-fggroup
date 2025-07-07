@@ -286,7 +286,7 @@ const TPRegistrationSubmitCertificate = () => {
                                           </div>
                                           <div className="d-inline-block p-0 text-right">
                                             <p className="m-0 f-rob-med f-16">
-                                              ₹ {80000 || 0} /-
+                                              ₹ {50000 || 0} /-
                                             </p>
                                           </div>
                                         </div>
@@ -318,7 +318,7 @@ const TPRegistrationSubmitCertificate = () => {
                                           <div className="d-inline-block p-0 text-right">
                                             <p className="m-0 f-rob-med f-16">
                                               <span className="f-rob-med f-16 text-green text-uppercase ml-1">
-                                                ₹ {80000 || 0} /-
+                                                ₹ {50000 || 0} /-
                                               </span>
                                             </p>
                                           </div>
@@ -335,7 +335,7 @@ const TPRegistrationSubmitCertificate = () => {
                                       </div>
                                       <div className="d-inline-block">
                                         <p className="m-0 f-rob-med f-16">
-                                          ₹ {80000 || 0} /-
+                                          ₹ {50000 || 0} /-
                                         </p>
                                       </div>
                                     </div>

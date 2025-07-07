@@ -82,7 +82,7 @@ const TPRegistrationListing = () => {
     contactNumber: "",
     whatsappNumber: "",
     direction_link: "",
-    // website: "",
+    website: "",
     email: "",
   });
   const [personalDetailsData, setPersonalDetailsData] = useState({
@@ -460,6 +460,10 @@ const TPRegistrationListing = () => {
             value: formData.email,
           },
           {
+            contact_type: "website",
+            value: formData.website,
+          },
+          {
             contact_type: "whatsapp",
             value: formData.whatsappNumber,
           },
@@ -766,7 +770,7 @@ const TPRegistrationListing = () => {
                                     />
                                   </div>
                                 </div>
-                                {/* <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                   <div className="form-group">
                                     <label className="mb-1">Website</label>
                                     <input
@@ -782,7 +786,7 @@ const TPRegistrationListing = () => {
                                       }
                                     />
                                   </div>
-                                </div> */}
+                                </div>
                                 <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
                                   <div className="form-group">
                                     <label className="mb-1">

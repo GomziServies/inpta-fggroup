@@ -16,15 +16,40 @@ import Footer from "../../components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ProgressBar from "../../components/progress-bar/registration-progress-bar";
+import { useNavigate } from "react-router-dom";
 
 const TPRegistrationListing = () => {
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    checkExistingListing();
     setTimeout(() => {
       setLoading(false);
     }, 1000);
   }, []);
+
+  // Check if user has already submitted a form with tpform=true
+  const checkExistingListing = async () => {
+    setLoading(true);
+    try {
+      // Get the user's listings
+      const response = await inptaListingAxiosInstance.get("/get-tp-listing");
+      
+      if (response.data && response.data.data && response.data.data.length > 0) {
+        const formCompleted = response.data.data.find(listing => listing.tpform === true);
+        
+        if (formCompleted) {
+          localStorage.setItem("tp_listing_id", formCompleted._id);
+          navigate('/training-partner/payment');
+          return; 
+        }
+      }
+    } catch (error) {
+      console.error("Error checking existing listings:", error);
+    }
+    setLoading(false);
+  };
 
   const [mobileNumber, setMobileNumber] = useState("");
   const [otpCode, setOtpCode] = useState("");
@@ -99,6 +124,9 @@ const TPRegistrationListing = () => {
     setLoading(true);
     try {
       const response = await axiosInstance.get("/account/profile");
+
+      console.log("response====>", response);
+
       const userData = response.data.data;
       if (userData) {
         setUserData(userData.user);
@@ -468,6 +496,8 @@ const TPRegistrationListing = () => {
             value: formData.whatsappNumber,
           },
         ],
+        // Form is complete at this point, set tpform to true
+        tpform: true
       };
 
       const result = await inptaListingAxiosInstance.post(
@@ -477,14 +507,14 @@ const TPRegistrationListing = () => {
       updateData();
 
       if (result?.data?.data) {
-        toast.success("Listing created successfully!", {
+        toast.success("Registration form completed successfully!", {
           position: toast.POSITION.TOP_RIGHT,
         });
 
         localStorage.setItem("tp_listing_id", result?.data?.data?._id);
 
         setTimeout(() => {
-          window.location.href = "/training-partner/payment";
+          navigate('/training-partner/payment');
         }, 1500);
       }
       setIsLoading(false);

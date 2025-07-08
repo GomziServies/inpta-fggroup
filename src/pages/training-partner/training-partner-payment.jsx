@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Helmet } from "react-helmet";
 import "../../assets/css/style.css";
 import Header from "../../components/Header";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "rsuite/dist/rsuite.min.css";
 import Footer from "../../components/Footer";
@@ -11,69 +11,116 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ProgressBar from "../../components/progress-bar/registration-progress-bar";
 import { createTPPayment } from "../../assets/utils/tp_payment";
+import axiosInstance, { inptaListingAxiosInstance } from "../../js/api";
+import { useNavigate } from "react-router-dom";
 
 const TPRegistrationPayment = () => {
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [listingData, setListingData] = useState(null);
+  const [showContent, setShowContent] = useState(false);
   const listing_id = localStorage.getItem("tp_listing_id");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(() => {
+    async function verifyAccess() {
+      if (!listing_id) {
+        navigate("/training-partner");
+        return;
+      }
+
+      try {
+        const response = await inptaListingAxiosInstance.get(
+          `/get-tp-listing?listing_id=${listing_id}`
+        );
+
+        if (response.data?.data?.length > 0) {
+          const listing = response.data.data[0];
+
+          if (!listing.tpform) {
+            navigate("/training-partner");
+            return;
+          }
+          if (listing.tppayment === true) {
+            navigate("/training-center");
+            return;
+          }
+          setListingData(listing);
+          setShowContent(true);
+        } else {
+          navigate("/training-partner");
+          return;
+        }
+      } catch (error) {
+        console.error("Error fetching listing data:", error);
+        navigate("/training-partner");
+        return;
+      }
+
       setLoading(false);
-    }, 1000);
-  }, []);
+    }
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   setIsLoading(true);
-  //   try {
-  //     const postData = {
-  //       // logo: logoUrl,
-  //     };
-
-  //     await inptaListingAxiosInstance.post("/create-tc-listing", postData);
-  //     setIsLoading(false);
-  //     toast.success("Listing created successfully!", {
-  //       position: toast.POSITION.TOP_RIGHT,
-  //     });
-
-  //     Swal.fire({
-  //       title: "Success",
-  //       text: "We will contact you further. Our team will get back you soon.",
-  //       showCancelButton: false,
-  //       confirmButtonColor: "#3085d6",
-  //       cancelButtonColor: "#d33",
-  //       confirmButtonText: "Okay",
-  //     }).then(async (result) => {
-  //       if (result.isConfirmed) {
-  //         window.location.href = "/training-center";
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.error("Error uploading files:", error);
-  //     setIsLoading(false);
-  //     toast.error(error?.message, {
-  //       position: toast.POSITION.TOP_RIGHT,
-  //     });
-  //   }
-  // };
+    verifyAccess();
+  }, [listing_id, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
+      let paymentResult;
       try {
-        await createTPPayment(listing_id);
+        paymentResult = await createTPPayment(listing_id);
       } catch (error) {
-        console.error("Error during order:", error);
+        console.error("Error during payment:", error);
+        toast.error("Payment failed. Please try again.");
+        setIsLoading(false);
+        return;
       }
-      window.Razorpay && window.Razorpay.close && window.Razorpay.close();
+
+      if (paymentResult && paymentResult.success) {
+        try {
+          await inptaListingAxiosInstance.patch("/update-tp-listing", {
+            listing_id: listing_id,
+            tppayment: true,
+            personal_details: {
+              work_experience:
+                listingData?.personal_details?.work_experience || "",
+              qualification: listingData?.personal_details?.qualification || "",
+            },
+          });
+
+          toast.success("Payment successful!");
+          setTimeout(() => {
+            navigate("/training-center");
+          }, 1500);
+        } catch (updateError) {
+          console.error("Error updating payment status:", updateError);
+          toast.error(
+            "Payment was processed but status update failed. Please contact support."
+          );
+        }
+      }
+
+      if (window.Razorpay && window.Razorpay.close) {
+        window.Razorpay.close();
+      }
       window.scrollTo(0, 0);
     } catch (error) {
       console.error("Error in handleFormSubmit:", error);
+      toast.error("Something went wrong. Please try again.");
     }
     setIsLoading(false);
   };
+
+  if (!showContent) {
+    return (
+      <div className="loader-background">
+        <div className="spinner-box">
+          <div className="three-quarter-spinner"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -81,10 +128,10 @@ const TPRegistrationPayment = () => {
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Add Your Listing - Get Featured on Our Platform</title>
+        <title>Payment - Complete Your Registration</title>
         <meta
           name="description"
-          content="Add your inpta to our platform and boost visibility. Showcase your services, attract customers, and grow your brand with our easy listing process!"
+          content="Complete your registration by making the payment and get access to all features."
         />
         <link
           rel="shortcut icon"
@@ -117,7 +164,7 @@ const TPRegistrationPayment = () => {
                             <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                               <div className="dashboard-list-wraps-flx">
                                 <h4 className="mb-0 ft-medium fs-md">
-                                  <i class="fa fa-file-invoice me-2 theme-cl fs-sm"></i>
+                                  <i className="fa fa-file-invoice me-2 theme-cl fs-sm"></i>
                                   Payment Info
                                 </h4>
                               </div>
@@ -196,6 +243,7 @@ const TPRegistrationPayment = () => {
                                     <button
                                       className="btn theme-bg rounded text-light add-listing-btn"
                                       onClick={handleSubmit}
+                                      disabled={loading || isLoading}
                                     >
                                       Pay & Continue
                                     </button>

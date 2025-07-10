@@ -77,30 +77,6 @@ const TPRegistrationPayment = () => {
         return;
       }
 
-      if (paymentResult && paymentResult.success) {
-        try {
-          await inptaListingAxiosInstance.patch("/update-tp-listing", {
-            listing_id: listing_id,
-            tppayment: true,
-            personal_details: {
-              work_experience:
-                listingData?.personal_details?.work_experience || "",
-              qualification: listingData?.personal_details?.qualification || "",
-            },
-          });
-
-          toast.success("Payment successful!");
-          setTimeout(() => {
-            navigate("/training-center");
-          }, 1500);
-        } catch (updateError) {
-          console.error("Error updating payment status:", updateError);
-          toast.error(
-            "Payment was processed but status update failed. Please contact support."
-          );
-        }
-      }
-
       if (window.Razorpay && window.Razorpay.close) {
         window.Razorpay.close();
       }

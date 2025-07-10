@@ -19,22 +19,40 @@ export const createTPPayment = async (listing_id) => {
           text: "Razorpay SDK failed to load. Please try again.",
           icon: "error",
         });
-        return;
+        return { showLoginModal: false, success: false };
       }
 
       const options = {
         hidden: { contact: false, email: false },
-        handler: function (response) {
-          Swal.fire({
-            title: "Success",
-            text: "Your payment has been successfully processed.",
-            icon: "success",
-          }).then(() => {
-            toast.success("Order created");
-            localStorage.removeItem("tp_listing_id");
-            localStorage.setItem("tp_listing_submitted", true);
-            window.location.href = "/thank-you";
-          });
+        handler: async function (response) {
+          try {
+            await inptaListingAxiosInstance.patch("/update-tp-listing", {
+              listing_id: listing_id,
+              tppayment: true,
+              personal_details: {
+                work_experience: "",
+                qualification: "",
+              },
+            });
+
+            Swal.fire({
+              title: "Success",
+              text: "Your payment has been successfully processed.",
+              icon: "success",
+            }).then(() => {
+              toast.success("Order created");
+              localStorage.removeItem("tp_listing_id");
+              localStorage.setItem("tp_listing_submitted", true);
+              window.location.href = "/thank-you";
+            });
+          } catch (error) {
+            console.error("Error updating payment status:", error);
+            Swal.fire({
+              title: "Error",
+              text: "Payment was processed but status update failed. Please contact support.",
+              icon: "error",
+            });
+          }
         },
       };
 
@@ -49,13 +67,14 @@ export const createTPPayment = async (listing_id) => {
   } catch (error) {
     if (error.response && error.response.data.status === 401) {
       console.log("error response");
-      return { showLoginModal: true };
+      return { showLoginModal: true, success: false };
     } else {
       Swal.fire({
         title: "Error",
         text: error.message || "An error occurred during the order creation.",
         icon: "error",
       });
+      return { showLoginModal: false, success: false };
     }
   }
 };

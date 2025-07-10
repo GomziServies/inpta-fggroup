@@ -355,7 +355,6 @@ const TPRegistrationListing = () => {
           return { [photo.value]: photoResponse.data.data.fileURLs[0] };
         })
       );
-
       uploadedUrls = photoUrls;
     } catch (error) {
       console.error("Error uploading Feature files:", error);
@@ -363,6 +362,7 @@ const TPRegistrationListing = () => {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
+    
     return uploadedUrls;
   };
 
@@ -372,11 +372,26 @@ const TPRegistrationListing = () => {
     try {
       const uploadedUrls = await uploadFeatureImage();
       const logoUrl = await uploadLogo();
-
+      
+      // Transform the uploaded URLs into the required format
+      const imagesArray = [];
+      const imagesObject = {};
+      
+      // Process each image URL and organize them by category
+      uploadedUrls.forEach(urlObj => {
+        const key = Object.keys(urlObj)[0];
+        const value = urlObj[key];
+        imagesObject[key] = value;
+      });
+      
+      // Add the formatted object to the images array
+      imagesArray.push(imagesObject);
+      
       const postData = {
-        tc_status: "tc_list",
+        title: formData.title || "Fitness Gym",
+        description: formData.description || "A fitness center is a broader term than a gym. While it includes everything a gym offers, it often also provides additional facilities.",
         logo: logoUrl,
-        images: uploadedUrls.flat(),
+        images: imagesArray,
         document: [
           {
             pan_card: personalDetailsData.pan_card,
@@ -385,6 +400,7 @@ const TPRegistrationListing = () => {
             dnc_certificate: personalDetailsData.dnc_certificate,
           },
         ],
+        tc_status: "tc_list",
       };
 
       const result = await inptaListingAxiosInstance.post(
@@ -392,7 +408,6 @@ const TPRegistrationListing = () => {
         postData
       );
       updateData();
-
       if (result) {
         toast.success("Listing created successfully!", {
           position: toast.POSITION.TOP_RIGHT,
@@ -404,7 +419,7 @@ const TPRegistrationListing = () => {
       }
 
       setIsLoading(false);
-      window.location.href = "/training-center/submit-certificate";
+      // window.location.href = "/training-center/submit-certificate";
     } catch (error) {
       console.error("Error uploading files:", error);
       setIsLoading(false);
@@ -492,62 +507,54 @@ const TPRegistrationListing = () => {
                       </div>
                       <div className="col-xl-12 col-md-12 col-sm-12">
                         <div className="submit-form">
-                          {/* <div className="dashboard-list-wraps bg-white rounded mb-4">
+                          <div className="dashboard-list-wraps bg-white rounded mb-4">
                             <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                               <div className="dashboard-list-wraps-flx">
                                 <h4 className="mb-0 ft-medium fs-md">
                                   <i className="fa fa-file me-2 theme-cl fs-sm" />
-                                  Mobile Verification
+                                  Basic Information
                                 </h4>
                               </div>
                             </div>
                             <div className="dashboard-list-wraps-body bg-white py-3 px-3">
-                              <div className="row align-items-end">
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                              <div className="row">
+                                <div className="col-md-6 mt-2">
                                   <div className="form-group">
-                                    <label className="mb-1">Mobile No.</label>
+                                    <label className="mb-1">Title</label>
                                     <input
                                       type="text"
                                       className="form-control rounded"
-                                      placeholder="Enter Mobile No."
-                                      value={formData.contactNumber}
+                                      placeholder="Enter Title"
+                                      value={formData.title}
                                       onChange={(e) =>
                                         handleInputChange(
-                                          "contactNumber",
+                                          "title",
                                           e.target.value
                                         )
                                       }
                                     />
                                   </div>
                                 </div>
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+                                <div className="col-md-12 mt-3">
                                   <div className="form-group">
-                                    <label className="mb-1">OTP</label>
-                                    <input
-                                      type="text"
+                                    <label className="mb-1">Description</label>
+                                    <textarea
                                       className="form-control rounded"
-                                      placeholder="Enter OTP"
-                                      value={formData.website}
+                                      placeholder="Enter Description"
+                                      rows="4"
+                                      value={formData.description}
                                       onChange={(e) =>
                                         handleInputChange(
-                                          "website",
+                                          "description",
                                           e.target.value
                                         )
                                       }
                                     />
                                   </div>
-                                </div>
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12">
-                                  <button
-                                    className="btn theme-bg rounded text-light add-listing-btn"
-                                    onClick={handleSubmit}
-                                  >
-                                    Submit OTP
-                                  </button>
                                 </div>
                               </div>
                             </div>
-                          </div> */}
+                          </div>
                           <div className="dashboard-list-wraps bg-white rounded mb-4">
                             <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                               <div className="dashboard-list-wraps-flx">
@@ -570,7 +577,7 @@ const TPRegistrationListing = () => {
                                       {loadingOne && (
                                         <div className="w-100 d-flex justify-content-center position-absolute">
                                           <div class="spinner-box spinner-width">
-                                            <div class="three-quarter-spinner three-quarter-spinner-width"></div>
+                                            <div className="three-quarter-spinner three-quarter-spinner-width"></div>
                                           </div>
                                         </div>
                                       )}

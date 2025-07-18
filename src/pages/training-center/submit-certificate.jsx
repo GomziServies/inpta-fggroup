@@ -170,21 +170,7 @@ const TPRegistrationSubmitCertificate = () => {
       
       if (personalDetailsData.train_the_trainer) {
         // Convert base64 to blob
-        let certBlob = personalDetailsData.train_the_trainer;
-        
-        if (typeof certBlob === "string" && certBlob.startsWith('data:')) {
-          const byteString = atob(certBlob.split(",")[1]);
-          const mimeString = certBlob
-            .split(",")[0]
-            .split(":")[1]
-            .split(";")[0];
-          const ab = new ArrayBuffer(byteString.length);
-          const ia = new Uint8Array(ab);
-          for (let i = 0; i < byteString.length; i++) {
-            ia[i] = byteString.charCodeAt(i);
-          }
-          certBlob = new Blob([ab], { type: mimeString });
-        }
+        const certBlob = await base64ToBlob(personalDetailsData.train_the_trainer);
         
         if (certBlob) {
           const certFormData = new FormData();
@@ -202,6 +188,7 @@ const TPRegistrationSubmitCertificate = () => {
       const postData = {
         listing_id: listingId,
         certificates: certificateUrl,
+        certificateSubmitted: false,
         tc_status: "tc_certificate",
       };
 
@@ -227,6 +214,27 @@ const TPRegistrationSubmitCertificate = () => {
       toast.error(error?.message || "Error uploading certificate", {
         position: toast.POSITION.TOP_RIGHT,
       });
+    }
+  };
+  
+  // Helper function to convert base64 to Blob
+  const base64ToBlob = async (base64String) => {
+    if (!base64String || typeof base64String !== "string") return null;
+    
+    try {
+      const byteString = atob(base64String.split(",")[1]);
+      const mimeString = base64String.split(",")[0].split(":")[1].split(";")[0];
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      
+      return new Blob([ab], { type: mimeString });
+    } catch (error) {
+      console.error("Error converting base64 to blob:", error);
+      return null;
     }
   };
 

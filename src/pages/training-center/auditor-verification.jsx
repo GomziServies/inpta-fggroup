@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet";
 import "../../assets/css/style.css";
 import Header from "../../components/Header";
 import { inptaListingAxiosInstance } from "../../js/api";
+import axiosInstance from "../../js/api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
@@ -304,10 +305,125 @@ const AuditorVerification = () => {
     event.preventDefault();
     setIsLoading(true);
     try {
+      const documentData = {};
+      const imagesData = {};
+      
+      if (personalDetailsData.profile_photo) {
+        const profilePhotoBlob = await base64ToBlob(personalDetailsData.profile_photo);
+        const profileFormData = new FormData();
+        profileFormData.append("files", profilePhotoBlob);
+        const profileResponse = await axiosInstance.post("/file-upload", profileFormData);
+        documentData.profile_photo = profileResponse.data.data.fileURLs[0];
+      }
+      
+      if (personalDetailsData.aadhaar_card) {
+        const aadhaarBlob = await base64ToBlob(personalDetailsData.aadhaar_card);
+        const aadhaarFormData = new FormData();
+        aadhaarFormData.append("files", aadhaarBlob);
+        const aadhaarResponse = await axiosInstance.post("/file-upload", aadhaarFormData);
+        documentData.aadhaar_card = aadhaarResponse.data.data.fileURLs[0];
+      }
+      
+      if (personalDetailsData.pan_card) {
+        const panBlob = await base64ToBlob(personalDetailsData.pan_card);
+        const panFormData = new FormData();
+        panFormData.append("files", panBlob);
+        const panResponse = await axiosInstance.post("/file-upload", panFormData);
+        documentData.pan_card = panResponse.data.data.fileURLs[0];
+      }
+      
+      if (personalDetailsData.gst_certificate) {
+        const gstBlob = await base64ToBlob(personalDetailsData.gst_certificate);
+        const gstFormData = new FormData();
+        gstFormData.append("files", gstBlob);
+        const gstResponse = await axiosInstance.post("/file-upload", gstFormData);
+        documentData.gst_certificate = gstResponse.data.data.fileURLs[0];
+      }
+      
+      if (personalDetailsData.dpt_certificate) {
+        const dptBlob = await base64ToBlob(personalDetailsData.dpt_certificate);
+        const dptFormData = new FormData();
+        dptFormData.append("files", dptBlob);
+        const dptResponse = await axiosInstance.post("/file-upload", dptFormData);
+        documentData.dpt_certificate = dptResponse.data.data.fileURLs[0];
+      }
+      
+      if (personalDetailsData.dnc_certificate) {
+        const dncBlob = await base64ToBlob(personalDetailsData.dnc_certificate);
+        const dncFormData = new FormData();
+        dncFormData.append("files", dncBlob);
+        const dncResponse = await axiosInstance.post("/file-upload", dncFormData);
+        documentData.dnc_certificate = dncResponse.data.data.fileURLs[0];
+      }
+      
+      // Process INPTA Photos (images)
+      if (inptaPhotos.washroom) {
+        const washroomBlob = await base64ToBlob(inptaPhotos.washroom);
+        const washroomFormData = new FormData();
+        washroomFormData.append("files", washroomBlob);
+        const washroomResponse = await axiosInstance.post("/file-upload", washroomFormData);
+        imagesData.washroom = washroomResponse.data.data.fileURLs[0];
+      }
+      
+      if (inptaPhotos.dustbin) {
+        const dustbinBlob = await base64ToBlob(inptaPhotos.dustbin);
+        const dustbinFormData = new FormData();
+        dustbinFormData.append("files", dustbinBlob);
+        const dustbinResponse = await axiosInstance.post("/file-upload", dustbinFormData);
+        imagesData.dustbin = dustbinResponse.data.data.fileURLs[0];
+      }
+      
+      if (inptaPhotos.medical_kit) {
+        const medicalKitBlob = await base64ToBlob(inptaPhotos.medical_kit);
+        const medicalKitFormData = new FormData();
+        medicalKitFormData.append("files", medicalKitBlob);
+        const medicalKitResponse = await axiosInstance.post("/file-upload", medicalKitFormData);
+        imagesData.medical_kit = medicalKitResponse.data.data.fileURLs[0];
+      }
+      
+      if (inptaPhotos.gym_area) {
+        const gymAreaBlob = await base64ToBlob(inptaPhotos.gym_area);
+        const gymAreaFormData = new FormData();
+        gymAreaFormData.append("files", gymAreaBlob);
+        const gymAreaResponse = await axiosInstance.post("/file-upload", gymAreaFormData);
+        imagesData.gym_area = gymAreaResponse.data.data.fileURLs[0];
+      }
+      
+      if (inptaPhotos.reception) {
+        const receptionBlob = await base64ToBlob(inptaPhotos.reception);
+        const receptionFormData = new FormData();
+        receptionFormData.append("files", receptionBlob);
+        const receptionResponse = await axiosInstance.post("/file-upload", receptionFormData);
+        imagesData.reception = receptionResponse.data.data.fileURLs[0];
+      }
+      
+      if (inptaPhotos.staff) {
+        const staffBlob = await base64ToBlob(inptaPhotos.staff);
+        const staffFormData = new FormData();
+        staffFormData.append("files", staffBlob);
+        const staffResponse = await axiosInstance.post("/file-upload", staffFormData);
+        imagesData.staff = staffResponse.data.data.fileURLs[0];
+      }
+      
+      let logoUrl = "";
+      if (logoPreview) {
+        const logoBlob = await base64ToBlob(logoPreview);
+        const logoFormData = new FormData();
+        logoFormData.append("files", logoBlob);
+        const logoResponse = await axiosInstance.post("/file-upload", logoFormData);
+        logoUrl = logoResponse.data.data.fileURLs[0];
+      }
+
       const postData = {
         listing_id: listingId,
         tc_status: "tc_auditor",
+        images: [imagesData],
+        document: [documentData]
       };
+      
+      if (logoUrl) {
+        postData.logo = logoUrl;
+      }
 
       const result = await inptaListingAxiosInstance.patch(
         "/update-tc-listing",
@@ -2158,3 +2274,24 @@ async function getCroppedImg(imageSrc, pixelCrop) {
 
   return canvas.toDataURL("image/jpeg");
 }
+
+// Helper function to convert base64 to Blob
+const base64ToBlob = async (base64String) => {
+  if (!base64String || typeof base64String !== "string") return null;
+  
+  try {
+    const byteString = atob(base64String.split(",")[1]);
+    const mimeString = base64String.split(",")[0].split(":")[1].split(";")[0];
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    
+    return new Blob([ab], { type: mimeString });
+  } catch (error) {
+    console.error("Error converting base64 to blob:", error);
+    return null;
+  }
+};

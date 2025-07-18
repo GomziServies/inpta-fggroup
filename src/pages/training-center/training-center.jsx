@@ -21,9 +21,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ProgressBar from "../../components/progress-bar/registration-progress-bar";
 import { createTCPayment } from "../../assets/utils/tc_payment";
+import { useNavigate } from "react-router-dom";
 
 const TPRegistrationListing = () => {
   const [loading, setLoading] = useState(true);
+  const [checkingFormStatus, setCheckingFormStatus] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
@@ -103,7 +106,35 @@ const TPRegistrationListing = () => {
 
   useEffect(() => {
     getUserData();
+    checkTcFormStatus();
   }, []);
+
+  const checkTcFormStatus = async () => {
+    setCheckingFormStatus(true);
+    try {
+      const response = await inptaListingAxiosInstance.get("/get-tc-listing");
+      if (response?.data?.data?.length > 0) {
+        const listing = response.data.data[0];
+        
+        localStorage.setItem("tc_listing_id", listing._id);
+        
+        if (listing.tcPayment === true) {
+          localStorage.setItem("tc_listing_submitted", "true");
+          navigate("/training-center/submit-certificate");
+          return;
+        }
+        
+        if (listing.tcForm === true && listing.tcPayment === false) {
+          navigate("/training-center/payment");
+          return;
+        }
+      }
+    } catch (error) {
+      console.error("Error checking TC form status:", error);
+    } finally {
+      setCheckingFormStatus(false);
+    }
+  };
 
   // ----------------------------------------------------------------------------------
 
@@ -366,42 +397,88 @@ const TPRegistrationListing = () => {
     return uploadedUrls;
   };
 
+  const uploadPersonalDocuments = async () => {
+    let documentUrls = {};
+    try {
+  
+      const documentFields = ['pan_card', 'gst_certificate', 'dpt_certificate', 'dnc_certificate'];
+      
+      for (const field of documentFields) {
+        if (personalDetailsData[field]) {
+          let docBlob = personalDetailsData[field];
+          
+          if (typeof docBlob === "string" && docBlob.startsWith('data:')) {
+  
+            const byteString = atob(docBlob.split(",")[1]);
+            const mimeString = docBlob
+              .split(",")[0]
+              .split(":")[1]
+              .split(";")[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+              ia[i] = byteString.charCodeAt(i);
+            }
+            docBlob = new Blob([ab], { type: mimeString });
+          }
+          
+          if (docBlob) {
+            const docFormData = new FormData();
+            docFormData.append("files", docBlob);
+            
+            const docResponse = await axiosInstance.post(
+              "/file-upload",
+              docFormData
+            );
+            
+            documentUrls[field] = docResponse.data.data.fileURLs[0];
+          }
+        }
+      }
+      
+      return documentUrls;
+    } catch (error) {
+      console.error("Error uploading document files:", error);
+      toast.error("Error uploading document files. Please try again.", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      throw error;
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     try {
       const uploadedUrls = await uploadFeatureImage();
       const logoUrl = await uploadLogo();
+      const documentUrls = await uploadPersonalDocuments();
+     
+      const imagesObject = {
+        gym: uploadedUrls.find(url => url.gym)?.gym || '',
+        washroom: uploadedUrls.find(url => url.washroom)?.washroom || '',
+        dustbin: uploadedUrls.find(url => url.dustbin)?.dustbin || '',
+        medical_kit: uploadedUrls.find(url => url.medical_kit)?.medical_kit || '',
+        gym_area: uploadedUrls.find(url => url.gym_area)?.gym_area || '',
+        reception: uploadedUrls.find(url => url.reception)?.reception || '',
+        staff: uploadedUrls.find(url => url.staff)?.staff || ''
+      };
       
-      // Transform the uploaded URLs into the required format
-      const imagesArray = [];
-      const imagesObject = {};
-      
-      // Process each image URL and organize them by category
-      uploadedUrls.forEach(urlObj => {
-        const key = Object.keys(urlObj)[0];
-        const value = urlObj[key];
-        imagesObject[key] = value;
-      });
-      
-      // Add the formatted object to the images array
-      imagesArray.push(imagesObject);
+      const documentObject = {
+        pan_card: documentUrls.pan_card || '',
+        gst_certificate: documentUrls.gst_certificate || '',
+        dpt_certificate: documentUrls.dpt_certificate || '',
+        dnc_certificate: documentUrls.dnc_certificate || '',
+      };
       
       const postData = {
-        title: formData.title || "Fitness Gym",
-        description: formData.description || "A fitness center is a broader term than a gym. While it includes everything a gym offers, it often also provides additional facilities.",
         logo: logoUrl,
-        images: imagesArray,
-        document: [
-          {
-            pan_card: personalDetailsData.pan_card,
-            gst_certificate: personalDetailsData.gst_certificate,
-            dpt_certificate: personalDetailsData.dpt_certificate,
-            dnc_certificate: personalDetailsData.dnc_certificate,
-          },
-        ],
+        images: [imagesObject], 
+        document: [documentObject], 
+        tcForm: true, 
         tc_status: "tc_list",
       };
+      console.log("Post Data:", postData);
 
       const result = await inptaListingAxiosInstance.post(
         "/create-tc-listing",
@@ -413,13 +490,16 @@ const TPRegistrationListing = () => {
           position: toast.POSITION.TOP_RIGHT,
         });
 
+        if (result?.data?.data?._id) {
+          localStorage.setItem("tc_listing_id", result.data.data._id);
+        }
+
         setTimeout(() => {
-          handlePaymentSubmit(result?.data?.data?._id);
+          navigate("/training-center/payment");
         }, 500);
       }
 
       setIsLoading(false);
-      // window.location.href = "/training-center/submit-certificate";
     } catch (error) {
       console.error("Error uploading files:", error);
       setIsLoading(false);
@@ -483,7 +563,7 @@ const TPRegistrationListing = () => {
         <link href="css/styles.css" rel="stylesheet" />
       </Helmet>
       <>
-        {(loading || isLoading) && (
+        {(loading || isLoading || checkingFormStatus) && (
           <div className="loader-background">
             <div className="spinner-box">
               <div className="three-quarter-spinner"></div>
@@ -507,54 +587,6 @@ const TPRegistrationListing = () => {
                       </div>
                       <div className="col-xl-12 col-md-12 col-sm-12">
                         <div className="submit-form">
-                          <div className="dashboard-list-wraps bg-white rounded mb-4">
-                            <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
-                              <div className="dashboard-list-wraps-flx">
-                                <h4 className="mb-0 ft-medium fs-md">
-                                  <i className="fa fa-file me-2 theme-cl fs-sm" />
-                                  Basic Information
-                                </h4>
-                              </div>
-                            </div>
-                            <div className="dashboard-list-wraps-body bg-white py-3 px-3">
-                              <div className="row">
-                                <div className="col-md-6 mt-2">
-                                  <div className="form-group">
-                                    <label className="mb-1">Title</label>
-                                    <input
-                                      type="text"
-                                      className="form-control rounded"
-                                      placeholder="Enter Title"
-                                      value={formData.title}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          "title",
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                                <div className="col-md-12 mt-3">
-                                  <div className="form-group">
-                                    <label className="mb-1">Description</label>
-                                    <textarea
-                                      className="form-control rounded"
-                                      placeholder="Enter Description"
-                                      rows="4"
-                                      value={formData.description}
-                                      onChange={(e) =>
-                                        handleInputChange(
-                                          "description",
-                                          e.target.value
-                                        )
-                                      }
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
                           <div className="dashboard-list-wraps bg-white rounded mb-4">
                             <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
                               <div className="dashboard-list-wraps-flx">

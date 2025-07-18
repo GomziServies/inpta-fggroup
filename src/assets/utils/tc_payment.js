@@ -24,16 +24,32 @@ export const createTCPayment = async (listing_id) => {
 
       const options = {
         hidden: { contact: false, email: false },
-        handler: function (response) {
+        handler: async function (response) {
+          try {
+            await inptaListingAxiosInstance.patch("/update-tc-listing", {
+              listing_id: listing_id,
+              tcPayment: true
+            });
+
           Swal.fire({
             title: "Success",
             text: "Your payment has been successfully processed.",
             icon: "success",
           }).then(() => {
-            toast.success("Order created");
-            localStorage.setItem("tc_listing_submitted", true);
-            window.location.href = "/thank-you";
+              toast.success("Payment successful");
+              
+              localStorage.setItem("tc_listing_submitted", "true");
+              
+              window.location.href = "/training-center/submit-certificate";
           });
+          } catch (error) {
+            console.error("Error updating payment status:", error);
+            Swal.fire({
+              title: "Error",
+              text: "Payment was processed but status update failed. Please contact support.",
+              icon: "error",
+            });
+          }
         },
       };
 
@@ -81,16 +97,31 @@ export const createTCSubmitCertificatePayment = async (listing_id) => {
 
       const options = {
         hidden: { contact: false, email: false },
-        handler: function (response) {
+        handler: async function (response) {
+          try {
+            // Update the listing to set certificate submission status
+            const updateResult = await inptaListingAxiosInstance.patch("/update-tc-listing", {
+              listing_id: listing_id,
+              certificateSubmitted: true
+            });
+            
           Swal.fire({
             title: "Success",
             text: "Your payment has been successfully processed.",
             icon: "success",
           }).then(() => {
-            toast.success("Order created");
-            localStorage.setItem("tc_listing_certificate_submitted", true);
-            window.location.href = "/thank-you";
-          });
+              toast.success("Certificate submission complete");
+              localStorage.setItem("tc_listing_certificate_submitted", "true");
+              window.location.href = "/training-center/auditor-verification";
+            });
+          } catch (error) {
+            console.error("Error updating certificate status:", error);
+            Swal.fire({
+              title: "Error",
+              text: "Payment was processed but status update failed. Please contact support.",
+              icon: "error",
+            });
+          }
         },
       };
 
@@ -138,16 +169,31 @@ export const createTCAuditorVerificationPayment = async (listing_id) => {
 
       const options = {
         hidden: { contact: false, email: false },
-        handler: function (response) {
+        handler: async function (response) {
+          try {
+            // Update the listing to set auditor verification status
+            await inptaListingAxiosInstance.patch("/update-tc-listing", {
+              listing_id: listing_id,
+              auditorVerified: true
+            });
+            
           Swal.fire({
             title: "Success",
             text: "Your payment has been successfully processed.",
             icon: "success",
           }).then(() => {
-            toast.success("Order created");
-            localStorage.setItem("tc_listing_auditor_submitted", true);
+              toast.success("Auditor verification complete");
+              localStorage.setItem("tc_listing_auditor_submitted", "true");
             window.location.href = "/thank-you";
           });
+          } catch (error) {
+            console.error("Error updating auditor verification status:", error);
+            Swal.fire({
+              title: "Error",
+              text: "Payment was processed but status update failed. Please contact support.",
+              icon: "error",
+            });
+          }
         },
       };
 

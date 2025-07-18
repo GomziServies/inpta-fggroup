@@ -21,6 +21,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ProgressBar from "../../components/progress-bar/registration-progress-bar";
 import { createTCSubmitCertificatePayment } from "../../assets/utils/tc_payment";
+import { useNavigate } from "react-router-dom";
 
 const TPRegistrationSubmitCertificate = () => {
   const [loading, setLoading] = useState(true);
@@ -29,12 +30,115 @@ const TPRegistrationSubmitCertificate = () => {
   const [personalDetailsData, setPersonalDetailsData] = useState({
     train_the_trainer: null,
   });
+  const [checkingStatus, setCheckingStatus] = useState(true);
+  const [listingId, setListingId] = useState(null);
+  const [showContent, setShowContent] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
+    
+    checkCertificateStatus();
   }, []);
+  
+  const checkCertificateStatus = async () => {
+    setCheckingStatus(true);
+    try {
+      const storedListingId = localStorage.getItem("tc_listing_id");
+      
+      if (!storedListingId) {
+        const response = await inptaListingAxiosInstance.get("/get-tc-listing");
+        
+        if (response?.data?.data?.length > 0) {
+          const listing = response.data.data[0];
+          setListingId(listing._id);
+          localStorage.setItem("tc_listing_id", listing._id);
+          
+          if (listing.certificateSubmitted === true) {
+            toast.info("Certificate already submitted. Redirecting to auditor verification...");
+            localStorage.setItem("tc_listing_certificate_submitted", "true");
+            setTimeout(() => {
+              navigate("/training-center/auditor-verification");
+            }, 2000);
+            return;
+          }
+          
+          if (!listing.tcForm) {
+            toast.error("Please complete training center registration first");
+            setTimeout(() => {
+              navigate("/training-center");
+            }, 2000);
+            return;
+          }
+          
+          if (!listing.tcPayment) {
+            toast.error("Please complete payment first");
+            setTimeout(() => {
+              navigate("/training-center/payment");
+            }, 2000);
+            return;
+          }
+          
+          setShowContent(true);
+        } else {
+          toast.error("No training center listing found. Please create one first.");
+          setTimeout(() => {
+            navigate("/training-center");
+          }, 2000);
+          return;
+        }
+      } else {
+        setListingId(storedListingId);
+        
+        const response = await inptaListingAxiosInstance.get(`/get-tc-listing?listing_id=${storedListingId}`);
+        
+        if (response?.data?.data?.length > 0) {
+          const listing = response.data.data[0];
+          
+          if (listing.certificateSubmitted === true) {
+            toast.info("Certificate already submitted. Redirecting to auditor verification...");
+            localStorage.setItem("tc_listing_certificate_submitted", "true");
+            setTimeout(() => {
+              navigate("/training-center/auditor-verification");
+            }, 2000);
+            return;
+          }
+          
+          if (!listing.tcForm) {
+            toast.error("Please complete training center registration first");
+            setTimeout(() => {
+              navigate("/training-center");
+            }, 2000);
+            return;
+          }
+          
+          if (!listing.tcPayment) {
+            toast.error("Please complete payment first");
+            setTimeout(() => {
+              navigate("/training-center/payment");
+            }, 2000);
+            return;
+          }
+          
+          setShowContent(true);
+        } else {
+          toast.error("Training center listing not found. Please create one first.");
+          localStorage.removeItem("tc_listing_id");
+          setTimeout(() => {
+            navigate("/training-center");
+          }, 2000);
+          return;
+        }
+      }
+    } catch (error) {
+      console.error("Error checking certificate status:", error);
+      toast.error("Error checking status. Please try again.");
+    } finally {
+      setCheckingStatus(false);
+    }
+  };
 
   const handlePersonalInputChange = (event, type) => {
     const file = event.target.files[0];
@@ -61,32 +165,66 @@ const TPRegistrationSubmitCertificate = () => {
     event.preventDefault();
     setIsLoading(true);
     try {
+      // Upload certificate file
+      let certificateUrl = "";
+      
+      if (personalDetailsData.train_the_trainer) {
+        // Convert base64 to blob
+        let certBlob = personalDetailsData.train_the_trainer;
+        
+        if (typeof certBlob === "string" && certBlob.startsWith('data:')) {
+          const byteString = atob(certBlob.split(",")[1]);
+          const mimeString = certBlob
+            .split(",")[0]
+            .split(":")[1]
+            .split(";")[0];
+          const ab = new ArrayBuffer(byteString.length);
+          const ia = new Uint8Array(ab);
+          for (let i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+          }
+          certBlob = new Blob([ab], { type: mimeString });
+        }
+        
+        if (certBlob) {
+          const certFormData = new FormData();
+          certFormData.append("files", certBlob);
+          
+          const certResponse = await axiosInstance.post(
+            "/file-upload",
+            certFormData
+          );
+          
+          certificateUrl = certResponse.data.data.fileURLs[0];
+        }
+      }
+
       const postData = {
+        listing_id: listingId,
+        certificates: certificateUrl,
         tc_status: "tc_certificate",
-        certificates: personalDetailsData.train_the_trainer,
       };
 
-      const result = await inptaListingAxiosInstance.post(
-        "/create-tc-listing",
+      const result = await inptaListingAxiosInstance.patch(
+        "/update-tc-listing",
         postData
       );
 
       if (result) {
-        toast.success("Listing created successfully!", {
+        toast.success("Certificate uploaded successfully!", {
           position: toast.POSITION.TOP_RIGHT,
         });
 
         setTimeout(() => {
-          handlePaymentSubmit(result?.data?.data?._id);
+          handlePaymentSubmit(listingId);
         }, 500);
       }
 
       setIsLoading(false);
-      // window.location.href = "/training-center/auditor-verification";
     } catch (error) {
       console.error("Error uploading files:", error);
       setIsLoading(false);
-      toast.error(error?.message, {
+      toast.error(error?.message || "Error uploading certificate", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
@@ -105,6 +243,16 @@ const TPRegistrationSubmitCertificate = () => {
       console.error("Error in handlePaymentSubmit:", error);
     }
   };
+
+  if (!showContent || loading || checkingStatus) {
+    return (
+      <div className="loader-background">
+        <div className="spinner-box">
+          <div className="three-quarter-spinner"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -125,7 +273,7 @@ const TPRegistrationSubmitCertificate = () => {
         <link href="css/styles.css" rel="stylesheet" />
       </Helmet>
       <>
-        {(loading || isLoading) && (
+        {isLoading && (
           <div className="loader-background">
             <div className="spinner-box">
               <div className="three-quarter-spinner"></div>

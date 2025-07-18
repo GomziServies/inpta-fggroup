@@ -17,18 +17,106 @@ import ProgressBar from "../../components/progress-bar/registration-progress-bar
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
 import { createTCAuditorVerificationPayment } from "../../assets/utils/tc_payment";
+import { useNavigate } from "react-router-dom";
 
 const AuditorVerification = () => {
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingOne, setLoadingOne] = useState(false);
   const [loadingTwo, setLoadingTwo] = useState(false);
+  const [checkingStatus, setCheckingStatus] = useState(true);
+  const [listingId, setListingId] = useState(null);
+  const [showContent, setShowContent] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
+    
+    checkAuditorStatus();
   }, []);
+
+  const checkAuditorStatus = async () => {
+    setCheckingStatus(true);
+    try {
+      const storedListingId = localStorage.getItem("tc_listing_id");
+      
+      if (!storedListingId) {
+        const response = await inptaListingAxiosInstance.get("/get-tc-listing");
+        
+        if (response?.data?.data?.length > 0) {
+          const listing = response.data.data[0];
+          setListingId(listing._id);
+          localStorage.setItem("tc_listing_id", listing._id);
+          
+          if (listing.auditorVerified === true) {
+            toast.info("Auditor verification already completed.");
+            setTimeout(() => {
+              navigate("/thank-you");
+            }, 2000);
+            return;
+          }
+          
+          if (!listing.certificateSubmitted) {
+            toast.error("Please complete certificate submission first");
+            setTimeout(() => {
+              navigate("/training-center/submit-certificate");
+            }, 2000);
+            return;
+          }
+          
+          setShowContent(true);
+        } else {
+          toast.error("No training center listing found. Please create one first.");
+          setTimeout(() => {
+            navigate("/training-center");
+          }, 2000);
+          return;
+        }
+      } else {
+        setListingId(storedListingId);
+        
+        const response = await inptaListingAxiosInstance.get(`/get-tc-listing?listing_id=${storedListingId}`);
+        
+        if (response?.data?.data?.length > 0) {
+          const listing = response.data.data[0];
+          
+          if (listing.auditorVerified === true) {
+            toast.info("Auditor verification already completed.");
+            localStorage.setItem("tc_listing_auditor_submitted", "true");
+            setTimeout(() => {
+              navigate("/thank-you");
+            }, 2000);
+            return;
+          }
+          
+          if (!listing.certificateSubmitted) {
+            toast.error("Please complete certificate submission first");
+            setTimeout(() => {
+              navigate("/training-center/submit-certificate");
+            }, 2000);
+            return;
+          }
+          
+          setShowContent(true);
+        } else {
+          toast.error("Training center listing not found. Please create one first.");
+          localStorage.removeItem("tc_listing_id");
+          setTimeout(() => {
+            navigate("/training-center");
+          }, 2000);
+          return;
+        }
+      }
+    } catch (error) {
+      console.error("Error checking auditor status:", error);
+      toast.error("Error checking status. Please try again.");
+    } finally {
+      setCheckingStatus(false);
+      setIsLoading(false);
+    }
+  };
 
   const [formData, setFormData] = useState({});
 
@@ -217,21 +305,22 @@ const AuditorVerification = () => {
     setIsLoading(true);
     try {
       const postData = {
+        listing_id: listingId,
         tc_status: "tc_auditor",
       };
 
-      const result = await inptaListingAxiosInstance.post(
-        "/create-tc-listing",
+      const result = await inptaListingAxiosInstance.patch(
+        "/update-tc-listing",
         postData
       );
 
       if (result) {
-        toast.success("Listing created successfully!", {
+        toast.success("Auditor verification initiated!", {
           position: toast.POSITION.TOP_RIGHT,
         });
 
         setTimeout(() => {
-          handlePaymentSubmit(result?.data?.data?._id);
+          handlePaymentSubmit(listingId);
         }, 500);
       }
 
@@ -239,7 +328,7 @@ const AuditorVerification = () => {
     } catch (error) {
       console.error("Error uploading files:", error);
       setIsLoading(false);
-      toast.error(error?.message, {
+      toast.error(error?.message || "Error processing auditor verification", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
@@ -258,6 +347,16 @@ const AuditorVerification = () => {
       console.error("Error in handlePaymentSubmit:", error);
     }
   };
+
+  if (!showContent || loading || checkingStatus) {
+    return (
+      <div className="loader-background">
+        <div className="spinner-box">
+          <div className="three-quarter-spinner"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -278,7 +377,7 @@ const AuditorVerification = () => {
         <link href="css/styles.css" rel="stylesheet" />
       </Helmet>
       <>
-        {(loading || isLoading) && (
+        {isLoading && (
           <div className="loader-background">
             <div className="spinner-box">
               <div className="three-quarter-spinner"></div>

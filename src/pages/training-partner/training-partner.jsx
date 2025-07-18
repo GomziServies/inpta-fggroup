@@ -41,6 +41,7 @@ const TPRegistrationListing = () => {
         
         if (formCompleted) {
           localStorage.setItem("tp_listing_id", formCompleted._id);
+          localStorage.setItem("tp_listing_submitted", "true");
           navigate('/training-partner/payment');
           return; 
         }

@@ -114,7 +114,6 @@ function OfflineCheckOutFinal({ setCheckData }) {
           // const result = await createCourseSubscriptionOrder(updatedCourseData)
           const result = {};
           if (result.success) {
-            console.log("Order success");
             localStorage.removeItem("tmp_CourseSubscriptionPurchasePayload");
             // localStorage.removeItem("offlineCourseClick")
           }

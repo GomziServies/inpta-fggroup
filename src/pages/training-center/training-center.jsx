@@ -478,7 +478,6 @@ const TPRegistrationListing = () => {
         tcForm: true, 
         tc_status: "tc_list",
       };
-      console.log("Post Data:", postData);
 
       const result = await inptaListingAxiosInstance.post(
         "/create-tc-listing",

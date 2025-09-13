@@ -126,8 +126,6 @@ const TPRegistrationListing = () => {
     try {
       const response = await axiosInstance.get("/account/profile");
 
-      console.log("response====>", response);
-
       const userData = response.data.data;
       if (userData) {
         setUserData(userData.user);

@@ -238,9 +238,9 @@ function Header() {
             )}
             <li className="mx-0" style={{ cursor: "pointer" }}>
               {isLogin ? (
-                <button onClick={handleNextOpen} class="add-list-btn">
+                <Link to="/registration" class="add-list-btn">
                   <i class="fas fa-plus me-2"></i>Registration
-                </button>
+                </Link>
               ) : (
                 <Link to="/login" class="add-list-btn">
                   <i class="fas fa-plus me-2"></i>Registration

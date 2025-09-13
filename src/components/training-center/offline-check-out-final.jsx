@@ -354,7 +354,7 @@ function TCOfflineCheckOutFinal({ setCheckData }) {
                     <div className="ReactCollapse--content">
                       <div className="col-12 mb-3 bg-white py-2 px-3 d-block d-md-none border-bottom">
                         <div className="col-12 p-0">
-                          <p className="f-pop-sembol f-16 mb-0 text-center pb-3 mb-2 border-bottom">
+                          <p className="f-pop-sembol f-16 text-center pb-3 mb-2 border-bottom">
                             <b className="text-center">
                               {selectedOption?.month} Training Partner
                             </b>
@@ -441,7 +441,7 @@ function TCOfflineCheckOutFinal({ setCheckData }) {
                 {/* ----- Desktop ------ */}
                 <div className="col-12 mb-3 border bg-white p-3 br-15 d-none d-md-block">
                   <div className="col-12 p-0">
-                    <p className="f-pop-sembol f-16 mb-0 text-center pb-3 mb-2 border-bottom">
+                    <p className="f-pop-sembol f-16 text-center pb-3 mb-2 border-bottom">
                       <b className="text-center">
                         {selectedOption?.month} Training Partner
                       </b>

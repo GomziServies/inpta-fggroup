@@ -13,7 +13,6 @@ import ViewAllListing from "./pages/listing/view-all-listing";
 import TPRegistrationListing from "./pages/training-partner/training-partner";
 import TCRegistrationListing from "./pages/training-center/training-center";
 import RegistrationPage from "./pages/registration-page";
-import TPRegistrationSubmitCertificate from "./pages/training-center/submit-certificate";
 import TPRegistrationPayment from "./pages/training-partner/training-partner-payment";
 import TCPaymentPage from "./pages/training-center/training-center-payment";
 import AuditorVerification from "./pages/training-center/auditor-verification";
@@ -37,7 +36,6 @@ function App() {
         <Route path="/training-partner" element={<TPRegistrationListing />} />
         <Route path="/training-partner/payment" element={<TPRegistrationPayment />} />
         <Route path="/training-center" element={<TCRegistrationListing />} />
-        <Route path="/training-center/submit-certificate" element={<TPRegistrationSubmitCertificate />} />
         <Route path="/training-center/payment" element={<TCPaymentPage />} />
         <Route path="/training-center/auditor-verification" element={<AuditorVerification />} />
         <Route path="/thank-you" element={<ThankYouPage />} />

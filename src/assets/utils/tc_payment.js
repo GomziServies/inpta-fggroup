@@ -40,7 +40,7 @@ export const createTCPayment = async (listing_id) => {
               
               localStorage.setItem("tc_listing_submitted", "true");
               
-              window.location.href = "/training-center/submit-certificate";
+              window.location.href = "/training-center/auditor-verification";
           });
           } catch (error) {
             console.error("Error updating payment status:", error);

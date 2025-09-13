@@ -6,6 +6,9 @@ import Header from "../../components/Header";
 import { inptaListingAxiosInstance } from "../../js/api";
 import axiosInstance from "../../js/api";
 import { ToastContainer, toast } from "react-toastify";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Select from "react-select";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
 import "rsuite/dist/rsuite.min.css";
@@ -28,6 +31,8 @@ const AuditorVerification = () => {
   const [checkingStatus, setCheckingStatus] = useState(true);
   const [listingId, setListingId] = useState(null);
   const [showContent, setShowContent] = useState(false);
+  
+  const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,14 +64,6 @@ const AuditorVerification = () => {
             return;
           }
           
-          if (!listing.certificateSubmitted) {
-            toast.error("Please complete certificate submission first");
-            setTimeout(() => {
-              navigate("/training-center/submit-certificate");
-            }, 2000);
-            return;
-          }
-          
           setShowContent(true);
         } else {
           toast.error("No training center listing found. Please create one first.");
@@ -88,14 +85,6 @@ const AuditorVerification = () => {
             localStorage.setItem("tc_listing_auditor_submitted", "true");
             setTimeout(() => {
               navigate("/thank-you");
-            }, 2000);
-            return;
-          }
-          
-          if (!listing.certificateSubmitted) {
-            toast.error("Please complete certificate submission first");
-            setTimeout(() => {
-              navigate("/training-center/submit-certificate");
             }, 2000);
             return;
           }
@@ -307,7 +296,16 @@ const AuditorVerification = () => {
     try {
       const documentData = {};
       const imagesData = {};
+      const certificates = [];
       
+      if (personalDetailsData.certificate) {
+        const certificateBlob = await base64ToBlob(personalDetailsData.certificate);
+        const certificateFormData = new FormData();
+        certificateFormData.append("files", certificateBlob);
+        const certificateResponse = await axiosInstance.post("/file-upload", certificateFormData);
+        certificates.push(certificateResponse.data.data.fileURLs[0]);
+      }
+
       if (personalDetailsData.profile_photo) {
         const profilePhotoBlob = await base64ToBlob(personalDetailsData.profile_photo);
         const profileFormData = new FormData();
@@ -418,7 +416,9 @@ const AuditorVerification = () => {
         listing_id: listingId,
         tc_status: "tc_auditor",
         images: [imagesData],
-        document: [documentData]
+        document: [documentData],
+        certificates: certificates[0] || "", // Take first certificate or empty string if none
+        certificateSubmitted: certificates.length > 0
       };
       
       if (logoUrl) {
@@ -509,11 +509,101 @@ const AuditorVerification = () => {
                 <div className="goodup-dashboard-content text-start">
                   <div className="dashboard-widg-bar d-block">
                     <div className="row">
-                      <ProgressBar activeData="third" pendingData="fourth" />
+                      <ProgressBar activeData="second" pendingData="third" />
                       <div className="col-12 mb-4 text-center">
                         <h2 className="mb-0 ft-medium fs-md">
-                          TC Auditor Verification
+                          Certificate Submission & Auditor Verification
                         </h2>
+                      </div>
+                      
+                      {/* Certificate Upload Section */}
+                      <div className="col-xl-12 col-md-12 col-sm-12">
+                        <div className="submit-form">
+                          <div className="dashboard-list-wraps bg-white rounded mb-4">
+                            <div className="dashboard-list-wraps-head br-bottom py-3 px-3">
+                              <div className="dashboard-list-wraps-flx">
+                                <h4 className="mb-0 ft-medium fs-md">
+                                  <i className="fa fa-certificate me-2 theme-cl fs-sm" />
+                                  Submit Certificates
+                                </h4>
+                              </div>
+                            </div>
+                            <div className="dashboard-list-wraps-body bg-white py-3 px-3">
+                              <div className="row">
+                                <div className="col-md-12 mt-4">
+                                  <label className="mb-1">Upload Certificate</label>
+                                  {personalDetailsData.certificate ? (
+                                    <div>
+                                      <div
+                                        className="row position-relative"
+                                        style={{
+                                          border: "2px dashed #ccc",
+                                          padding: "20px",
+                                          margin: "0px 0px 0px 0px",
+                                          textAlign: "center",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <div
+                                          style={{
+                                            width: "200px",
+                                            position: "relative",
+                                            marginBottom: "10px",
+                                          }}
+                                        >
+                                          <img
+                                            src={personalDetailsData.certificate}
+                                            alt="Certificate"
+                                            style={{
+                                              maxWidth: "100%",
+                                              height: "auto",
+                                              marginBottom: "5px",
+                                            }}
+                                          />
+                                          <IconButton
+                                            onClick={() => handleRemovePersonalDetails("certificate")}
+                                            style={{
+                                              position: "absolute",
+                                              top: "-10px",
+                                              right: "-10px",
+                                            }}
+                                          >
+                                            <DeleteIcon />
+                                          </IconButton>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="row position-relative"
+                                      style={{
+                                        border: "2px dashed #ccc",
+                                        padding: "20px",
+                                        margin: "0px 0px 0px 0px",
+                                        textAlign: "center",
+                                        cursor: "pointer",
+                                      }}
+                                      onClick={() =>
+                                        document.getElementById("certificate_upload").click()
+                                      }
+                                    >
+                                      <input
+                                        type="file"
+                                        id="certificate_upload"
+                                        accept=".pdf,.jpg,.jpeg,.png"
+                                        style={{ display: "none" }}
+                                        onChange={(e) =>
+                                          handlePersonalInputChange(e, "certificate")
+                                        }
+                                      /><i className="fas fa-upload" />
+                                      <p>Click to Upload Certificate</p>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div className="col-xl-12 col-md-12 col-sm-12">
                         <div className="submit-form">
@@ -2077,7 +2167,7 @@ const AuditorVerification = () => {
                                           </div>
                                           <div className="d-inline-block p-0 text-right">
                                             <p className="m-0 f-rob-med f-16">
-                                              ₹ {50000 || 0} /-
+                                              ₹ {66666 || 0} /-
                                             </p>
                                           </div>
                                         </div>
@@ -2109,7 +2199,7 @@ const AuditorVerification = () => {
                                           <div className="d-inline-block p-0 text-right">
                                             <p className="m-0 f-rob-med f-16">
                                               <span className="f-rob-med f-16 text-green text-uppercase ml-1">
-                                                ₹ {50000 || 0} /-
+                                                ₹ {66666 || 0} /-
                                               </span>
                                             </p>
                                           </div>
@@ -2126,7 +2216,7 @@ const AuditorVerification = () => {
                                       </div>
                                       <div className="d-inline-block">
                                         <p className="m-0 f-rob-med f-16">
-                                          ₹ {50000 || 0} /-
+                                          ₹ {66666 || 0} /-
                                         </p>
                                       </div>
                                     </div>

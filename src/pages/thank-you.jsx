@@ -25,11 +25,6 @@ const ThankYouPage = () => {
       return;
     }
 
-    if (!localStorage.getItem("tc_listing_certificate_submitted")) {
-      window.location.href = "/training-center/submit-certificate";
-      return;
-    }
-
     if (!localStorage.getItem("tc_listing_auditor_submitted")) {
       window.location.href = "/training-center/auditor-verification";
       return;

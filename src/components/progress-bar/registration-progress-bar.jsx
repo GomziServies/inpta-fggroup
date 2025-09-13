@@ -22,7 +22,7 @@ const ProgressBar = ({ activeData, pendingData }) => {
           <div className="row meal">
             <div
               className={`order-tracking ${
-                activeData === "first" || activeData === "second" || activeData === "third" || activeData === "fourth" ? "completed" : pendingData === "first" ? "pending" : ""
+                activeData === "first" || activeData === "second" || activeData === "third" ? "completed" : pendingData === "first" ? "pending" : ""
               }`}
             >
               <span className="is-complete"></span>
@@ -30,7 +30,7 @@ const ProgressBar = ({ activeData, pendingData }) => {
             </div>
             <div
               className={`order-tracking ${
-                activeData === "second" || activeData === "third" || activeData === "fourth" ? "completed" : pendingData === "second" ? "pending" : ""
+                activeData === "second" || activeData === "third" ? "completed" : pendingData === "second" ? "pending" : ""
               }`}
             >
               <span className="is-complete"></span>
@@ -38,19 +38,11 @@ const ProgressBar = ({ activeData, pendingData }) => {
             </div>
             <div
               className={`order-tracking ${
-                activeData === "third" || activeData === "fourth" ? "completed" : pendingData === "third" ? "pending" : ""
+                activeData === "third" || activeData === "third" ? "completed" : pendingData === "third" ? "pending" : ""
               }`}
             >
               <span className="is-complete"></span>
-              <p>Submit Certificate</p>
-            </div>
-            <div
-              className={`order-tracking ${
-                activeData === "fourth" ? "completed" : pendingData === "fourth" ? "pending" : ""
-              }`}
-            >
-              <span className="is-complete"></span>
-              <p>Auditor Verification</p>
+              <p>Certificate & Verification</p>
             </div>
           </div>
         </div>

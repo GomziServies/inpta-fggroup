@@ -117,6 +117,7 @@ const AuditorVerification = () => {
     gst_certificate: null,
     dpt_certificate: null,
     dnc_certificate: null,
+    train_the_trainer: null,
   });
 
   const handlePersonalInputChange = (event, type) => {
@@ -352,6 +353,14 @@ const AuditorVerification = () => {
         dncFormData.append("files", dncBlob);
         const dncResponse = await axiosInstance.post("/file-upload", dncFormData);
         documentData.dnc_certificate = dncResponse.data.data.fileURLs[0];
+      }
+
+      if (personalDetailsData.train_the_trainer) {
+        const trainerBlob = await base64ToBlob(personalDetailsData.train_the_trainer);
+        const trainerFormData = new FormData();
+        trainerFormData.append("files", trainerBlob);
+        const trainerResponse = await axiosInstance.post("/file-upload", trainerFormData);
+        documentData.train_the_trainer = trainerResponse.data.data.fileURLs[0];
       }
       
       // Process INPTA Photos (images)
@@ -1843,7 +1852,7 @@ const AuditorVerification = () => {
                                   <label className="mb-1">
                                     Upload Train the Trainer Certificate
                                   </label>
-                                  {personalDetailsData.dpt_certificate ? (
+                                  {personalDetailsData.train_the_trainer ? (
                                     <div>
                                       <div
                                         className="row position-relative"
@@ -1864,9 +1873,9 @@ const AuditorVerification = () => {
                                         >
                                           <img
                                             src={
-                                              personalDetailsData.dpt_certificate
+                                              personalDetailsData.train_the_trainer
                                             }
-                                            alt="Pan Card"
+                                            alt="Train the Trainer Certificate"
                                             style={{
                                               maxWidth: "100%",
                                               height: "auto",
@@ -1876,7 +1885,7 @@ const AuditorVerification = () => {
                                           <IconButton
                                             onClick={() =>
                                               handleRemovePersonalDetails(
-                                                "dpt_certificate"
+                                                "train_the_trainer"
                                               )
                                             }
                                             className="px-1 py-1"
@@ -1899,7 +1908,7 @@ const AuditorVerification = () => {
                                           className="btn btn-primary rounded-pill px-3 py-1"
                                           onClick={() =>
                                             document
-                                              .getElementById("dpt_certificate")
+                                              .getElementById("train_the_trainer")
                                               .click()
                                           }
                                         >
@@ -1912,7 +1921,7 @@ const AuditorVerification = () => {
                                       className="dropzone"
                                       onClick={() =>
                                         document
-                                          .getElementById("dpt_certificate")
+                                          .getElementById("train_the_trainer")
                                           .click()
                                       }
                                       style={{
@@ -1923,18 +1932,18 @@ const AuditorVerification = () => {
                                       }}
                                     >
                                       <i className="fas fa-upload" />
-                                      <p>Click to Train the Trainer</p>
+                                      <p>Click to Upload Train the Trainer Certificate</p>
                                     </div>
                                   )}
                                   <input
-                                    id="dpt_certificate"
+                                    id="train_the_trainer"
                                     type="file"
                                     accept="image/*"
                                     className="d-none"
                                     onChange={(e) =>
                                       handlePersonalInputChange(
                                         e,
-                                        "dpt_certificate"
+                                        "train_the_trainer"
                                       )
                                     }
                                   />

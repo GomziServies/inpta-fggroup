@@ -20,7 +20,6 @@ const TCPaymentPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
   const [listingId, setListingId] = useState(null);
-  const [listingData, setListingData] = useState(null);
   const [showContent, setShowContent] = useState(false);
   const navigate = useNavigate();
 
@@ -43,7 +42,6 @@ const TCPaymentPage = () => {
         
         if (response?.data?.data?.length > 0) {
           const listing = response.data.data[0];
-          setListingData(listing);
           
           if (listing.tcPayment === true) {
             toast.info("Payment already completed. Redirecting to next step...");
@@ -263,14 +261,15 @@ const TCPaymentPage = () => {
             </div>
           </div>
           <Footer />
-          <a
+          <button
+            type="button"
             id="tops-button"
             className="top-scroll"
             title="Back to top"
-            href="#"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <i className="ti-arrow-up" />
-          </a>
+          </button>
         </div>
       </>
       <ToastContainer />

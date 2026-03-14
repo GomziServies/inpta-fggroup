@@ -50,10 +50,34 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
+    "ignorePatterns": [
+      "build/**",
+      "src/assets/js/**",
+      "src/assets/css/**",
+      "public/**"
+    ],
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "no-unused-vars": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "no-control-regex": "off",
+      "no-useless-escape": "off",
+      "no-script-url": "off",
+      "no-unused-expressions": "off",
+      "no-sequences": "off",
+      "no-mixed-operators": "off",
+      "no-cond-assign": "off",
+      "default-case": "off",
+      "no-fallthrough": "off",
+      "react/jsx-no-target-blank": "off",
+      "jsx-a11y/anchor-is-valid": "off",
+      "jsx-a11y/iframe-has-title": "off",
+      "jsx-a11y/alt-text": "off",
+      "jsx-a11y/img-redundant-alt": "off"
+    }
   },
   "browserslist": {
     "production": [

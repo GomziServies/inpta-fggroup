@@ -114,16 +114,16 @@ function AadharVerification({ setCheckData }) {
       const fileURLs = response.data?.data?.fileURLs;
       const photoUrl = fileURLs[0];
 
-      if (key == "adhar1") {
+      if (key === "adhar1") {
         setImagePreviews((prev) => ({
           ...prev,
-          ["adhar1"]: photoUrl,
+          adhar1: photoUrl,
           selectedImg1: true,
         }));
       } else {
         setImagePreviews((prev) => ({
           ...prev,
-          ["pan_card"]: photoUrl,
+          pan_card: photoUrl,
           selectedImg2: true,
         }));
       }

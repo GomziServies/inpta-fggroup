@@ -6,9 +6,6 @@ import Header from "../../components/Header";
 import { inptaListingAxiosInstance } from "../../js/api";
 import axiosInstance from "../../js/api";
 import { ToastContainer, toast } from "react-toastify";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Select from "react-select";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button";
 import "rsuite/dist/rsuite.min.css";
@@ -31,19 +28,10 @@ const AuditorVerification = () => {
   const [checkingStatus, setCheckingStatus] = useState(true);
   const [listingId, setListingId] = useState(null);
   const [showContent, setShowContent] = useState(false);
-  
-  const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-    
-    checkAuditorStatus();
-  }, []);
-
-  const checkAuditorStatus = async () => {
+  const checkAuditorStatus = useCallback(async () => {
     setCheckingStatus(true);
     try {
       const storedListingId = localStorage.getItem("tc_listing_id");
@@ -106,9 +94,15 @@ const AuditorVerification = () => {
       setCheckingStatus(false);
       setIsLoading(false);
     }
-  };
+  }, [navigate]);
 
-  const [formData, setFormData] = useState({});
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    checkAuditorStatus();
+  }, [checkAuditorStatus]);
 
   const [personalDetailsData, setPersonalDetailsData] = useState({
     profile_photo: null,
@@ -164,38 +158,13 @@ const AuditorVerification = () => {
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [inptaPhoto, setInptaPhoto] = useState(null);
 
-  const onCropComplete = useCallback((croppedArea, profilePhoto, context) => {
+  const onCropComplete = useCallback((croppedArea, croppedPixels, context) => {
     if (context === "logo") {
-      setProfilePhoto(profilePhoto);
-      handleLogoChange(profilePhoto);
+      setProfilePhoto(croppedPixels);
     } else if (context === "feature") {
-      setInptaPhoto(profilePhoto);
+      setInptaPhoto(croppedPixels);
     }
   }, []);
-
-  const handleLogoChange = (event) => {
-    const file = profilePhoto;
-
-    if (file instanceof File) {
-      if (file.size > 2 * 1024 * 1024) {
-        alert("File size exceeds 2 MB!");
-        return;
-      }
-      const previewUrl = URL.createObjectURL(file);
-      setLogoPreview(previewUrl);
-    }
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prevData) => ({
-          ...prevData,
-          logo: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const handleCropComplete = async (context) => {
     if (imageSrc && (profilePhoto || inptaPhoto)) {
@@ -1138,7 +1107,7 @@ const AuditorVerification = () => {
                                             >
                                               <img
                                                 src={inptaPhotos.washroom}
-                                                alt={`INPTA Photo washroom`}
+                                                alt={`INPTA washroom`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -1259,7 +1228,7 @@ const AuditorVerification = () => {
                                             >
                                               <img
                                                 src={inptaPhotos.dustbin}
-                                                alt={`INPTA Photo dustbin`}
+                                                alt={`INPTA dustbin`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -1382,7 +1351,7 @@ const AuditorVerification = () => {
                                             >
                                               <img
                                                 src={inptaPhotos.medical_kit}
-                                                alt={`INPTA Photo medical_kit`}
+                                                alt={`INPTA medical kit`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -1505,7 +1474,7 @@ const AuditorVerification = () => {
                                             >
                                               <img
                                                 src={inptaPhotos.gym_area}
-                                                alt={`INPTA Photo gym_area`}
+                                                alt={`INPTA gym area`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -1628,7 +1597,7 @@ const AuditorVerification = () => {
                                             >
                                               <img
                                                 src={inptaPhotos.reception}
-                                                alt={`INPTA Photo reception`}
+                                                alt={`INPTA reception`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -1749,7 +1718,7 @@ const AuditorVerification = () => {
                                             >
                                               <img
                                                 src={inptaPhotos.staff}
-                                                alt={`INPTA Photo staff`}
+                                                alt={`INPTA staff`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -2253,14 +2222,15 @@ const AuditorVerification = () => {
             </div>
           </div>
           <Footer />
-          <a
+          <button
+            type="button"
             id="tops-button"
             className="top-scroll"
             title="Back to top"
-            href="#"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <i className="ti-arrow-up" />
-          </a>
+          </button>
         </div>
       </>
       <ToastContainer />

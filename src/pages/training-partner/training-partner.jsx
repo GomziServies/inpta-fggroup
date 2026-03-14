@@ -22,80 +22,37 @@ const TPRegistrationListing = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    checkExistingListing();
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
-
   // Check if user has already submitted a form with tpform=true
-  const checkExistingListing = async () => {
+  const checkExistingListing = useCallback(async () => {
     setLoading(true);
     try {
       // Get the user's listings
       const response = await inptaListingAxiosInstance.get("/get-tp-listing");
-      
+
       if (response.data && response.data.data && response.data.data.length > 0) {
-        const formCompleted = response.data.data.find(listing => listing.tpform === true);
-        
+        const formCompleted = response.data.data.find(
+          (listing) => listing.tpform === true
+        );
+
         if (formCompleted) {
           localStorage.setItem("tp_listing_id", formCompleted._id);
           localStorage.setItem("tp_listing_submitted", "true");
           navigate('/training-partner/payment');
-          return; 
+          return;
         }
       }
     } catch (error) {
       console.error("Error checking existing listings:", error);
     }
     setLoading(false);
-  };
+  }, [navigate]);
 
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [otpCode, setOtpCode] = useState("");
-  const [showOtp, setShowOtp] = React.useState(false);
-
-  const handleLoginSubmit = async () => {
-    try {
-      const response = await axiosInstance.post("/account/authorization", {
-        mobile: mobileNumber,
-        service: "INPTA-LISTING",
-      });
-
-      if (response.data && response.data.data && response.data.data.OTP) {
-        setShowOtp(true);
-        setOtpCode(response.data.data.OTP);
-        toast.success("OTP Sent! You will receive an OTP shortly.");
-      }
-    } catch (error) {
-      toast.error(error?.response?.data?.message);
-      console.error("Error in handleLoginSubmit:", error);
-    }
-  };
-
-  const handleOtpSubmit = async () => {
-    try {
-      const response = await axiosInstance.post(
-        "/account/authorization/verify",
-        {
-          mobile: mobileNumber,
-          otp: otpCode,
-        }
-      );
-
-      const auth = response.data.data.authorization;
-
-      if (response.status === 200) {
-        localStorage.setItem("authorization", auth);
-        getUserData();
-        toast.success("OTP Verified!");
-      }
-    } catch (error) {
-      toast.error(error?.response?.data?.message);
-      console.error("Error in handleOtpSubmit:", error);
-    }
-  };
+  useEffect(() => {
+    checkExistingListing();
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [checkExistingListing]);
 
   const [formData, setFormData] = useState({
     description: "",
@@ -155,13 +112,11 @@ const TPRegistrationListing = () => {
   const [aadhaarPhoto, setAadhaarPhoto] = useState(null);
   const [profilePhoto, setProfilePhoto] = useState(null);
 
-  const onCropComplete = useCallback((croppedArea, aadhaarPhoto, context) => {
+  const onCropComplete = useCallback((croppedArea, croppedPixels, context) => {
     if (context === "aadhaar") {
-      setAadhaarPhoto(aadhaarPhoto);
-      handleAadhaarChange(aadhaarPhoto);
+      setAadhaarPhoto(croppedPixels);
     } else if (context === "profile") {
-      setProfilePhoto(aadhaarPhoto);
-      handleProfileChange(aadhaarPhoto);
+      setProfilePhoto(croppedPixels);
     }
   }, []);
 
@@ -175,54 +130,6 @@ const TPRegistrationListing = () => {
     fileInput.click();
   };
 
-  const handleAadhaarChange = (event) => {
-    const file = aadhaarPhoto;
-
-    if (file instanceof File) {
-      if (file.size > 2 * 1024 * 1024) {
-        alert("File size exceeds 2 MB!");
-        return;
-      }
-      const previewUrl = URL.createObjectURL(file);
-      setAadhaarPreview(previewUrl);
-    }
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prevData) => ({
-          ...prevData,
-          aadhaar: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleProfileChange = (event) => {
-    const file = profilePhoto;
-
-    if (file instanceof File) {
-      if (file.size > 2 * 1024 * 1024) {
-        alert("File size exceeds 2 MB!");
-        return;
-      }
-      const previewUrl = URL.createObjectURL(file);
-      setProfilePreview(previewUrl);
-    }
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prevData) => ({
-          ...prevData,
-          profile: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleCropComplete = async (context) => {
     if (imageSrc && aadhaarPhoto) {
       try {
@@ -230,6 +137,10 @@ const TPRegistrationListing = () => {
         if (context === "aadhaar") {
           setAadhaarPreview(croppedImg);
           setAadhaarPhoto(croppedImg);
+          setFormData((prevData) => ({
+            ...prevData,
+            aadhaar: croppedImg,
+          }));
           setShow(false);
         }
       } catch (error) {
@@ -245,6 +156,10 @@ const TPRegistrationListing = () => {
         if (context === "profile") {
           setProfilePreview(croppedImg);
           setProfilePhoto(croppedImg);
+          setFormData((prevData) => ({
+            ...prevData,
+            profile: croppedImg,
+          }));
           setProfileShow(false);
         }
       } catch (error) {
@@ -1139,14 +1054,15 @@ const TPRegistrationListing = () => {
             </div>
           </div>
           <Footer />
-          <a
+          <button
+            type="button"
             id="tops-button"
             className="top-scroll"
             title="Back to top"
-            href="#"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <i className="ti-arrow-up" />
-          </a>
+          </button>
         </div>
       </>
       <ToastContainer />

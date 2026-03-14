@@ -11,13 +11,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ProgressBar from "../../components/progress-bar/registration-progress-bar";
 import { createTPPayment } from "../../assets/utils/tp_payment";
-import axiosInstance, { inptaListingAxiosInstance } from "../../js/api";
+import { inptaListingAxiosInstance } from "../../js/api";
 import { useNavigate } from "react-router-dom";
 
 const TPRegistrationPayment = () => {
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const [listingData, setListingData] = useState(null);
   const [showContent, setShowContent] = useState(false);
   const listing_id = localStorage.getItem("tp_listing_id");
   const navigate = useNavigate();
@@ -45,7 +44,6 @@ const TPRegistrationPayment = () => {
             navigate("/training-center");
             return;
           }
-          setListingData(listing);
           setShowContent(true);
         } else {
           navigate("/training-partner");
@@ -67,9 +65,8 @@ const TPRegistrationPayment = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      let paymentResult;
       try {
-        paymentResult = await createTPPayment(listing_id);
+        await createTPPayment(listing_id);
       } catch (error) {
         console.error("Error during payment:", error);
         toast.error("Payment failed. Please try again.");
@@ -237,14 +234,15 @@ const TPRegistrationPayment = () => {
             </div>
           </div>
           <Footer />
-          <a
+          <button
+            type="button"
             id="tops-button"
             className="top-scroll"
             title="Back to top"
-            href="#"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <i className="ti-arrow-up" />
-          </a>
+          </button>
         </div>
       </>
       <ToastContainer />

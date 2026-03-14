@@ -11,16 +11,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { IconButton } from "@mui/material";
-import { TagInput } from "rsuite";
 import "rsuite/dist/rsuite.min.css";
 import { Modal } from "react-bootstrap";
 import Cropper from "react-easy-crop";
 import Footer from "../../components/Footer";
-import Select from "react-select";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import ProgressBar from "../../components/progress-bar/registration-progress-bar";
-import { createTCPayment } from "../../assets/utils/tc_payment";
 import { useNavigate } from "react-router-dom";
 
 const TPRegistrationListing = () => {
@@ -33,26 +30,6 @@ const TPRegistrationListing = () => {
       setLoading(false);
     }, 1000);
   }, []);
-
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    address_line_1: "",
-    address_line_2: "",
-    area: "",
-    landmark: "",
-    city: "",
-    country: "",
-    state: "",
-    pin_code: "",
-    contactNumber: "",
-    whatsappNumber: "",
-    services: [],
-    tags: [],
-    website: "",
-    email: "",
-    branch: "",
-  });
 
   const [personalDetailsData, setPersonalDetailsData] = useState({
     pan_card: null,
@@ -82,34 +59,13 @@ const TPRegistrationListing = () => {
     }));
   };
 
-  const [userUpdateData, setUserUpdateData] = useState({});
+  const [userUpdateData] = useState({});
   const [isDetailsCorrect, setIsDetailsCorrect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingOne, setLoadingOne] = useState(false);
   const [loadingTwo, setLoadingTwo] = useState(false);
 
-  const [userData, setUserData] = useState({});
-
-  const getUserData = async () => {
-    setLoading(true);
-    try {
-      const response = await axiosInstance.get("/account/profile");
-      const userData = response.data.data;
-      if (userData) {
-        setUserData(userData.user);
-      }
-    } catch (error) {
-      console.error("Error in getUserData:", error);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    getUserData();
-    checkTcFormStatus();
-  }, []);
-
-  const checkTcFormStatus = async () => {
+  const checkTcFormStatus = useCallback(async () => {
     setCheckingFormStatus(true);
     try {
       const response = await inptaListingAxiosInstance.get("/get-tc-listing");
@@ -134,7 +90,11 @@ const TPRegistrationListing = () => {
     } finally {
       setCheckingFormStatus(false);
     }
-  };
+  }, [navigate]);
+
+  useEffect(() => {
+    checkTcFormStatus();
+  }, [checkTcFormStatus]);
 
   // ----------------------------------------------------------------------------------
 
@@ -160,38 +120,13 @@ const TPRegistrationListing = () => {
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [inptaPhoto, setInptaPhoto] = useState(null);
 
-  const onCropComplete = useCallback((croppedArea, profilePhoto, context) => {
+  const onCropComplete = useCallback((croppedArea, croppedPixels, context) => {
     if (context === "logo") {
-      setProfilePhoto(profilePhoto);
-      handleLogoChange(profilePhoto);
+      setProfilePhoto(croppedPixels);
     } else if (context === "feature") {
-      setInptaPhoto(profilePhoto);
+      setInptaPhoto(croppedPixels);
     }
   }, []);
-
-  const handleLogoChange = (event) => {
-    const file = profilePhoto;
-
-    if (file instanceof File) {
-      if (file.size > 2 * 1024 * 1024) {
-        alert("File size exceeds 2 MB!");
-        return;
-      }
-      const previewUrl = URL.createObjectURL(file);
-      setLogoPreview(previewUrl);
-    }
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prevData) => ({
-          ...prevData,
-          logo: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const handleCropComplete = async (context) => {
     if (imageSrc && (profilePhoto || inptaPhoto)) {
@@ -287,23 +222,7 @@ const TPRegistrationListing = () => {
 
   // ----------------------------------------------------------------------------------
 
-  const handleInputChange = (field, value) => {
-    if (field === "services" || field === "tags") {
-      setFormData((prevState) => ({
-        ...prevState,
-        [field]: value,
-      }));
-    } else {
-      setFormData((prevState) => ({
-        ...prevState,
-        [field]: value,
-      }));
-    }
-  };
-
   const uploadLogo = async () => {
-    let logoUrl = "";
-
     try {
       let croppedBlob = profilePhoto;
       if (typeof profilePhoto === "string") {
@@ -516,7 +435,6 @@ const TPRegistrationListing = () => {
         userUpdateData
       );
       if (response.data.data) {
-        getUserData();
         toast.success("User data updated successfully");
       } else {
         console.error("Failed to update user data");
@@ -527,20 +445,6 @@ const TPRegistrationListing = () => {
       toast.error("Error updating user data");
     }
     setIsLoading(false);
-  };
-
-  const handlePaymentSubmit = async (listing_id) => {
-    try {
-      try {
-        await createTCPayment(listing_id);
-      } catch (error) {
-        console.error("Error during order:", error);
-      }
-      window.Razorpay && window.Razorpay.close && window.Razorpay.close();
-      window.scrollTo(0, 0);
-    } catch (error) {
-      console.error("Error in handlePaymentSubmit:", error);
-    }
   };
 
   return (
@@ -704,7 +608,7 @@ const TPRegistrationListing = () => {
                                             >
                                               <img
                                                 src={inptaPhotos.gym}
-                                                alt={`INPTA Photo gym`}
+                                                alt={`INPTA gym`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -821,7 +725,7 @@ const TPRegistrationListing = () => {
                                             >
                                               <img
                                                 src={inptaPhotos.washroom}
-                                                alt={`INPTA Photo washroom`}
+                                                alt={`INPTA washroom`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -946,7 +850,7 @@ const TPRegistrationListing = () => {
                                             >
                                               <img
                                                 src={inptaPhotos.dustbin}
-                                                alt={`INPTA Photo dustbin`}
+                                                alt={`INPTA dustbin`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -1071,7 +975,7 @@ const TPRegistrationListing = () => {
                                             >
                                               <img
                                                 src={inptaPhotos.medical_kit}
-                                                alt={`INPTA Photo medical_kit`}
+                                                alt={`INPTA medical kit`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -1194,7 +1098,7 @@ const TPRegistrationListing = () => {
                                             >
                                               <img
                                                 src={inptaPhotos.gym_area}
-                                                alt={`INPTA Photo gym_area`}
+                                                alt={`INPTA gym area`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -1318,7 +1222,7 @@ const TPRegistrationListing = () => {
                                             >
                                               <img
                                                 src={inptaPhotos.reception}
-                                                alt={`INPTA Photo reception`}
+                                                alt={`INPTA reception`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -1442,7 +1346,7 @@ const TPRegistrationListing = () => {
                                             >
                                               <img
                                                 src={inptaPhotos.staff}
-                                                alt={`INPTA Photo staff`}
+                                                alt={`INPTA staff`}
                                                 style={{
                                                   maxWidth: "100%",
                                                   height: "auto",
@@ -2069,14 +1973,15 @@ const TPRegistrationListing = () => {
             </div>
           </div>
           <Footer />
-          <a
+          <button
+            type="button"
             id="tops-button"
             className="top-scroll"
             title="Back to top"
-            href="#"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <i className="ti-arrow-up" />
-          </a>
+          </button>
         </div>
       </>
       <ToastContainer />

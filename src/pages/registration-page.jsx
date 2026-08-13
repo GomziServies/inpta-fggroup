@@ -137,14 +137,14 @@ const RegistrationPage = () => {
                                 </div>
                               </div>
                             </div>
-                            <div className="d-flex justify-content-center">
+                            {/* <div className="d-flex justify-content-center">
                               <button
                                 className="btn theme-bg rounded text-light add-listing-btn"
                                 onClick={downloadPDF}
                               >
                                 Download PDF
                               </button>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>

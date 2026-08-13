@@ -105,9 +105,9 @@ const Contact = () => {
                     working contact form with Ajax &amp; PHP in a few minutes.
                     Just copy and paste the files, add a little code and you're
                     done.{" "}
-                    <a href="https://htmlcodex.com/contact-form">
+                    {/* <a href="https://htmlcodex.com/contact-form">
                       Download Now
-                    </a>
+                    </a> */}
                     .
                   </p>
                   <div className="d-flex align-items-center mb-3">

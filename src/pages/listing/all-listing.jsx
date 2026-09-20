@@ -208,12 +208,14 @@ const AllListing = () => {
                         </p>
                       </div>
                     </div>
-                    <Link
+                    <a
                       className="btn btn-primary py-3 px-5 mt-2"
-                      to="https://fggroup.in/inpta/home-inpta"
+                      href="https://fggroup.in/inpta/home-inpta"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Read More
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -335,6 +337,10 @@ const AllListing = () => {
             className="top-scroll"
             title="Back to top"
             href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
           >
             <i className="ti-arrow-up" />
           </a>

@@ -323,7 +323,7 @@ const GymMainActivity = ({ searchData }) => {
                             </div>
                         )}
                         <div className="col-12 d-flex justify-content-center mt-3">
-                            <Link to="/all-gym-listing" class="view-list-btn me-2">
+                            <Link to="/view-all-listing" class="view-list-btn me-2">
                                 <i class="fas fa-eye me-2"></i>View More
                             </Link>
                         </div>

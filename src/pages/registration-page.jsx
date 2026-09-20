@@ -298,9 +298,21 @@ const RegistrationPage = () => {
                                 </p>
                               </div>
                             </div> */}
-                    <div className="col-12 d-flex justify-content-center">
+                    <div className="col-12 d-flex flex-wrap justify-content-center gap-3 mt-3">
                       <Link
-                        className="btn btn-primary py-3 px-5 mt-2"
+                        className="btn btn-outline-primary py-3 px-4"
+                        to="/training-partner-program"
+                      >
+                        <i className="fas fa-handshake me-2"></i> Training Partner Details
+                      </Link>
+                      <Link
+                        className="btn btn-outline-secondary py-3 px-4"
+                        to="/training-center-program"
+                      >
+                        <i className="fas fa-dumbbell me-2"></i> Training Center Details
+                      </Link>
+                      <Link
+                        className="btn btn-primary py-3 px-5"
                         to="/training-partner"
                       >
                         Start Listing
@@ -317,6 +329,10 @@ const RegistrationPage = () => {
             className="top-scroll"
             title="Back to top"
             href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
           >
             <i className="ti-arrow-up" />
           </a>

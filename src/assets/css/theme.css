@@ -1,0 +1,1159 @@
+/*
+  INPTA Foundation theme
+  ----------------------
+  Palette is taken from the INPTA logo:
+    navy  #1e4680  (INPTA wordmark, hands, cap)
+    blue  #57a0d9  (book / pen nib)
+    orange #f4922f (Indian Nutritionist)
+    green #1b8541  (Trainer Accreditation)
+
+  This file is loaded LAST (see src/index.js) so it overrides style.css,
+  bootstrap and the page level css without touching any JSX.
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap");
+
+/* ------------------------------------------------------------------ */
+/* Design tokens                                                       */
+/* ------------------------------------------------------------------ */
+:root {
+  --inpta-navy: #1e4680;
+  --inpta-navy-dark: #143562;
+  --inpta-navy-deep: #0d2447;
+  --inpta-blue: #57a0d9;
+  --inpta-blue-soft: #4a8ac8;
+  --inpta-orange: #f4922f;
+  --inpta-orange-dark: #d9791a;
+  --inpta-green: #1b8541;
+  --inpta-green-dark: #146a33;
+
+  --inpta-tint: #f2f7fc;
+  --inpta-tint-orange: #fff4e8;
+  --inpta-tint-green: #e8f5ed;
+  --inpta-border: #dbe5f0;
+  --inpta-text: #1c2b3f;
+  --inpta-muted: #5b6b7f;
+
+  --inpta-radius: 10px;
+  --inpta-radius-lg: 16px;
+  --inpta-shadow-sm: 0 2px 8px rgba(20, 53, 98, 0.08);
+  --inpta-shadow: 0 8px 24px rgba(20, 53, 98, 0.12);
+  --inpta-ring: 0 0 0 0.2rem rgba(87, 160, 217, 0.3);
+
+  --inpta-font-body: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  --inpta-font-head: "Poppins", "Inter", "Segoe UI", system-ui, sans-serif;
+
+  /* names already used by style.css */
+  --primary: var(--inpta-navy);
+  --light: var(--inpta-tint);
+  --dark: var(--inpta-navy-deep);
+
+  /* bootstrap 5 variables */
+  --bs-primary: #1e4680;
+  --bs-primary-rgb: 30, 70, 128;
+  --bs-success: #1b8541;
+  --bs-success-rgb: 27, 133, 65;
+  --bs-warning: #f4922f;
+  --bs-warning-rgb: 244, 146, 47;
+  --bs-info: #57a0d9;
+  --bs-info-rgb: 87, 160, 217;
+  --bs-dark: #0d2447;
+  --bs-dark-rgb: 13, 36, 71;
+  --bs-light: #f2f7fc;
+  --bs-light-rgb: 242, 247, 252;
+  --bs-link-color: #1e4680;
+  --bs-link-hover-color: #f4922f;
+  --bs-body-color: #1c2b3f;
+  --bs-body-font-family: var(--inpta-font-body);
+  --bs-border-color: #dbe5f0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+body {
+  font-family: var(--inpta-font-body);
+  color: var(--inpta-text);
+  background-color: #ffffff;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: var(--inpta-font-head);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--inpta-navy);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--inpta-orange-dark);
+}
+
+::selection {
+  background: var(--inpta-blue);
+  color: #ffffff;
+}
+
+/* utility classes already used in the JSX but never defined */
+.theme-bg {
+  background-color: var(--inpta-navy);
+  color: #ffffff;
+}
+
+.theme-cl {
+  color: var(--inpta-navy);
+}
+
+.bg-light {
+  background-color: var(--inpta-tint) !important;
+}
+
+.bg-primary {
+  background-color: var(--inpta-navy) !important;
+}
+
+.bg-dark {
+  background-color: var(--inpta-navy-deep) !important;
+}
+
+.text-primary {
+  color: var(--inpta-navy) !important;
+}
+
+.text-success {
+  color: var(--inpta-green) !important;
+}
+
+.text-warning {
+  color: var(--inpta-orange-dark) !important;
+}
+
+.border-primary {
+  border-color: var(--inpta-navy) !important;
+}
+
+.bg-success {
+  background-color: var(--inpta-green) !important;
+}
+
+.bg-warning {
+  background-color: var(--inpta-orange) !important;
+  color: #ffffff !important;
+}
+
+/* ------------------------------------------------------------------ */
+/* Buttons                                                             */
+/* ------------------------------------------------------------------ */
+.btn {
+  font-family: var(--inpta-font-body);
+  font-weight: 600;
+  border-radius: var(--inpta-radius);
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    box-shadow 0.2s ease, transform 0.15s ease;
+}
+
+.btn:focus,
+.btn:focus-visible {
+  box-shadow: var(--inpta-ring);
+}
+
+.btn-primary,
+.btn.btn-primary {
+  background-color: var(--inpta-navy);
+  border: 1px solid var(--inpta-navy);
+  color: #ffffff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn.btn-primary:hover {
+  background-color: var(--inpta-navy-dark) !important;
+  border-color: var(--inpta-navy-dark) !important;
+  color: #ffffff;
+  box-shadow: var(--inpta-shadow-sm);
+}
+
+.btn-warning,
+.btn.btn-warning {
+  background-color: var(--inpta-orange);
+  border: 1px solid var(--inpta-orange);
+  color: #ffffff;
+}
+
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active {
+  background-color: var(--inpta-orange-dark) !important;
+  border-color: var(--inpta-orange-dark) !important;
+  color: #ffffff;
+  box-shadow: var(--inpta-shadow-sm);
+}
+
+.btn-success,
+.btn.btn-success {
+  background-color: var(--inpta-green);
+  border: 1px solid var(--inpta-green);
+  color: #ffffff;
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+  background-color: var(--inpta-green-dark) !important;
+  border-color: var(--inpta-green-dark) !important;
+  color: #ffffff;
+}
+
+.btn-outline-primary {
+  color: var(--inpta-navy);
+  border-color: var(--inpta-navy);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:active {
+  background-color: var(--inpta-navy) !important;
+  border-color: var(--inpta-navy) !important;
+  color: #ffffff;
+}
+
+.btn-outline-light:hover {
+  color: var(--inpta-navy);
+}
+
+.btn-danger {
+  border-radius: var(--inpta-radius);
+}
+
+/* project specific buttons from style.css */
+.add-list-btn {
+  background: var(--inpta-navy);
+  border-radius: var(--inpta-radius);
+  font-family: var(--inpta-font-body);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-list-btn:hover {
+  background: var(--inpta-orange);
+  box-shadow: var(--inpta-shadow-sm);
+}
+
+.call-btn {
+  background-color: var(--inpta-orange) !important;
+  color: #ffffff !important;
+  border-radius: var(--inpta-radius) !important;
+}
+
+.call-btn:hover {
+  background-color: var(--inpta-navy) !important;
+  color: #ffffff !important;
+}
+
+.call-btn-listing {
+  background-color: var(--inpta-green) !important;
+  border: 2px solid var(--inpta-green-dark) !important;
+  border-radius: var(--inpta-radius) !important;
+  letter-spacing: 0.5px;
+}
+
+.call-btn-listing:hover {
+  background-color: var(--inpta-green-dark) !important;
+  color: #ffffff !important;
+}
+
+.view-listing-page .btn.theme-bg,
+.signup-screen-wrap button.theme-bg,
+button.theme-bg {
+  background-color: var(--inpta-navy);
+  color: #ffffff;
+}
+
+.view-listing-page .btn.theme-bg:hover,
+button.theme-bg:hover {
+  background-color: var(--inpta-orange);
+  color: #ffffff;
+}
+
+button.bg-dark {
+  background-color: var(--inpta-navy-deep) !important;
+}
+
+/* ------------------------------------------------------------------ */
+/* Header / navigation                                                 */
+/* ------------------------------------------------------------------ */
+.main {
+  background-color: #ffffff;
+  box-shadow: 0 2px 14px rgba(20, 53, 98, 0.12);
+}
+
+/* tri-colour brand stripe (navy / orange / green, same as the logo text) */
+.main::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--inpta-navy) 0 50%,
+    var(--inpta-orange) 50% 75%,
+    var(--inpta-green) 75% 100%
+  );
+}
+
+.lang ul,
+.lang ul li a,
+.lang ul li a p,
+.login ul li a,
+.side a,
+.side p {
+  font-family: var(--inpta-font-body) !important;
+}
+
+.lang ul li a,
+.login ul li a {
+  color: var(--inpta-text);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.lang ul li a:hover,
+.login ul li a:hover {
+  color: var(--inpta-orange-dark);
+}
+
+.side {
+  background-color: #ffffff;
+}
+
+.side a:hover,
+.side p:hover {
+  color: var(--inpta-orange-dark);
+}
+
+.closebtn {
+  color: var(--inpta-navy);
+}
+
+/* ------------------------------------------------------------------ */
+/* Footer                                                              */
+/* ------------------------------------------------------------------ */
+.footer,
+.footer.bg-dark {
+  background: linear-gradient(
+    160deg,
+    var(--inpta-navy-deep) 0%,
+    var(--inpta-navy-dark) 100%
+  ) !important;
+  border-top: 4px solid var(--inpta-orange);
+}
+
+.footer h4,
+.footer h5 {
+  color: #ffffff;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer h4::after,
+.footer h5::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 42px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--inpta-orange);
+}
+
+.footer a,
+.footer .btn.btn-link {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.footer .btn.btn-link:hover,
+.footer a:hover {
+  color: var(--inpta-orange);
+}
+
+.footer .btn.btn-social {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.footer .btn.btn-social:hover {
+  background: var(--inpta-orange);
+  border-color: var(--inpta-orange);
+  color: #ffffff;
+}
+
+.footer .copyright {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.footer .copyright a {
+  color: var(--inpta-orange);
+}
+
+.footer-like p a {
+  color: var(--inpta-navy);
+}
+
+/* ------------------------------------------------------------------ */
+/* Forms                                                               */
+/* ------------------------------------------------------------------ */
+.form-control,
+.form-select,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+textarea,
+select {
+  border-color: var(--inpta-border);
+  border-radius: var(--inpta-radius);
+  color: var(--inpta-text);
+}
+
+.form-control:focus,
+.form-select:focus,
+.view-listing-page textarea.form-control:focus {
+  border-color: var(--inpta-blue);
+  box-shadow: var(--inpta-ring);
+  outline: none;
+}
+
+.form-check-input:checked {
+  background-color: var(--inpta-navy);
+  border-color: var(--inpta-navy);
+}
+
+.form-label {
+  color: var(--inpta-navy);
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------------ */
+/* Cards, modals, misc components                                      */
+/* ------------------------------------------------------------------ */
+.card {
+  border: 1px solid var(--inpta-border);
+  border-radius: var(--inpta-radius-lg);
+  box-shadow: var(--inpta-shadow-sm);
+}
+
+.modal-content {
+  border: none;
+  border-radius: var(--inpta-radius-lg);
+  box-shadow: var(--inpta-shadow);
+}
+
+.badge.bg-primary {
+  background-color: var(--inpta-navy) !important;
+}
+
+.nav-tabs .nav-link.active,
+.nav-pills .nav-link.active {
+  background-color: var(--inpta-navy);
+  border-color: var(--inpta-navy);
+  color: #ffffff;
+}
+
+.page-link {
+  color: var(--inpta-navy);
+}
+
+.page-item.active .page-link {
+  background-color: var(--inpta-navy);
+  border-color: var(--inpta-navy);
+  color: #ffffff;
+}
+
+.progress-bar {
+  background-color: var(--inpta-green);
+}
+
+.view-listing-page .list-lioe-single a {
+  color: var(--inpta-navy);
+}
+
+.view-listing-page .list-lioe-single a:hover {
+  color: var(--inpta-orange-dark);
+}
+
+.back-to-top {
+  background-color: var(--inpta-orange);
+  border-color: var(--inpta-orange);
+  color: #ffffff;
+}
+
+.back-to-top:hover {
+  background-color: var(--inpta-navy);
+  border-color: var(--inpta-navy);
+}
+
+/* carousels */
+.testimonial-carousel .owl-item.center .testimonial-text {
+  background: var(--inpta-navy) !important;
+}
+
+.testimonial-carousel .owl-dot {
+  border-radius: 50%;
+}
+
+.testimonial-carousel .owl-dot.active {
+  background: var(--inpta-orange);
+  border-color: var(--inpta-orange);
+}
+
+.first-secttion-bg {
+  background-color: rgba(13, 36, 71, 0.82);
+}
+
+/* icons that were hard-coded red inline (style={{ color: "#ff3838" }}) */
+[style*="rgb(255, 56, 56)"] {
+  color: var(--inpta-orange) !important;
+}
+
+/* toastify */
+.Toastify__toast--success {
+  border-left: 5px solid var(--inpta-green);
+}
+
+.Toastify__progress-bar--success {
+  background: var(--inpta-green) !important;
+}
+
+/* sweetalert2 */
+.swal2-styled.swal2-confirm {
+  background-color: var(--inpta-navy) !important;
+  border-radius: var(--inpta-radius) !important;
+}
+
+.swal2-styled.swal2-confirm:focus {
+  box-shadow: var(--inpta-ring) !important;
+}
+
+/* training partner / training center landing pages */
+.partner-page-wrapper {
+  font-family: var(--inpta-font-body);
+  color: var(--inpta-text);
+  background-color: var(--inpta-tint);
+}
+
+/* ================================================================== */
+/* Responsive layer (mobile first fixes, all devices)                  */
+/* Breakpoints follow bootstrap: 576 / 768 / 992 / 1200 / 1400         */
+/* ================================================================== */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* safety net: nothing should ever make the page scroll sideways */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+/* headings keep a compact line height even though body is 1.6 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  line-height: 1.25;
+  overflow-wrap: break-word;
+}
+
+p,
+li,
+td,
+th {
+  overflow-wrap: break-word;
+}
+
+/* wide tables scroll inside their box instead of the page */
+.table-responsive {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---------------- laptops (992 - 1399): header gets tight ---------- */
+@media (min-width: 992px) and (max-width: 1399.98px) {
+  .lang ul li {
+    margin: 0 10px;
+  }
+
+  .lang ul li a {
+    letter-spacing: 0.3px;
+    font-size: 13.5px;
+  }
+
+  .login ul li {
+    margin-right: 6px;
+    padding: 7px 6px;
+  }
+
+  .login {
+    right: 12px;
+  }
+
+  .log {
+    margin-left: 12px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .lang {
+    left: 47%;
+  }
+
+  .lang ul li {
+    margin: 0 6px;
+  }
+
+  .lang ul li a {
+    font-size: 13px;
+  }
+
+  .add-list-btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  .lang ul li a {
+    letter-spacing: 0.6px;
+  }
+}
+
+/* ---------------- tablets and below (< 992) ------------------------ */
+@media (max-width: 991.98px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* mobile drawer */
+  .side img {
+    width: 150px;
+    max-width: 60%;
+  }
+
+  .side a,
+  .side p {
+    font-weight: 600;
+    border-bottom: 1px solid var(--inpta-border);
+  }
+
+  .side a:last-of-type {
+    border-bottom: none;
+  }
+
+  .side .add-list-btn {
+    border-bottom: none;
+    text-align: center;
+  }
+
+  h1,
+  .h1 {
+    font-size: clamp(1.9rem, 6vw, 2.6rem);
+  }
+
+  h2,
+  .h2 {
+    font-size: clamp(1.5rem, 4.6vw, 2rem);
+  }
+}
+
+/* ---------------- large phones / small tablets (< 768) ------------- */
+@media (max-width: 767.98px) {
+  /* bootstrap g-5 (3rem gutter) is wider than the container padding */
+  .row.g-5,
+  .row.gx-5 {
+    --bs-gutter-x: 1.5rem;
+  }
+
+  .row.g-5,
+  .row.gy-5 {
+    --bs-gutter-y: 1.5rem;
+  }
+
+  /* 16px inputs stop iOS from zooming the page on focus */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+  select,
+  textarea,
+  .form-control,
+  .form-select {
+    font-size: 16px;
+  }
+
+  .modal-body.p-5,
+  .p-5.modal-body {
+    padding: 1.5rem !important;
+  }
+
+  .modal-dialog {
+    margin: 0.75rem;
+  }
+
+  .footer.pt-5,
+  .footer .container.py-5 {
+    padding-top: 1.5rem !important;
+  }
+
+  .footer .container.py-5 {
+    padding-bottom: 1.5rem !important;
+  }
+
+  .footer .copyright {
+    text-align: center;
+  }
+
+  .footer .footer-menu {
+    margin-top: 0.5rem;
+  }
+
+  .back-to-top {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .card {
+    border-radius: var(--inpta-radius);
+  }
+}
+
+/* ---------------- phones (< 576) ----------------------------------- */
+@media (max-width: 575.98px) {
+  body {
+    font-size: 15px;
+  }
+
+  .container {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  h1,
+  .h1 {
+    font-size: clamp(1.7rem, 8vw, 2.1rem);
+  }
+
+  h2,
+  .h2 {
+    font-size: clamp(1.4rem, 6.4vw, 1.7rem);
+  }
+
+  /* training partner / center landing pages */
+  .tp-hero-section {
+    padding: 96px 0 48px;
+  }
+
+  .tp-hero-title {
+    font-size: 28px;
+  }
+
+  .tp-section-title {
+    font-size: 22px;
+  }
+
+  .tp-hero-section .d-flex.flex-wrap > .btn,
+  .tp-hero-section .d-flex.flex-wrap > a.btn {
+    flex: 1 1 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .tp-table-custom th,
+  .tp-table-custom td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  .tp-calc-box {
+    padding: 20px;
+  }
+
+  /* generic buttons in a row wrap instead of overflowing */
+  .btn-group-responsive,
+  .d-flex.flex-wrap.gap-3 {
+    row-gap: 0.75rem;
+  }
+}
+
+/* ---------------- very small phones (< 360) ------------------------ */
+@media (max-width: 359.98px) {
+  .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .add-list-btn,
+  .btn {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+/* ================================================================== */
+/* Buttons: fixes for legacy style.css overrides + landing page hero   */
+/* ================================================================== */
+
+/* style.css forces .btn-warning to navy with !important; restore the brand orange */
+.btn-warning,
+.btn.btn-warning {
+  background-color: var(--inpta-orange) !important;
+  border: 1px solid var(--inpta-orange) !important;
+  color: var(--inpta-navy-deep) !important;
+}
+
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active {
+  background-color: #ffa94d !important;
+  border-color: #ffa94d !important;
+  color: var(--inpta-navy-deep) !important;
+}
+
+/* hero call-to-action row: three equal, clearly different buttons */
+.tp-hero-section .btn-lg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 54px;
+  min-width: 250px;
+  padding: 12px 28px !important;
+  font-size: 1rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  border-radius: 999px;
+  transition: background-color 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease, transform 0.15s ease;
+}
+
+.tp-hero-section .btn-lg:hover {
+  transform: translateY(-2px);
+}
+
+.tp-hero-section .btn-lg i {
+  width: 1.2em;
+  text-align: center;
+}
+
+/* secondary: white outline */
+.tp-hero-section .btn-outline-light {
+  background-color: transparent !important;
+  border: 2px solid rgba(255, 255, 255, 0.9) !important;
+  color: #ffffff !important;
+}
+
+.tp-hero-section .btn-outline-light:hover {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+  color: var(--inpta-navy) !important;
+}
+
+/* tertiary: light glass so it stays readable on the navy hero */
+.tp-hero-section .btn-primary {
+  background-color: rgba(255, 255, 255, 0.14) !important;
+  border: 2px solid rgba(255, 255, 255, 0.35) !important;
+  color: #ffffff !important;
+}
+
+.tp-hero-section .btn-primary:hover {
+  background-color: rgba(255, 255, 255, 0.26) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  color: #ffffff !important;
+}
+
+@media (max-width: 575.98px) {
+  .tp-hero-section .btn-lg {
+    min-width: 0;
+    width: 100%;
+    white-space: normal;
+  }
+}
+
+/* tablet + desktop: lay the three hero buttons out as an aligned grid (phones stack them) */
+@media (min-width: 576px) {
+  .tp-hero-section .d-flex.flex-wrap.gap-3 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    max-width: 560px;
+  }
+
+  .tp-hero-section .d-flex.flex-wrap.gap-3 > .btn-lg {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 20px !important;
+  }
+
+  .tp-hero-section .d-flex.flex-wrap.gap-3 > .btn-lg:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* in-page anchors (#apply-now etc.) must not hide under the fixed header */
+[id] {
+  scroll-margin-top: 90px;
+}
+
+/* ================================================================== */
+/* Motion: page transitions, scroll reveal, button feedback            */
+/* ================================================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ---- page transition (see components/MotionEffects.jsx) ---- */
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.page-transition {
+  animation: pageFadeIn 0.45s ease backwards;
+}
+
+html.page-leaving .page-transition {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+/* ---- scroll reveal ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- hero intro on the landing pages ---- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.tp-hero-section .tp-badge-pill,
+.tp-hero-section .tp-hero-title,
+.tp-hero-section .tp-hero-subtitle,
+.tp-hero-section .d-flex.flex-wrap.gap-3,
+.tp-hero-section .tp-stat-pill,
+.tp-hero-section .col-lg-5 > div {
+  animation: fadeUp 0.75s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+
+.tp-hero-section .tp-badge-pill {
+  animation-delay: 0.05s;
+}
+
+.tp-hero-section .tp-hero-title {
+  animation-delay: 0.15s;
+}
+
+.tp-hero-section .tp-hero-subtitle {
+  animation-delay: 0.25s;
+}
+
+.tp-hero-section .d-flex.flex-wrap.gap-3 {
+  animation-delay: 0.35s;
+}
+
+.tp-hero-section .col-lg-5 > div {
+  animation-delay: 0.3s;
+}
+
+/* ---- buttons: lift on hover, press on click ---- */
+.btn,
+.add-list-btn,
+.view-list-btn,
+.call-btn,
+.back-to-top,
+.top-scroll {
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn:not(.btn-link):not(.btn-close):not(.btn-social):not(:disabled):not(.disabled):hover,
+.add-list-btn:hover,
+.view-list-btn:hover,
+.call-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(20, 53, 98, 0.18);
+}
+
+.btn:not(.btn-link):not(.btn-close):not(:disabled):not(.disabled):active,
+.add-list-btn:active,
+.view-list-btn:active,
+.call-btn:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: none;
+  transition-duration: 0.08s;
+}
+
+.footer .btn-social:hover {
+  transform: translateY(-3px);
+}
+
+/* arrows and plus icons nudge forward on hover */
+.btn .fa-arrow-right,
+.btn .fa-plus,
+.add-list-btn .fa-plus {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+.btn:hover .fa-arrow-right {
+  transform: translateX(5px);
+}
+
+.btn:hover .fa-plus,
+.add-list-btn:hover .fa-plus {
+  transform: rotate(90deg);
+}
+
+/* ---- navigation underline that grows from the centre ---- */
+@media (min-width: 992px) {
+  .lang ul li a p {
+    position: relative;
+    display: inline-block;
+  }
+
+  .lang ul li a p::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--inpta-orange);
+    transition: width 0.25s ease, left 0.25s ease;
+  }
+
+  .lang ul li a:hover p::after {
+    left: 0;
+    width: 100%;
+  }
+}
+
+/* ---- footer links slide a little on hover ---- */
+.footer .btn.btn-link {
+  transition: transform 0.2s ease, color 0.2s ease, letter-spacing 0.2s ease;
+}
+
+.footer .btn.btn-link:hover {
+  transform: translateX(4px);
+}
+
+/* ---- drawer and floating buttons ---- */
+.side {
+  transition: width 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.Goodup-grid-wrap {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.Goodup-grid-wrap:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--inpta-shadow);
+}
+
+/* ---- form fields ---- */
+.form-control,
+.form-select {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ---- OS "reduce motion": keep the fades, drop the movement ---- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    transform: none;
+  }
+
+  .tp-hero-section .tp-badge-pill,
+  .tp-hero-section .tp-hero-title,
+  .tp-hero-section .tp-hero-subtitle,
+  .tp-hero-section .d-flex.flex-wrap.gap-3,
+  .tp-hero-section .tp-stat-pill,
+  .tp-hero-section .col-lg-5 > div {
+    animation-name: pageFadeIn;
+  }
+
+  .btn:hover,
+  .btn:active,
+  .add-list-btn:hover,
+  .add-list-btn:active,
+  .view-list-btn:hover,
+  .call-btn:hover,
+  .Goodup-grid-wrap:hover,
+  .footer .btn-social:hover,
+  .footer .btn.btn-link:hover {
+    transform: none !important;
+  }
+}
+
+@media print {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

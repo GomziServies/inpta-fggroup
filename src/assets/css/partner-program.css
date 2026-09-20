@@ -1,0 +1,532 @@
+/* INPTA Training Partner & Training Center Program Styles */
+
+.partner-page-wrapper {
+  color: #1e293b;
+  background-color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Hero Section */
+.tp-hero-section {
+  background: linear-gradient(135deg, #0d2447 0%, #1e4680 50%, #143562 100%);
+  color: #ffffff;
+  padding: 120px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tp-hero-section::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(244, 146, 47, 0.15) 0%, rgba(244, 146, 47, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.tp-hero-section::after {
+  content: "";
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(30, 70, 128, 0.2) 0%, rgba(30, 70, 128, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.tp-badge-pill {
+  display: inline-block;
+  padding: 8px 18px;
+  background: rgba(244, 146, 47, 0.15);
+  border: 1px solid rgba(244, 146, 47, 0.5);
+  color: #f4922f;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.tp-hero-title {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.tp-hero-title span {
+  color: #f4922f;
+  background: linear-gradient(90deg, #f4922f 0%, #ffc078 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tp-hero-subtitle {
+  font-size: 18px;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  font-weight: 400;
+}
+
+.tp-stat-pill {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 16px 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.tp-stat-pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-3px);
+}
+
+.tp-stat-number {
+  font-size: 26px;
+  font-weight: 800;
+  color: #f4922f;
+  display: block;
+}
+
+.tp-stat-label {
+  font-size: 13px;
+  color: #e2e8f0;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+/* Section Headings */
+.tp-section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.tp-section-tag {
+  color: #1e4680;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.tp-section-title {
+  font-size: 34px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.tp-section-desc {
+  font-size: 16px;
+  color: #64748b;
+  max-width: 700px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+/* Feature & Benefit Cards */
+.tp-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 28px 24px;
+  height: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+.tp-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: #cbd5e1;
+}
+
+.tp-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: #eff6ff;
+  color: #1e4680;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.tp-card:hover .tp-card-icon {
+  background: #1e4680;
+  color: #ffffff;
+}
+
+.tp-card-icon.orange {
+  background: #fff7ed;
+  color: #d9791a;
+}
+
+.tp-card:hover .tp-card-icon.orange {
+  background: #d9791a;
+  color: #ffffff;
+}
+
+.tp-card-icon.green {
+  background: #f0fdf4;
+  color: #1b8541;
+}
+
+.tp-card:hover .tp-card-icon.green {
+  background: #1b8541;
+  color: #ffffff;
+}
+
+.tp-card-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.tp-card-desc {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 0;
+  font-weight: 400;
+}
+
+/* Numbered Package Grid */
+.tp-package-item {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.25s ease;
+}
+
+.tp-package-item:hover {
+  border-color: #1e4680;
+  background: #f8fafc;
+  transform: translateX(4px);
+}
+
+.tp-package-num {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1e4680 0%, #143562 100%);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tp-package-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* Roles Comparison Split */
+.roles-container {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.role-column-inpta {
+  background: linear-gradient(180deg, #143562 0%, #133b68 100%);
+  color: #ffffff;
+  padding: 40px 32px;
+}
+
+.role-column-partner {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  color: #0f172a;
+  padding: 40px 32px;
+}
+
+.role-header-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.role-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.role-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.role-column-partner .role-list-item {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Process Roadmap */
+.tp-roadmap-step {
+  position: relative;
+  text-align: center;
+  padding: 15px;
+}
+
+.tp-step-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #1e4680;
+  color: #1e4680;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 16px;
+  margin: 0 auto 16px;
+  box-shadow: 0 4px 10px rgba(30, 70, 128, 0.2);
+  z-index: 2;
+  position: relative;
+}
+
+.tp-roadmap-step.active .tp-step-circle {
+  background: #1e4680;
+  color: #ffffff;
+}
+
+.tp-step-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+.tp-step-desc {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.4;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Pricing / Investment Cards */
+.tp-pricing-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 2px solid #e2e8f0;
+  padding: 36px 30px;
+  transition: all 0.3s ease;
+  position: relative;
+  text-align: center;
+}
+
+.tp-pricing-card.featured {
+  border-color: #f4922f;
+  box-shadow: 0 20px 30px rgba(244, 146, 47, 0.15);
+}
+
+.tp-popular-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #f4922f 0%, #f4922f 100%);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 16px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+}
+
+.tp-plan-name {
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.tp-plan-price {
+  font-size: 38px;
+  font-weight: 800;
+  color: #1e4680;
+  margin-bottom: 6px;
+}
+
+.tp-pricing-card.featured .tp-plan-price {
+  color: #d97706;
+}
+
+.tp-plan-duration {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+.tp-plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  text-align: left;
+}
+
+.tp-plan-features li {
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 14px;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Comparison Table */
+.tp-table-custom {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.tp-table-custom th {
+  background: #0f172a;
+  color: #ffffff;
+  padding: 18px 20px;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+}
+
+.tp-table-custom td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 14px;
+  color: #334155;
+  background: #ffffff;
+}
+
+.tp-table-custom tr:last-child td {
+  border-bottom: none;
+}
+
+.tp-table-custom tr td:nth-child(3) {
+  background: #f0fdf4;
+  font-weight: 600;
+  color: #146a33;
+}
+
+/* Interactive Calculator */
+.tp-calc-box {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.tp-calc-result-card {
+  background: linear-gradient(135deg, #0d2447 0%, #0f3d6c 100%);
+  border-radius: 16px;
+  padding: 30px 24px;
+  color: #ffffff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tp-result-item {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tp-result-highlight {
+  background: rgba(244, 146, 47, 0.15);
+  border: 1px solid rgba(244, 146, 47, 0.4);
+  border-radius: 12px;
+  padding: 18px;
+  margin-top: 15px;
+}
+
+/* City Grid / Student Data */
+.city-badge-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.city-badge-item:hover {
+  border-color: #1e4680;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.city-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.city-count {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e4680;
+  background: #eff6ff;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 991px) {
+  .tp-hero-title {
+    font-size: 32px;
+  }
+  .tp-hero-section {
+    padding: 100px 0 60px;
+  }
+  .tp-section-title {
+    font-size: 26px;
+  }
+}

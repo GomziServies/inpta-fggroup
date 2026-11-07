@@ -1830,6 +1830,10 @@ const UpdateListing = () => {
             className="top-scroll"
             title="Back to top"
             href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
           >
             <i className="ti-arrow-up" />
           </a>

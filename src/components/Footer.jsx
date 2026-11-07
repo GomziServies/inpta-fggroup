@@ -23,6 +23,12 @@ function Footer() {
               <Link className="btn btn-link" to="/">
                 Home
               </Link>
+              <Link className="btn btn-link" to="/training-partner-program">
+                Training Partner
+              </Link>
+              <Link className="btn btn-link" to="/training-center-program">
+                Training Center
+              </Link>
               <Link className="btn btn-link" to="/all-listing">
                 Listing
               </Link>
@@ -49,31 +55,46 @@ function Footer() {
               <div className="d-flex pt-2">
                 <Link
                   className="btn btn-outline-light btn-social"
-                  to="https://api.whatsapp.com/send?phone=6354051487&text=Hello, I want to know more about INPTA accreditation service."
+                  to="https://api.whatsapp.com/send?phone=916354051487&text=Hello%2C%20I%20want%20to%20know%20more%20about%20INPTA%20accreditation%20service."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="WhatsApp"
                 >
                   <i className="fab fa-whatsapp"></i>
                 </Link>
                 <Link
                   className="btn btn-outline-light btn-social"
                   to="https://www.instagram.com/fgiit.surat/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
                 >
                   <i className="fab fa-instagram"></i>
                 </Link>
                 <Link
                   className="btn btn-outline-light btn-social"
                   to="https://www.facebook.com/gajani2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
                 >
                   <i className="fab fa-facebook-f"></i>
                 </Link>
                 <Link
                   className="btn btn-outline-light btn-social"
                   to="https://www.youtube.com/@fgiitsurat5121"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="YouTube"
                 >
                   <i className="fab fa-youtube"></i>
                 </Link>
                 <Link
                   className="btn btn-outline-light btn-social"
                   to="https://www.linkedin.com/in/gautam-jani-561a50161"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
                 >
                   <i className="fab fa-linkedin-in"></i>
                 </Link>

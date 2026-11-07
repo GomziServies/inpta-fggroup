@@ -382,9 +382,7 @@ const ListingView = () => {
                                 </div>
                                 <div className="reviews-comments-item-text">
                                   <h4>
-                                    <a href="#">
-                                      {review.createdBy_user.user_name}
-                                    </a>
+                                    <span>{review.createdBy_user.user_name}</span>
                                     <span className="reviews-comments-item-date">
                                       <i class="fa fa-calendar me-1"></i>
                                       {new Date(
@@ -593,7 +591,23 @@ const ListingView = () => {
                             <div className="list-uiyt-capt p-2">
                               <h5>Get Directions</h5>
                               <a
-                                href={locationData.direction_link}
+                                href={
+                                  locationData.direction_link ||
+                                  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                                    [
+                                      locationData.address_line_1,
+                                      locationData.address_line_2,
+                                      locationData.landmark,
+                                      locationData.city,
+                                      locationData.state,
+                                      locationData.pin_code,
+                                    ]
+                                      .filter(Boolean)
+                                      .join(", ")
+                                  )}`
+                                }
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="text-dark"
                               >
                                 <p className="text-underline">

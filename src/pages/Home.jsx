@@ -152,15 +152,16 @@ const Home = () => {
                       href="https://fggroup.in/inpta/home-inpta"
                       className="btn btn-primary py-md-3 mt-2 px-md-5 me-3 animated slideInLeft"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Learn More
                     </a>
-                    <a
-                      href="/registration"
+                    <Link
+                      to="/registration"
                       className="btn btn-light py-md-3 mt-2 px-md-5 animated slideInRight"
                     >
                       Apply for Accreditation
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -309,12 +310,14 @@ const Home = () => {
                     </p>
                   </div>
                 </div>
-                <Link
+                <a
                   className="btn btn-primary py-3 px-5 mt-2"
-                  to="https://fggroup.in/inpta/home-inpta"
+                  href="https://fggroup.in/inpta/home-inpta"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Read More
-                </Link>
+                </a>
               </div>
             </div>
           </div>

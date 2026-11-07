@@ -169,6 +169,16 @@ function Header() {
               </Link>
             </li>
             <li>
+              <Link to="/training-partner-program">
+                <p className="m-0">Training Partner</p>
+              </Link>
+            </li>
+            <li>
+              <Link to="/training-center-program">
+                <p className="m-0">Training Center</p>
+              </Link>
+            </li>
+            <li>
               <Link to="/all-listing">
                 <p className="m-0">Listing</p>
               </Link>
@@ -195,6 +205,8 @@ function Header() {
             />
           </Link>
           <Link to="/">Home</Link>
+          <Link to="/training-partner-program">Training Partner</Link>
+          <Link to="/training-center-program">Training Center</Link>
           <Link to="/all-listing">Listing</Link>
           {isLogin ? <Link to="/profile">Profile</Link> : ""}
           <div className="d-flex justify-content-center mt-3">
@@ -259,7 +271,7 @@ function Header() {
         <Modal.Body className="p-5">
           <a
             className="nav-brand d-flex justify-content-center align-items-center mb-2"
-            href="#"
+            href="/"
           >
             <img src={logo} className="logo" alt="logo" width="40%" />
           </a>
@@ -308,7 +320,7 @@ function Header() {
         <Modal.Body className="p-5">
           <a
             className="nav-brand d-flex justify-content-center align-items-center"
-            href="#"
+            href="/"
           >
             <img src={logo} className="logo" alt="logo" width="40%" />
           </a>

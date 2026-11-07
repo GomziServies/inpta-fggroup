@@ -13,7 +13,7 @@ import WhatsappBtn from "../components/WhatsappBtn";
 const Login = () => {
   const [loading, setLoading] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
-  const [mobileNumber, setMobileNumber] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [currentStep, setCurrentStep] = React.useState("login");
   const [otpDialogOpen, setOtpDialogOpen] = React.useState(false);
   const [otpCode, setOtpCode] = React.useState("");
@@ -34,7 +34,8 @@ const Login = () => {
   const handleLoginSubmit = async () => {
     try {
       const response = await axiosInstance.post("/account/authorization", {
-        mobile: mobileNumber,
+        email: email.trim().toLowerCase(),
+        brand: 'FGIIT',
         service: 'INPTA-LISTING'
       });
 
@@ -43,11 +44,11 @@ const Login = () => {
         setCurrentStep("otp");
         setOtpCode(response.data.data.OTP);
 
-        toast.success("OTP Sent! You will receive an OTP shortly.");
+        toast.success("OTP sent! Please check your email inbox.");
       } else {
         setOtpDialogOpen(true);
         setCurrentStep("otp");
-        toast.success("OTP Sent! You will receive an OTP shortly.");
+        toast.success("OTP sent! Please check your email inbox.");
       }
     } catch (error) {
       toast.error("Failed to send OTP. Please try again.");
@@ -60,7 +61,7 @@ const Login = () => {
       const response = await axiosInstance.post(
         "/account/authorization/verify",
         {
-          mobile: mobileNumber,
+          email: email.trim().toLowerCase(),
           otp: otpCode,
         }
       );
@@ -135,7 +136,7 @@ const Login = () => {
                       <div className="signup-screen-single">
                         <a
                           className="nav-brand d-flex justify-content-center align-items-center"
-                          href="#"
+                          href="/"
                         >
                           <img
                             src="images/inpta-logo.webp"
@@ -151,13 +152,14 @@ const Login = () => {
                           </h4>
                         </div>
                         <Form>
-                          <Form.Group controlId="mobile">
-                            <Form.Label>Mobile Number</Form.Label>
+                          <Form.Group controlId="email">
+                            <Form.Label>Email Address</Form.Label>
                             <Form.Control
-                              type="text"
-                              placeholder="Mobile Number*"
+                              type="email"
+                              placeholder="Email Address*"
                               className="rounded bg-light"
-                              onChange={(e) => setMobileNumber(e.target.value)}
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
                             />
                           </Form.Group>
 
@@ -179,7 +181,7 @@ const Login = () => {
                       <div className="signup-screen-single">
                         <a
                           className="nav-brand d-flex justify-content-center align-items-center"
-                          href="#"
+                          href="/"
                         >
                           <img
                             src="images/inpta-logo.webp"
@@ -244,111 +246,15 @@ const Login = () => {
             </div>
           </section>
           <Footer />
-          <div
-            className="modal fade"
-            id="login"
-            tabIndex={-1}
-            role="dialog"
-            aria-labelledby="loginmodal"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog login-pop-form" role="document">
-              <div className="modal-content" id="loginmodal">
-                <div className="modal-headers">
-                  <button
-                    type="button"
-                    className="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span className="ti-close" />
-                  </button>
-                </div>
-                <div className="modal-body p-5">
-                  <div className="text-center mb-4">
-                    <h4 className="m-0 ft-medium">Login Your Account</h4>
-                  </div>
-                  <form className="submit-form">
-                    <div className="form-group">
-                      <label className="mb-1">User Name</label>
-                      <input
-                        type="text"
-                        className="form-control rounded bg-light"
-                        placeholder="Username*"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="mb-1">Password</label>
-                      <input
-                        type="password"
-                        className="form-control rounded bg-light"
-                        placeholder="Password*"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <div className="d-flex align-items-center justify-content-between">
-                        <div className="flex-1">
-                          <input
-                            id="dd"
-                            className="checkbox-custom"
-                            name="dd"
-                            type="checkbox"
-                            defaultChecked=""
-                          />
-                          <label htmlFor="dd" className="checkbox-custom-label">
-                            Remember Me
-                          </label>
-                        </div>
-                        <div className="eltio_k2">
-                          <a href="#" className="theme-cl">
-                            Lost Your Password?
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <button
-                        type="submit"
-                        className="btn btn-md full-width theme-bg text-light rounded ft-medium"
-                      >
-                        Sign In
-                      </button>
-                    </div>
-                    <div className="form-group text-center mb-0">
-                      <p className="extra">Or login with</p>
-                      <div className="option-log">
-                        <div className="single-log-opt">
-                          <a href="javascript:void(0);" className="log-btn">
-                            <img
-                              src="images/c-1.png"
-                              className="img-fluid"
-                              alt=""
-                            />
-                            Login with Google
-                          </a>
-                        </div>
-                        <div className="single-log-opt">
-                          <a href="javascript:void(0);" className="log-btn">
-                            <img
-                              src="images/facebook.png"
-                              className="img-fluid"
-                              alt=""
-                            />
-                            Login with Facebook
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
           <a
             id="tops-button"
             className="top-scroll"
             title="Back to top"
             href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
           >
             <i className="ti-arrow-up" />
           </a>

@@ -241,7 +241,7 @@ function ContactPage() {
         <Modal.Body className="p-5">
           <a
             className="nav-brand d-flex justify-content-center align-items-center mb-2"
-            href="#"
+            href="/"
           >
             <img
               src="images/inpta-logo.webp"
@@ -295,7 +295,7 @@ function ContactPage() {
         <Modal.Body className="p-5">
           <a
             className="nav-brand d-flex justify-content-center align-items-center"
-            href="#"
+            href="/"
           >
             <img
               src="images/inpta-logo.webp"

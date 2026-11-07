@@ -13,7 +13,7 @@ import WhatsappBtn from "../components/WhatsappBtn";
 const Login = () => {
   const [loading, setLoading] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
-  const [mobileNumber, setMobileNumber] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [currentStep, setCurrentStep] = React.useState("login");
   const [otpDialogOpen, setOtpDialogOpen] = React.useState(false);
   const [otpCode, setOtpCode] = React.useState("");
@@ -34,7 +34,8 @@ const Login = () => {
   const handleLoginSubmit = async () => {
     try {
       const response = await axiosInstance.post("/account/authorization", {
-        mobile: mobileNumber,
+        email: email.trim().toLowerCase(),
+        brand: 'FGIIT',
         service: 'INPTA-LISTING'
       });
 
@@ -43,11 +44,11 @@ const Login = () => {
         setCurrentStep("otp");
         setOtpCode(response.data.data.OTP);
 
-        toast.success("OTP Sent! You will receive an OTP shortly.");
+        toast.success("OTP sent! Please check your email inbox.");
       } else {
         setOtpDialogOpen(true);
         setCurrentStep("otp");
-        toast.success("OTP Sent! You will receive an OTP shortly.");
+        toast.success("OTP sent! Please check your email inbox.");
       }
     } catch (error) {
       toast.error("Failed to send OTP. Please try again.");
@@ -60,7 +61,7 @@ const Login = () => {
       const response = await axiosInstance.post(
         "/account/authorization/verify",
         {
-          mobile: mobileNumber,
+          email: email.trim().toLowerCase(),
           otp: otpCode,
         }
       );
@@ -151,13 +152,14 @@ const Login = () => {
                           </h4>
                         </div>
                         <Form>
-                          <Form.Group controlId="mobile">
-                            <Form.Label>Mobile Number</Form.Label>
+                          <Form.Group controlId="email">
+                            <Form.Label>Email Address</Form.Label>
                             <Form.Control
-                              type="text"
-                              placeholder="Mobile Number*"
+                              type="email"
+                              placeholder="Email Address*"
                               className="rounded bg-light"
-                              onChange={(e) => setMobileNumber(e.target.value)}
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
                             />
                           </Form.Group>
 
